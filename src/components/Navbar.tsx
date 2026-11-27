@@ -133,7 +133,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                   Revival Church International
                 </span>
                 <span className="text-[10px] sm:text-[11px] text-blue-400 font-medium tracking-wide hidden sm:inline leading-none">
-                  Supernatural Church-Changing Lives-Disciple the Nations
+                  Restore-Empower-Send
                 </span>
               </div>
             </button>
