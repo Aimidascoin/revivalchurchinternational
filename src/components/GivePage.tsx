@@ -4,7 +4,6 @@ import { api, errorMessage, type YocoCheckoutResult } from '../lib/api';
 import { useToast } from './Toast';
 import { CheckoutHandoffModal } from './CheckoutHandoffModal';
 import {
-  Heart,
   Building2,
   Copy,
   Check,
@@ -103,22 +102,6 @@ export const GivePage: React.FC<GivePageProps> = ({ onNavigateHome }) => {
           </button>
         </div>
 
-        {/* Hero Banner */}
-        <div className="relative rounded-3xl bg-gradient-to-br from-amber-950 via-slate-900 to-slate-950 border border-slate-800 p-8 sm:p-14 overflow-hidden shadow-2xl">
-          <div className="absolute top-0 right-0 w-96 h-96 bg-amber-600/10 rounded-full blur-3xl pointer-events-none" />
-          <div className="relative z-10 max-w-3xl space-y-4">
-            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-300 font-mono text-xs font-bold">
-              <Heart className="w-3.5 h-3.5 text-amber-400 fill-amber-400/20" />
-              Kingdom Stewardship &amp; Generosity
-            </span>
-            <h1 className="text-3xl sm:text-5xl font-black text-white tracking-tight">
-              Honoring God with Our Substance
-            </h1>
-            <p className="text-base sm:text-lg text-slate-300 leading-relaxed">
-              <em>"Bring all the tithes into the storehouse, that there may be food in My house..." (Malachi 3:10)</em>. Your faithful tithes and sacrificial offerings fund global apostolic revival, feed families, and build altars for the nations.
-            </p>
-          </div>
-        </div>
 
         {/* Vision Fund Progress & Direct Giving Form */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
