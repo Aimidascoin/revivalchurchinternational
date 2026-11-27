@@ -32,7 +32,9 @@ jobs:
 
       - name: Build static site
         env:
-          VITE_BASE_PATH: /revivalchurchinternational/
+          # Relative assets work at the GitHub Pages project path AND at the
+          # custom domain root (CNAME in public/ sets www.revivalchurchinternational.co.za).
+          VITE_BASE_PATH: ./
           # Set a repository variable VITE_API_URL to your deployed Express API
           # URL (for example https://rci-api.onrender.com/api) to enable forms.
           VITE_API_URL: ${{ vars.VITE_API_URL || '/api' }}
