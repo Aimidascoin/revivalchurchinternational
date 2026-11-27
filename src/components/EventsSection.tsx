@@ -52,7 +52,7 @@ export const EventsSection: React.FC = () => {
           </div>
           <div className="flex shrink-0 items-center gap-3 rounded-2xl border border-yellow-300/30 bg-slate-950 px-6 py-4 text-yellow-300">
             <Calendar className="h-5 w-5 shrink-0" />
-            <span className="text-lg font-extrabold uppercase tracking-widest sm:text-xl">JOIN US</span>
+            <span className="text-lg font-extrabold uppercase tracking-widest sm:text-xl">COMING SOON</span>
           </div>
         </div>
 
