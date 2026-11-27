@@ -10,13 +10,7 @@ interface GivingModalProps {
   onClose: () => void;
 }
 
-const funds = [
-  'Tithes & Offerings',
-  'Legacy Vision Fund 2026',
-  'Revival Hope Compassion',
-  'Global Missions & Media',
-  'School of Ministry Scholarship',
-];
+const givingTypes = ['TITHE', 'OFFERING', 'SEED', 'PARTNER'];
 
 const amounts: Record<string, string[]> = {
   ZAR: ['100', '250', '500', '1000', '2500', '5000'],
@@ -28,7 +22,7 @@ export const GivingModal: React.FC<GivingModalProps> = ({ isOpen, onClose }) => 
   const { content } = useContent();
   const toast = useToast();
   const [currency, setCurrency] = useState<'ZAR' | 'USD' | 'GBP'>('ZAR');
-  const [fund, setFund] = useState(funds[0]);
+  const [fund, setFund] = useState(givingTypes[0]);
   const [amount, setAmount] = useState('500');
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -106,6 +100,50 @@ export const GivingModal: React.FC<GivingModalProps> = ({ isOpen, onClose }) => 
     }
   };
 
+  const startYocoCheckout = async (selectedFund: string) => {
+    if (submitting) return;
+    setError('');
+    if (method !== 'online') {
+      setFund(selectedFund);
+      return;
+    }
+    if (currency !== 'ZAR') {
+      setError('Yoco accepts South African Rand only. Switch to ZAR to give by card.');
+      return;
+    }
+    const value = Number(amount);
+    if (!Number.isFinite(value) || value <= 0) {
+      setError('Please enter a valid amount.');
+      return;
+    }
+    if (name.trim().length < 2) {
+      setError('Please enter your full name.');
+      return;
+    }
+    if (!/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(email.trim())) {
+      setError('Please enter a valid email for your receipt.');
+      return;
+    }
+    setFund(selectedFund);
+    setSubmitting(true);
+    try {
+      const response = await api.createYocoCheckout({
+        name: name.trim(),
+        email: email.trim(),
+        amount: value,
+        fund: selectedFund,
+      });
+      if (!response.data) throw new Error('Secure checkout could not be started.');
+      setCheckout(response.data);
+    } catch (cause) {
+      const message = errorMessage(cause);
+      setError(message);
+      toast(message, 'error');
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
   const reset = () => {
     setResult(null);
     setCheckout(null);
@@ -167,13 +205,38 @@ export const GivingModal: React.FC<GivingModalProps> = ({ isOpen, onClose }) => 
           </div>
         ) : (
           <form onSubmit={handleSubmit} className="space-y-4">
-            <div className="grid gap-3 sm:grid-cols-2">
-              <div>
-                <label className="mb-1 block text-xs font-semibold text-slate-300">Giving Designation</label>
-                <select value={fund} onChange={(e) => setFund(e.target.value)} className="w-full rounded-xl border border-slate-800 bg-slate-900 px-3.5 py-2.5 text-xs text-white">
-                  {funds.map((item) => <option key={item} value={item}>{item}</option>)}
-                </select>
+            <div>
+              <label className="mb-2 block text-xs font-semibold text-slate-300">Give As</label>
+              <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
+                {givingTypes.map((type) => (
+                  <button
+                    key={type}
+                    type="button"
+                    disabled={submitting}
+                    onClick={() => {
+                      if (method === 'online') {
+                        void startYocoCheckout(type);
+                      } else {
+                        setFund(type);
+                      }
+                    }}
+                    className={`rounded-xl border py-2.5 text-xs font-black transition-all disabled:opacity-60 ${
+                      fund === type
+                        ? 'border-amber-400 bg-amber-500/15 text-white'
+                        : 'border-slate-800 bg-slate-900 text-slate-400 hover:text-white'
+                    }`}
+                  >
+                    {submitting && fund === type && method === 'online' ? 'Preparing…' : type}
+                  </button>
+                ))}
               </div>
+              <p className="mt-2 text-[11px] text-slate-500">
+                {method === 'online'
+                  ? "Tap TITHE, OFFERING, SEED or PARTNER to go straight to Yoco's secure payment page."
+                  : 'Tap a giving type, then record your bank EFT pledge.'}
+              </p>
+            </div>
+            <div className="grid gap-3 sm:grid-cols-2">
               <div>
                 <label className="mb-1 block text-xs font-semibold text-slate-300">Currency</label>
                 <div className="grid grid-cols-3 gap-1 rounded-xl border border-slate-800 bg-slate-900 p-1 text-center text-xs font-bold">
@@ -254,18 +317,20 @@ export const GivingModal: React.FC<GivingModalProps> = ({ isOpen, onClose }) => 
 
             {error && <p role="alert" className="rounded-xl border border-red-500/40 bg-red-500/10 px-3 py-2 text-xs text-red-300">{error}</p>}
 
-            <button
-              type="submit"
-              disabled={submitting}
-              className="flex w-full items-center justify-center gap-2 rounded-xl bg-blue-600 py-3 text-xs font-bold text-white hover:bg-blue-500 disabled:opacity-60"
-            >
-              <ShieldCheck className="h-4 w-4" />
-              {submitting
-                ? 'Preparing secure checkout…'
-                : method === 'online'
-                  ? `Give ${symbol}${amount} securely with Yoco`
-                  : `Record ${currency} ${amount} pledge`}
-            </button>
+            {method === 'bank' ? (
+              <button
+                type="submit"
+                disabled={submitting}
+                className="flex w-full items-center justify-center gap-2 rounded-xl bg-blue-600 py-3 text-xs font-bold text-white hover:bg-blue-500 disabled:opacity-60"
+              >
+                <ShieldCheck className="h-4 w-4" />
+                {submitting ? 'Recording pledge…' : `Record ${currency} ${amount} pledge`}
+              </button>
+            ) : (
+              <p className="text-center text-[11px] text-slate-500">
+                Tap TITHE, OFFERING, SEED or PARTNER above to continue straight to Yoco.
+              </p>
+            )}
           </form>
         )}
       </div>
