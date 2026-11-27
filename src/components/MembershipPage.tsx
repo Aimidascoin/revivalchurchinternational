@@ -123,7 +123,7 @@ export const MembershipPage: React.FC<MembershipPageProps> = ({
                 href="#register"
                 className="px-6 py-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold text-xs sm:text-sm border border-slate-700 transition-all"
               >
-                Enroll in Next Cohort
+                Enroll in Next membership class
               </a>
             </div>
           </div>
