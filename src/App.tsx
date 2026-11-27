@@ -142,7 +142,10 @@ export default function App() {
       />
 
       {/* RCI-branded receipt after returning from Yoco */}
-      <PaymentReturnNotice onNavigateGive={() => handleNavigate('give')} />
+      <PaymentReturnNotice
+        onNavigateGive={() => handleNavigate('give')}
+        onNavigateHome={() => handleNavigate('home')}
+      />
 
       {/* Interactive Global Modals */}
       <GivingModal

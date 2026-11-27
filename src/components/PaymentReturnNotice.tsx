@@ -3,12 +3,13 @@ import { AlertCircle, CheckCircle2, Heart, XCircle } from 'lucide-react';
 
 interface PaymentReturnNoticeProps {
   onNavigateGive: () => void;
+  onNavigateHome: () => void;
 }
 
 type Outcome = 'success' | 'cancelled' | 'failed';
 
 /** RCI-branded receipt/handoff shown after Yoco returns the visitor home. */
-export const PaymentReturnNotice: React.FC<PaymentReturnNoticeProps> = ({ onNavigateGive }) => {
+export const PaymentReturnNotice: React.FC<PaymentReturnNoticeProps> = ({ onNavigateGive, onNavigateHome }) => {
   const params = new URLSearchParams(window.location.search);
   const initial = params.get('giving');
   const [outcome] = useState<Outcome | null>(
@@ -34,8 +35,8 @@ export const PaymentReturnNotice: React.FC<PaymentReturnNoticeProps> = ({ onNavi
   const content = {
     success: {
       icon: <CheckCircle2 className="h-7 w-7 text-emerald-400" />,
-      title: 'Thank you for your gift',
-      body: 'Your payment is being confirmed. A receipt will be sent to the email address you provided.',
+      title: 'TRANSACTION SUCCEED...',
+      body: 'THANK YOU FOR SUPPORTING OUR MINISTRIES',
       tone: 'border-emerald-500/40 bg-emerald-950/40',
     },
     cancelled: {
@@ -68,7 +69,17 @@ export const PaymentReturnNotice: React.FC<PaymentReturnNoticeProps> = ({ onNavi
           <p className="mt-4 font-mono text-xs text-amber-400">Reference: {reference}</p>
         )}
         <div className="mt-6 flex flex-col gap-2 sm:flex-row">
-          {outcome !== 'success' && (
+          {outcome === 'success' ? (
+            <button
+              onClick={() => {
+                dismiss();
+                onNavigateHome();
+              }}
+              className="flex-1 rounded-xl bg-amber-400 px-5 py-3 text-xs font-black text-slate-950 hover:bg-amber-300"
+            >
+              Return to Home Page
+            </button>
+          ) : (
             <button
               onClick={() => {
                 dismiss();
