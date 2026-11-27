@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { CAMPUSES } from '../data/churchData';
 import { Check, Gift, Car, Coffee, ShieldCheck } from 'lucide-react';
-import { api, campusIdFor, errorMessage, serviceDateFor } from '../lib/api';
+import { api, campusIdFor, errorMessage } from '../lib/api';
 import { useToast } from './Toast';
 
 interface PlanVisitModalProps {
@@ -16,8 +16,8 @@ export const PlanVisitModal: React.FC<PlanVisitModalProps> = ({
   defaultCampus,
 }) => {
   const [selectedCampus, setSelectedCampus] = useState(defaultCampus || 'Paarl Campus');
-  const [serviceDate, setServiceDate] = useState('This Sunday');
-  const [serviceTime, setServiceTime] = useState('09:00 AM (Morning Encounter)');
+  const [serviceDate, setServiceDate] = useState('');
+  const [serviceTime, setServiceTime] = useState('09:30 SAST');
   const [guestName, setGuestName] = useState('');
   const [guestEmail, setGuestEmail] = useState('');
   const [guestPhone, setGuestPhone] = useState('');
@@ -47,7 +47,7 @@ export const PlanVisitModal: React.FC<PlanVisitModalProps> = ({
         email: guestEmail,
         phone: guestPhone,
         campusId: campusIdFor(selectedCampus),
-        serviceDate: serviceDateFor(serviceDate),
+        serviceDate,
         serviceTime,
         guests: adultCount + kidCount,
         needsParking,
@@ -151,18 +151,15 @@ export const PlanVisitModal: React.FC<PlanVisitModalProps> = ({
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div>
                 <label className="block text-xs font-semibold text-slate-300 mb-1">
-                  Expected Sunday / Gathering
+                  Expected Gathering Date
                 </label>
-                <select
+                <input
+                  type="date"
+                  required
                   value={serviceDate}
                   onChange={(e) => setServiceDate(e.target.value)}
-                  className="w-full bg-slate-900 border border-slate-800 rounded-xl px-3 py-2 text-xs sm:text-sm text-white focus:outline-none focus:ring-1 focus:ring-blue-500"
-                >
-                  <option value="This Sunday">This Coming Sunday</option>
-                  <option value="Next Sunday">Next Sunday</option>
-                  <option value="Wednesday Midweek">Wednesday Midweek Encounter</option>
-                  <option value="Later this Month">Later this Month</option>
-                </select>
+                  className="w-full bg-slate-900 border border-slate-800 rounded-xl px-3 py-2 text-xs sm:text-sm text-white focus:outline-none focus:ring-1 focus:ring-blue-500 [color-scheme:dark]"
+                />
               </div>
 
               <div>
@@ -174,9 +171,9 @@ export const PlanVisitModal: React.FC<PlanVisitModalProps> = ({
                   onChange={(e) => setServiceTime(e.target.value)}
                   className="w-full bg-slate-900 border border-slate-800 rounded-xl px-3 py-2 text-xs sm:text-sm text-white focus:outline-none focus:ring-1 focus:ring-blue-500"
                 >
-                  <option value="09:00 AM (Morning Encounter)">09:00 AM (Morning Encounter)</option>
-                  <option value="17:00 PM (Evening Prophetic)">17:00 PM (Evening Prophetic)</option>
-                  <option value="19:00 PM (Midweek Miracles)">19:00 PM (Wednesday Midweek)</option>
+                  <option value="09:30 SAST">09:30 SAST</option>
+                  <option value="19:00 SAST">19:00 SAST</option>
+                  <option value="Midweek 19:00 SAST">Midweek · 19:00 SAST</option>
                 </select>
               </div>
             </div>
