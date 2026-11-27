@@ -41,6 +41,15 @@ export const givingSchema = z.object({
   note: z.string().trim().max(1000).optional(),
 });
 
+/** Yoco Checkout API only supports South African Rand. */
+export const yocoCheckoutSchema = z.object({
+  name,
+  email,
+  amount: z.coerce.number().positive('Amount must be greater than zero').max(1000000),
+  fund: z.string().trim().min(2).max(120),
+  currency: z.literal('ZAR').default('ZAR'),
+});
+
 export const contactSchema = z.object({
   name,
   email,

@@ -13,6 +13,7 @@ import { PrayerRequestModal } from './components/PrayerRequestModal';
 import { PlanVisitModal } from './components/PlanVisitModal';
 import { LiveStreamModal } from './components/LiveStreamModal';
 import { DownloadModal } from './components/DownloadModal';
+import { PaymentReturnNotice } from './components/PaymentReturnNotice';
 import { Footer } from './components/Footer';
 
 export default function App() {
@@ -139,6 +140,9 @@ export default function App() {
         onOpenVisit={() => setIsVisitOpen(true)}
         onOpenDownload={() => setIsDownloadOpen(true)}
       />
+
+      {/* RCI-branded receipt after returning from Yoco */}
+      <PaymentReturnNotice onNavigateGive={() => handleNavigate('give')} />
 
       {/* Interactive Global Modals */}
       <GivingModal

@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { Heart, Building, Copy, Check, DollarSign, ShieldCheck } from 'lucide-react';
 import { useContent } from '../context/ContentContext';
-import { api, errorMessage, type GivingResult } from '../lib/api';
+import { api, errorMessage, type GivingResult, type YocoCheckoutResult } from '../lib/api';
 import { useToast } from './Toast';
+import { CheckoutHandoffModal } from './CheckoutHandoffModal';
 
 interface GivingModalProps {
   isOpen: boolean;
@@ -31,13 +32,26 @@ export const GivingModal: React.FC<GivingModalProps> = ({ isOpen, onClose }) => 
   const [amount, setAmount] = useState('500');
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
-  const [method, setMethod] = useState<'bank' | 'online'>('bank');
+  const [method, setMethod] = useState<'bank' | 'online'>('online');
+  const [checkout, setCheckout] = useState<YocoCheckoutResult | null>(null);
   const [copied, setCopied] = useState('');
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState('');
   const [result, setResult] = useState<GivingResult | null>(null);
 
   if (!isOpen) return null;
+
+  if (checkout) {
+    return (
+      <CheckoutHandoffModal
+        checkout={checkout}
+        onClose={() => {
+          setCheckout(null);
+          onClose();
+        }}
+      />
+    );
+  }
 
   const symbol = currency === 'ZAR' ? 'R' : currency === 'USD' ? '$' : '£';
   const bank = result?.bankingDetails ?? content.bankingDetails;
@@ -56,15 +70,30 @@ export const GivingModal: React.FC<GivingModalProps> = ({ isOpen, onClose }) => 
     event.preventDefault();
     if (submitting) return;
     setError('');
+    const value = Number(amount);
+    if (!Number.isFinite(value) || value <= 0) {
+      setError('Please enter a valid amount.');
+      return;
+    }
     setSubmitting(true);
     try {
+      if (method === 'online') {
+        if (currency !== 'ZAR') {
+          setError('Yoco accepts South African Rand only. Switch to ZAR to give by card.');
+          return;
+        }
+        const response = await api.createYocoCheckout({ name, email, amount: value, fund });
+        if (!response.data) throw new Error('Secure checkout could not be started.');
+        setCheckout(response.data);
+        return;
+      }
       const response = await api.giving({
         name,
         email,
-        amount: Number(amount),
+        amount: value,
         currency,
         fund,
-        method,
+        method: 'bank',
       });
       setResult(response.data ?? null);
       toast('Thank you — your giving pledge has been recorded.');
@@ -79,6 +108,7 @@ export const GivingModal: React.FC<GivingModalProps> = ({ isOpen, onClose }) => 
 
   const reset = () => {
     setResult(null);
+    setCheckout(null);
     setError('');
     setName('');
     setEmail('');
@@ -193,15 +223,31 @@ export const GivingModal: React.FC<GivingModalProps> = ({ isOpen, onClose }) => 
             <div>
               <label className="mb-2 block text-xs font-semibold text-slate-300">How would you like to give?</label>
               <div className="grid grid-cols-2 gap-2">
-                <button type="button" onClick={() => setMethod('bank')} className={`flex items-center justify-center gap-2 rounded-xl border py-2.5 text-xs font-semibold ${method === 'bank' ? 'border-blue-500 bg-blue-600/20 text-white' : 'border-slate-800 text-slate-400'}`}>
-                  <Building className="h-3.5 w-3.5" /> Bank EFT
+                <button
+                  type="button"
+                  onClick={() => {
+                    setMethod('online');
+                    if (currency !== 'ZAR') {
+                      setCurrency('ZAR');
+                      setAmount('500');
+                    }
+                  }}
+                  className={`flex items-center justify-center gap-2 rounded-xl border py-2.5 text-xs font-semibold ${method === 'online' ? 'border-amber-400 bg-amber-500/15 text-white' : 'border-slate-800 text-slate-400'}`}
+                >
+                  <DollarSign className="h-3.5 w-3.5" /> Pay with Yoco
                 </button>
-                <button type="button" onClick={() => setMethod('online')} className={`flex items-center justify-center gap-2 rounded-xl border py-2.5 text-xs font-semibold ${method === 'online' ? 'border-blue-500 bg-blue-600/20 text-white' : 'border-slate-800 text-slate-400'}`}>
-                  <DollarSign className="h-3.5 w-3.5" /> Digital / App
+                <button
+                  type="button"
+                  onClick={() => setMethod('bank')}
+                  className={`flex items-center justify-center gap-2 rounded-xl border py-2.5 text-xs font-semibold ${method === 'bank' ? 'border-blue-500 bg-blue-600/20 text-white' : 'border-slate-800 text-slate-400'}`}
+                >
+                  <Building className="h-3.5 w-3.5" /> Bank EFT
                 </button>
               </div>
               <p className="mt-2 text-[11px] text-slate-500">
-                No card details are collected here. Digital payments are completed in the RCI app; we only record your pledge.
+                {method === 'online'
+                  ? 'Review your gift on an RCI-branded page, then pay securely on Yoco. Card details never touch this website.'
+                  : 'A pledge is recorded here; transfer the amount using the bank details shown after submission.'}
               </p>
             </div>
 
@@ -213,7 +259,11 @@ export const GivingModal: React.FC<GivingModalProps> = ({ isOpen, onClose }) => 
               className="flex w-full items-center justify-center gap-2 rounded-xl bg-blue-600 py-3 text-xs font-bold text-white hover:bg-blue-500 disabled:opacity-60"
             >
               <ShieldCheck className="h-4 w-4" />
-              {submitting ? 'Recording pledge…' : `Record ${currency} ${amount} pledge`}
+              {submitting
+                ? 'Preparing secure checkout…'
+                : method === 'online'
+                  ? `Give ${symbol}${amount} securely with Yoco`
+                  : `Record ${currency} ${amount} pledge`}
             </button>
           </form>
         )}

@@ -19,7 +19,7 @@ const panels: Record<InfoPanel, { title: string; intro: string; points: string[]
     title: 'Privacy Policy',
     intro: 'Revival Church International respects your privacy. Information you share through this website is used only to respond to your request.',
     points: [
-      'We collect only the details you submit in our prayer, visit, giving and contact forms.',
+      'We collect only the details you submit in our prayer, visit, giving and contact forms. Card details are entered directly with Yoco.',
       'Your information is stored on our secured server and is never sold or shared with advertisers.',
       'Confidential prayer requests are visible only to the pastoral prayer team.',
       'To request access or deletion of your details, email info@revivalchurchintl.org.',
@@ -31,7 +31,7 @@ const panels: Record<InfoPanel, { title: string; intro: string; points: string[]
     points: [
       'All content, media and broadcasts are the property of Revival Church International.',
       'Sermon notes and resources may be downloaded for personal, non-commercial use.',
-      'Giving pledges recorded here are commitments; no payment is processed on this website.',
+      'Card gifts are processed securely by Yoco; RCI never receives or stores your card details. Bank EFT pledges remain commitments until transferred.',
       'We may update service times and event details as needed; the latest information is always published here.',
     ],
   },

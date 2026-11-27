@@ -83,6 +83,24 @@ export interface GivingResult {
   bankingDetails: typeof BANKING_DETAILS | null;
 }
 
+export interface YocoCheckoutPayload {
+  name: string;
+  email: string;
+  amount: number;
+  fund: string;
+}
+
+export interface YocoCheckoutResult {
+  reference: string;
+  checkoutId: string;
+  redirectUrl: string;
+  amount: number;
+  currency: 'ZAR';
+  fund: string;
+  name: string;
+  email: string;
+}
+
 export interface LiveChatMessage {
   id: string;
   sender: string;
@@ -130,6 +148,8 @@ export const api = {
     post<{ id: string; receivedAt: string }>('/prayer-requests', payload),
   visit: (payload: VisitPayload) => post<{ id: string; receivedAt: string }>('/visits', payload),
   giving: (payload: GivingPayload) => post<GivingResult>('/giving', payload),
+  createYocoCheckout: (payload: YocoCheckoutPayload) =>
+    post<YocoCheckoutResult>('/yoco/checkout', payload),
   contact: (payload: { name: string; email: string; subject: string; message: string }) =>
     post<{ id: string; receivedAt: string }>('/contact', payload),
   newsletter: (email: string) => post<Record<string, never>>('/newsletter', { email }),

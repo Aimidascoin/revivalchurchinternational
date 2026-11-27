@@ -1,5 +1,7 @@
-import { randomUUID } from 'node:crypto';
+import { createHmac, randomUUID, timingSafeEqual } from 'node:crypto';
 import { Router, type NextFunction, type Request, type RequestHandler, type Response } from 'express';
+import { config } from './config';
+import type { RawBodyRequest } from './index';
 import {
   BANKING_DETAILS,
   CAMPUSES,
@@ -21,6 +23,7 @@ import {
   newsletterSchema,
   prayerRequestSchema,
   visitSchema,
+  yocoCheckoutSchema,
 } from './validation';
 
 type AsyncHandler = (req: Request, res: Response, next: NextFunction) => Promise<void>;
@@ -133,6 +136,157 @@ apiRouter.post('/giving', formLimit, asyncRoute(async (req, res) => {
     },
     message: 'Thank you for your giving. Your pledge has been recorded.',
   });
+}));
+
+/**
+ * Yoco Checkout API. The secret key is read from the server environment and
+ * is never returned to the browser. Card details are entered on Yoco's own
+ * hosted page, and payment success is confirmed by the signed webhook below.
+ */
+apiRouter.post('/yoco/checkout', formLimit, asyncRoute(async (req, res) => {
+  const parsed = yocoCheckoutSchema.safeParse(req.body);
+  if (!parsed.success) {
+    res.status(400).json({ ok: false, error: parsed.error.issues[0]?.message ?? 'Invalid request' });
+    return;
+  }
+  if (!config.yocoSecretKey) {
+    res.status(503).json({ ok: false, error: 'Online giving is not configured yet. Please use bank EFT.' });
+    return;
+  }
+
+  const { name, email, fund } = parsed.data;
+  const amountInCents = Math.round(parsed.data.amount * 100);
+  const reference = `RCI-${Date.now().toString(36).toUpperCase()}-${randomUUID().slice(0, 6).toUpperCase()}`;
+  // Yoco redirects inside the checkout iframe. This RCI-owned page breaks
+  // the visitor back out to the main site, where the branded receipt shows.
+  const returnUrl = (outcome: 'success' | 'cancelled' | 'failed') =>
+    `${config.siteUrl}/checkout-complete.html?giving=${outcome}&reference=${encodeURIComponent(reference)}`;
+
+  try {
+    const yocoResponse = await fetch('https://payments.yoco.com/api/checkouts', {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${config.yocoSecretKey}`,
+        'Content-Type': 'application/json',
+        'Idempotency-Key': reference,
+      },
+      body: JSON.stringify({
+        amount: amountInCents,
+        currency: 'ZAR',
+        successUrl: returnUrl('success'),
+        cancelUrl: returnUrl('cancelled'),
+        failureUrl: returnUrl('failed'),
+        metadata: {
+          reference,
+          fund,
+          donorName: name,
+          donorEmail: email,
+          source: 'rci_website',
+        },
+        lineItems: [
+          {
+            displayName: `RCI Giving — ${fund}`,
+            quantity: 1,
+            pricingDetails: { price: amountInCents },
+          },
+        ],
+      }),
+    });
+
+    const checkout = (await yocoResponse.json().catch(() => ({}))) as {
+      id?: string;
+      redirectUrl?: string;
+      status?: string;
+      message?: string;
+      error?: string;
+    };
+
+    if (!yocoResponse.ok || !checkout.redirectUrl || !checkout.id) {
+      console.error('[yoco] checkout creation failed', yocoResponse.status, checkout.message ?? checkout.error);
+      res.status(502).json({
+        ok: false,
+        error: 'We could not start secure payment right now. Please try again or use bank EFT.',
+      });
+      return;
+    }
+
+    res.json({
+      ok: true,
+      data: {
+        reference,
+        checkoutId: checkout.id,
+        redirectUrl: checkout.redirectUrl,
+        amount: parsed.data.amount,
+        currency: 'ZAR',
+        fund,
+        name,
+        email,
+      },
+      message: 'Continue on the secure RCI checkout page to complete your gift.',
+    });
+  } catch (error) {
+    console.error('[yoco] checkout error', error);
+    res.status(502).json({ ok: false, error: 'We could not reach the payment provider. Please try again.' });
+  }
+}));
+
+/** Signed Yoco webhook: the authoritative record that a payment succeeded. */
+apiRouter.post('/yoco/webhook', asyncRoute(async (req, res) => {
+  const header = (name: string) => {
+    const value = req.headers[name];
+    return Array.isArray(value) ? value[0] : value;
+  };
+  const webhookId = header('webhook-id');
+  const timestamp = header('webhook-timestamp');
+  const signatureHeader = header('webhook-signature');
+  const secret = config.yocoWebhookSecret;
+
+  if (!secret || !webhookId || !timestamp || !signatureHeader) {
+    res.status(401).json({ ok: false, error: 'Missing webhook credentials' });
+    return;
+  }
+
+  const sentAt = Number(timestamp);
+  if (!Number.isFinite(sentAt) || Math.abs(Date.now() / 1000 - sentAt) > 180) {
+    res.status(401).json({ ok: false, error: 'Stale webhook timestamp' });
+    return;
+  }
+
+  const rawBody = (req as RawBodyRequest).rawBody ?? JSON.stringify(req.body ?? {});
+  const signedContent = `${webhookId}.${timestamp}.${rawBody}`;
+  const secretBytes = Buffer.from(secret.replace(/^whsec_/, ''), 'base64');
+  const expected = createHmac('sha256', secretBytes).update(signedContent).digest('base64');
+  const candidates = signatureHeader
+    .split(' ')
+    .map((part) => part.split(',')[1])
+    .filter((part): part is string => Boolean(part));
+  const isValid = candidates.some((candidate) => {
+    const supplied = Buffer.from(candidate);
+    const computed = Buffer.from(expected);
+    return supplied.length === computed.length && timingSafeEqual(supplied, computed);
+  });
+
+  if (!isValid) {
+    res.status(403).json({ ok: false, error: 'Invalid webhook signature' });
+    return;
+  }
+
+  const event = req.body as {
+    type?: string;
+    id?: string;
+    payload?: { metadata?: { reference?: string }; status?: string; amount?: number };
+  };
+  if (event.type === 'payment.succeeded') {
+    // Webhook is the source of truth. Replace this log with ledger/email
+    // fulfillment when those services are connected.
+    console.log('[yoco] payment.succeeded', {
+      eventId: event.id,
+      reference: event.payload?.metadata?.reference ?? null,
+      amount: event.payload?.amount ?? null,
+    });
+  }
+
+  res.json({ ok: true });
 }));
 
 apiRouter.post('/contact', formLimit, asyncRoute(async (req, res) => {

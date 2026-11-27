@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { useContent } from '../context/ContentContext';
-import { api, errorMessage } from '../lib/api';
+import { api, errorMessage, type YocoCheckoutResult } from '../lib/api';
 import { useToast } from './Toast';
+import { CheckoutHandoffModal } from './CheckoutHandoffModal';
 import {
   Heart,
   Building2,
@@ -21,7 +22,8 @@ export const GivePage: React.FC<GivePageProps> = ({ onNavigateHome }) => {
   const [giveCustomAmount, setGiveCustomAmount] = useState('');
   const [donorName, setDonorName] = useState('');
   const [donorEmail, setDonorEmail] = useState('');
-  const [paymentMethod, setPaymentMethod] = useState<'bank' | 'online'>('bank');
+  const [paymentMethod, setPaymentMethod] = useState<'bank' | 'online'>('online');
+  const [checkout, setCheckout] = useState<YocoCheckoutResult | null>(null);
   const [copiedField, setCopiedField] = useState<string | null>(null);
   const [giveSuccess, setGiveSuccess] = useState(false);
   const [reference, setReference] = useState('');
@@ -44,15 +46,34 @@ export const GivePage: React.FC<GivePageProps> = ({ onNavigateHome }) => {
     e.preventDefault();
     if (submitting) return;
     setError('');
+    const amount = Number(currentAmount);
+    if (!Number.isFinite(amount) || amount <= 0) {
+      const message = 'Please enter a valid amount.';
+      setError(message);
+      toast(message, 'error');
+      return;
+    }
     setSubmitting(true);
     try {
+      if (paymentMethod === 'online') {
+        const response = await api.createYocoCheckout({
+          name: donorName,
+          email: donorEmail,
+          amount,
+          fund: giveType,
+        });
+        if (!response.data) throw new Error('Secure checkout could not be started.');
+        setCheckout(response.data);
+        return;
+      }
+
       const response = await api.giving({
         name: donorName,
         email: donorEmail,
-        amount: Number(currentAmount),
+        amount,
         currency: 'ZAR',
         fund: giveType,
-        method: paymentMethod,
+        method: 'bank',
       });
       setReference(response.data?.reference ?? '');
       setGiveSuccess(true);
@@ -195,14 +216,14 @@ export const GivePage: React.FC<GivePageProps> = ({ onNavigateHome }) => {
           {/* Right Column: Instant Online Giving Gateway */}
           <div className="lg:col-span-6 bg-slate-900 border border-slate-800 rounded-3xl p-6 sm:p-8 space-y-6 shadow-2xl">
             <div className="space-y-1">
-              <span className="text-xs font-mono font-bold text-blue-400 uppercase tracking-wider">
-                Giving Pledge
+              <span className="text-xs font-mono font-bold text-amber-400 uppercase tracking-wider">
+                Secure Online Giving
               </span>
               <h2 className="text-2xl font-extrabold text-white">
                 Partner With RCI
               </h2>
               <p className="text-xs text-slate-400">
-                Record your pledge here, then complete payment by EFT or in the RCI app. No card details are collected on this site.
+                Give securely by card with Yoco. Card details are entered on Yoco&apos;s protected page — never on this website — and you return to RCI for your receipt. Bank EFT is also available.
               </p>
             </div>
 
@@ -305,6 +326,16 @@ export const GivePage: React.FC<GivePageProps> = ({ onNavigateHome }) => {
                   <div className="grid grid-cols-2 gap-2">
                     <button
                       type="button"
+                      onClick={() => setPaymentMethod('online')}
+                      className={`p-2.5 rounded-xl border flex items-center justify-center gap-2 font-bold cursor-pointer ${
+                        paymentMethod === 'online' ? 'bg-amber-400/15 border-amber-400 text-white' : 'bg-slate-950 border-slate-800 text-slate-400'
+                      }`}
+                    >
+                      <CreditCard className="w-4 h-4" />
+                      <span>Pay with Yoco</span>
+                    </button>
+                    <button
+                      type="button"
                       onClick={() => setPaymentMethod('bank')}
                       className={`p-2.5 rounded-xl border flex items-center justify-center gap-2 font-bold cursor-pointer ${
                         paymentMethod === 'bank' ? 'bg-slate-800 border-blue-500 text-white' : 'bg-slate-950 border-slate-800 text-slate-400'
@@ -313,17 +344,12 @@ export const GivePage: React.FC<GivePageProps> = ({ onNavigateHome }) => {
                       <Building2 className="w-4 h-4" />
                       <span>Bank EFT</span>
                     </button>
-                    <button
-                      type="button"
-                      onClick={() => setPaymentMethod('online')}
-                      className={`p-2.5 rounded-xl border flex items-center justify-center gap-2 font-bold cursor-pointer ${
-                        paymentMethod === 'online' ? 'bg-slate-800 border-blue-500 text-white' : 'bg-slate-950 border-slate-800 text-slate-400'
-                      }`}
-                    >
-                      <CreditCard className="w-4 h-4" />
-                      <span>RCI App / Digital</span>
-                    </button>
                   </div>
+                  <p className="mt-2 text-[11px] text-slate-500">
+                    {paymentMethod === 'online'
+                      ? 'You will review your gift on an RCI-branded checkout page, then complete payment securely on Yoco.'
+                      : 'A pledge is recorded here; transfer the amount using the bank details shown on the left.'}
+                  </p>
                 </div>
 
                 {error && (
@@ -336,7 +362,13 @@ export const GivePage: React.FC<GivePageProps> = ({ onNavigateHome }) => {
                   className="w-full py-3.5 bg-amber-400 hover:bg-amber-300 text-slate-950 font-black rounded-xl text-xs sm:text-sm shadow-lg shadow-amber-400/20 flex items-center justify-center gap-2 cursor-pointer transition-all disabled:opacity-60"
                 >
                   <Heart className="w-4 h-4 fill-slate-950" />
-                  <span>{submitting ? 'Recording…' : `Record R ${currentAmount} pledge to ${giveType}`}</span>
+                  <span>
+                    {submitting
+                      ? 'Preparing secure checkout…'
+                      : paymentMethod === 'online'
+                        ? `Give R ${currentAmount} securely with Yoco`
+                        : `Record R ${currentAmount} pledge to ${giveType}`}
+                  </span>
                 </button>
               </form>
             )}
@@ -354,6 +386,10 @@ export const GivePage: React.FC<GivePageProps> = ({ onNavigateHome }) => {
           </button>
         </div>
       </div>
+
+      {checkout && (
+        <CheckoutHandoffModal checkout={checkout} onClose={() => setCheckout(null)} />
+      )}
     </div>
   );
 };

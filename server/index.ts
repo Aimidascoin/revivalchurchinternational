@@ -6,13 +6,27 @@ import helmet from 'helmet';
 import { config } from './config';
 import { apiRouter } from './routes';
 
+export type RawBodyRequest = Request & { rawBody?: string };
+
 export function createApp() {
   const app = express();
 
   app.disable('x-powered-by');
   app.use(helmet({ crossOriginResourcePolicy: false }));
-  app.use(cors({ origin: config.isProduction ? false : true }));
-  app.use(express.json({ limit: '128kb' }));
+  app.use(
+    cors({
+      origin: config.allowedOrigins.includes('*') ? true : config.allowedOrigins,
+    }),
+  );
+  // Keep the untouched body so webhook HMAC verification can use it.
+  app.use(
+    express.json({
+      limit: '128kb',
+      verify: (req, _res, buffer) => {
+        (req as RawBodyRequest).rawBody = buffer.toString('utf8');
+      },
+    }),
+  );
 
   app.use(config.apiPrefix, apiRouter);
   app.use(config.apiPrefix, (_req, res) => {
@@ -36,7 +50,9 @@ export function createApp() {
   return app;
 }
 
-if (!config.isTest) {
+// On Vercel the exported app is invoked by the serverless runtime; do not
+// open a local listener there.
+if (!config.isTest && process.env.VERCEL !== '1') {
   const app = createApp();
   app.listen(config.port, '0.0.0.0', () => {
     console.log(`[rci-api] listening on http://localhost:${config.port}${config.apiPrefix}`);
