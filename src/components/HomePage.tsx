@@ -302,10 +302,10 @@ export const HomePage: React.FC<HomePageProps> = ({
           </div>
         </div>
 
-        <div className="space-y-6">
+        <div className="mx-auto max-w-5xl space-y-5">
           {/* Bento Row 1: Wide Panorama + Feature Tile */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
-            <figure className="lg:col-span-7 relative aspect-[16/9] lg:aspect-auto lg:h-[400px] rounded-3xl overflow-hidden border border-white/10 bg-slate-950 shadow-2xl group">
+            <figure className="lg:col-span-7 relative aspect-[16/9] lg:aspect-auto lg:h-[300px] rounded-3xl overflow-hidden border border-white/10 bg-slate-950 shadow-2xl group">
               <img
                 src="assets/aistudio/17jpg_cf5cc1f1.jpg"
                 alt="Congregation gathered inside the main sanctuary facing the altar"
@@ -322,7 +322,7 @@ export const HomePage: React.FC<HomePageProps> = ({
               </figcaption>
             </figure>
 
-            <figure className="lg:col-span-5 relative aspect-[3/2] lg:aspect-auto lg:h-[400px] rounded-3xl overflow-hidden border border-white/10 bg-slate-950 shadow-2xl group">
+            <figure className="lg:col-span-5 relative aspect-[3/2] lg:aspect-auto lg:h-[300px] rounded-3xl overflow-hidden border border-white/10 bg-slate-950 shadow-2xl group">
               <img
                 src="assets/aistudio/21_eb16dab7.jpg"
                 alt="Joyful church members applauding and celebrating during worship"
@@ -342,7 +342,7 @@ export const HomePage: React.FC<HomePageProps> = ({
 
           {/* Bento Row 2: Two Balanced Feature Frames */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <figure className="relative aspect-[16/10] rounded-3xl overflow-hidden border border-white/10 bg-slate-950 shadow-2xl group">
+            <figure className="relative aspect-[16/9] rounded-3xl overflow-hidden border border-white/10 bg-slate-950 shadow-2xl group">
               <img
                 src="assets/aistudio/13_658df435.jpg"
                 alt="Elders and youth seated side by side listening attentively to the Word"
@@ -359,7 +359,7 @@ export const HomePage: React.FC<HomePageProps> = ({
               </figcaption>
             </figure>
 
-            <figure className="relative aspect-[16/10] rounded-3xl overflow-hidden border border-white/10 bg-slate-950 shadow-2xl group">
+            <figure className="relative aspect-[16/9] rounded-3xl overflow-hidden border border-white/10 bg-slate-950 shadow-2xl group">
               <img
                 src="assets/aistudio/15_5dd492fb.jpg"
                 alt="Church family attentively taking notes during a prophetic teaching"

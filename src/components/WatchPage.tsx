@@ -15,7 +15,7 @@ import {
 } from 'lucide-react';
 import { api, errorMessage, type LiveChatMessage } from '../lib/api';
 import { LiveStreamPlayer } from './LiveStreamPlayer';
-import { useLiveStatus, watchUrl } from '../lib/liveStream';
+import { useLiveStatus } from '../lib/liveStream';
 
 interface WatchPageProps {
   onNavigateHome: () => void;
@@ -242,7 +242,7 @@ export const WatchPage: React.FC<WatchPageProps> = ({
                 <span
                   className={`w-2 h-2 rounded-full ${liveStatus.isLive ? 'bg-red-500' : 'bg-slate-500'}`}
                 />
-                {liveStatus.isLive ? 'LIVE NOW' : 'OFFLINE · NEXT SERVICE SOON'}
+                {liveStatus.isLive ? 'LIVE NOW' : 'OFFLINE'}
               </span>
               {liveStatus.isLive && liveStatus.viewers !== null && (
                 <span className="text-xs text-slate-400 font-mono">
@@ -322,17 +322,6 @@ export const WatchPage: React.FC<WatchPageProps> = ({
 
               <div className="text-xs text-slate-400 space-y-1 sm:text-right shrink-0">
                 <div>Broadcast Times: <strong className="text-amber-400">{LIVE_STREAM.schedule}</strong></div>
-                <div>
-                  Watch archive:{' '}
-                  <a
-                    href={watchUrl}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="text-blue-400 hover:text-blue-300 font-semibold"
-                  >
-                    RCI on YouTube
-                  </a>
-                </div>
               </div>
             </div>
           </div>

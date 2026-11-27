@@ -9,6 +9,8 @@ import {
   Play,
   Home,
 } from 'lucide-react';
+import { LiveIndicator } from './LiveIndicator';
+import { useLiveStatus } from '../lib/liveStream';
 
 export type AppPage = 'home' | 'connect' | 'membership' | 'watch' | 'care' | 'ministries' | 'campuses' | 'give';
 
@@ -34,6 +36,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   const [isScrolled, setIsScrolled] = useState(false);
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const navRef = useRef<HTMLDivElement>(null);
+  const liveStatus = useLiveStatus();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -73,13 +76,27 @@ export const Navbar: React.FC<NavbarProps> = ({
       <div className="bg-gradient-to-r from-blue-900 via-indigo-900 to-slate-950 text-xs py-1.5 px-3 sm:px-4 border-b border-white/10 w-full overflow-hidden">
         <div className="max-w-7xl mx-auto flex items-center justify-between gap-2">
           <div className="flex items-center gap-2 min-w-0 truncate">
-            <span className="inline-block w-2 h-2 rounded-full bg-emerald-400 animate-pulse shrink-0" />
-            <button
-              onClick={onOpenLive}
-              className="text-slate-200 hover:text-white font-medium truncate text-[11px] sm:text-xs cursor-pointer text-left"
-            >
+            {liveStatus.isLive && !liveStatus.loading ? (
+              <>
+                <LiveIndicator label="LIVE" className="shrink-0" />
+                <button
+                  onClick={onOpenLive}
+                  className="text-emerald-200 hover:text-emerald-100 font-semibold truncate text-[11px] sm:text-xs cursor-pointer text-left"
+                >
+                  The service is streaming right now — tap to watch
+                </button>
+              </>
+            ) : (
+              <>
+                <span className="inline-block w-2 h-2 rounded-full bg-emerald-400/70 shrink-0" />
+                <button
+                  onClick={onOpenLive}
+                  className="text-slate-200 hover:text-white font-medium truncate text-[11px] sm:text-xs cursor-pointer text-left"
+                >
               Live Broadcast: Sunday 10:00 AM &amp; 17:00 PM CAT · Watch Live
-            </button>
+                </button>
+              </>
+            )}
           </div>
           <div className="flex items-center gap-2 sm:gap-3 text-slate-300 shrink-0">
             <button

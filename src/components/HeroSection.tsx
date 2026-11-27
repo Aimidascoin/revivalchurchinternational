@@ -1,5 +1,6 @@
 import React from 'react';
 import { Play, Calendar, ChevronRight, Sparkles } from 'lucide-react';
+import { LiveIndicator } from './LiveIndicator';
 
 interface HeroSectionProps {
   onOpenLive: () => void;
@@ -43,7 +44,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             <div className="absolute bottom-5 left-6 right-6 flex flex-col sm:flex-row sm:items-end justify-between gap-2">
               <div>
                 <div className="text-xs font-medium text-yellow-300 tracking-wide">
-                  Revival Altar · Sandton HQ &amp; Global Campuses
+                  Revival Church International
                 </div>
                 <div className="text-lg sm:text-2xl font-bold text-white mt-0.5 leading-snug">
                   Where the Word Works &amp; Lives Are Transformed
@@ -62,10 +63,10 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                 The Soil of Solutions.
               </h2>
               <p className="text-sm sm:text-base text-slate-200 leading-relaxed">
-                The place where your story changes, where the Word works and where you{' '}
-                <span className="font-bold text-white">ALWAYS</span> come back with a testimony.
-                This is not just a church but truly a family that loves and cares for each other.
-                We serve God’s people with excellence and compassion.
+                Where your story changes, the Word works, and every life comes{' '}
+                <span className="font-bold text-white">back with a testimony</span>. More than a
+                church — we are a family that loves, carries and cares for one another, serving
+                with excellence, compassion and the power of the Holy Spirit.
               </p>
             </div>
 
@@ -87,6 +88,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                   className="px-4 py-3 text-xs sm:text-sm font-semibold text-slate-100 bg-slate-950/90 hover:bg-slate-800 border border-slate-700/80 rounded-xl transition-all flex items-center justify-center gap-2 cursor-pointer whitespace-nowrap"
                 >
                   <Play className="w-4 h-4 text-red-500 fill-red-500 shrink-0" />
+                  <LiveIndicator label="" />
                   <span>Watch Live Online</span>
                 </button>
 

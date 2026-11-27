@@ -147,7 +147,7 @@ export const LiveStreamModal: React.FC<LiveStreamModalProps> = ({
                   liveStatus.isLive ? 'bg-red-500 animate-pulse' : 'bg-slate-500'
                 }`}
               />
-              <span>{liveStatus.isLive ? 'Live Broadcast' : 'Between Services'}</span>
+              <span>{liveStatus.isLive ? 'Live Broadcast' : 'Offline'}</span>
             </span>
             <div className="hidden sm:block">
               <h3 className="text-sm font-bold text-white">Sunday Global Encounter Service</h3>
@@ -175,7 +175,7 @@ export const LiveStreamModal: React.FC<LiveStreamModalProps> = ({
         <div className="flex-1 grid grid-cols-1 lg:grid-cols-12 overflow-hidden min-h-[480px]">
           {/* Main Video Viewport (8 Cols) */}
           <div className="lg:col-span-8 bg-slate-950 flex flex-col justify-between relative group">
-            {/* Real YouTube Live embed (offline state between services) */}
+            {/* RCI-branded live player (reads OFFLINE while the stream is down) */}
             <div className="w-full h-full min-h-[300px] flex items-center justify-center overflow-hidden p-2 sm:p-3">
               <LiveStreamPlayer className="max-h-[52vh] lg:max-h-none rounded-xl" />
             </div>

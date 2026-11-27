@@ -127,8 +127,8 @@ export const ConnectPage: React.FC<ConnectPageProps> = ({
           </div>
 
           <div className="rounded-3xl border border-slate-800 bg-slate-950 p-6 shadow-2xl sm:p-8">
-            <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
-              <div className="max-w-3xl space-y-2">
+            <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:gap-8">
+              <div className="flex-1 space-y-3">
                 <span className="text-xs font-mono font-bold tracking-wider uppercase text-amber-400">
                   SENIOR LEADERS
                 </span>
@@ -141,18 +141,17 @@ export const ConnectPage: React.FC<ConnectPageProps> = ({
                 <p className="text-sm leading-relaxed text-slate-300">
                   Together, Prophet Herbert &amp; Pastor Shelma Mulondo carry a prophetic mandate of healing, sound Word, and unconditional family love — raising believers who walk in supernatural testimony across South Africa and the nations.
                 </p>
+                <button
+                  type="button"
+                  onClick={onOpenVisit}
+                  className="inline-flex shrink-0 items-center gap-2 rounded-xl bg-blue-600 px-5 py-2.5 text-xs font-bold text-white transition-colors hover:bg-blue-500"
+                >
+                  Connect With Our Leaders
+                  <ArrowRight className="h-4 w-4" />
+                </button>
               </div>
-              <button
-                type="button"
-                onClick={onOpenVisit}
-                className="inline-flex shrink-0 items-center gap-2 rounded-xl bg-blue-600 px-5 py-2.5 text-xs font-bold text-white transition-colors hover:bg-blue-500"
-              >
-                Connect With Our Leaders
-                <ArrowRight className="h-4 w-4" />
-              </button>
-            </div>
 
-            <figure className="mx-auto mt-6 w-full max-w-xl overflow-hidden rounded-2xl border border-white/15 bg-slate-950 shadow-xl">
+              <figure className="w-full shrink-0 overflow-hidden rounded-2xl border border-white/15 bg-slate-950 shadow-xl lg:w-[45%]">
               <div className="relative aspect-[3/2] w-full">
                 <img
                   src="assets/aistudio/leaders_HD.jpg"
@@ -169,7 +168,8 @@ export const ConnectPage: React.FC<ConnectPageProps> = ({
                   </div>
                 </figcaption>
               </div>
-            </figure>
+              </figure>
+            </div>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
