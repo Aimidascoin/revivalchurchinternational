@@ -54,7 +54,7 @@ export const GivePage: React.FC<GivePageProps> = ({ onNavigateHome }) => {
       toast(message, 'error');
       return;
     }
-    if (!/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(donorEmail.trim())) {
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(donorEmail.trim())) {
       const message = 'Please enter a valid email for your receipt.';
       setError(message);
       toast(message, 'error');

@@ -120,7 +120,7 @@ export const GivingModal: React.FC<GivingModalProps> = ({ isOpen, onClose }) => 
       setError('Please enter your full name.');
       return;
     }
-    if (!/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(email.trim())) {
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())) {
       setError('Please enter a valid email for your receipt.');
       return;
     }
