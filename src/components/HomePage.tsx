@@ -203,7 +203,73 @@ export const HomePage: React.FC<HomePageProps> = ({
         </div>
       </section>
 
-      {/* 3. Asymmetric Editorial Bento Showcase: Worship, Word & Covenant Family (4 Remaining HD Images) */}
+      {/* 3. Senior Leaders Showcase */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="rounded-3xl border border-slate-800 bg-black p-6 shadow-2xl sm:p-8">
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+            <div className="max-w-3xl space-y-2">
+              <span className="text-xs font-mono font-bold tracking-wider uppercase text-amber-400">
+                SENIOR LEADERS
+              </span>
+              <h2 className="text-2xl font-black tracking-tight text-white sm:text-3xl">
+                Meet our Senior Leaders
+              </h2>
+              <p className="text-sm font-semibold text-blue-300">
+                Led by Prophet Herbert &amp; Pastor Shelma Mulondo
+              </p>
+              <p className="text-sm leading-relaxed text-slate-300">
+                Together, Prophet Herbert &amp; Pastor Shelma Mulondo carry a prophetic mandate of healing, sound Word, and unconditional family love — raising believers who walk in supernatural testimony across South Africa and the nations.
+              </p>
+            </div>
+            <button
+              type="button"
+              onClick={() => onNavigate('connect')}
+              className="inline-flex shrink-0 items-center gap-2 rounded-xl bg-blue-600 px-5 py-2.5 text-xs font-bold text-white transition-colors hover:bg-blue-500"
+            >
+              Connect With Our Leaders
+              <ArrowRight className="h-4 w-4" />
+            </button>
+          </div>
+
+          <div className="mt-6 grid max-w-md grid-cols-2 gap-4 sm:gap-5">
+            <figure className="relative aspect-[3/4] overflow-hidden rounded-2xl border border-white/15 bg-black shadow-xl">
+              <img
+                src="assets/aistudio/image_2_6cfe55f4.jfif"
+                alt="Prophet Herbert Mulondo preaching at Revival Church International"
+                referrerPolicy="no-referrer"
+                className="h-full w-full object-cover object-[46%_top]"
+              />
+              <figcaption className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black via-black/70 to-transparent px-3 pb-3 pt-8">
+                <div className="text-[10px] font-mono font-bold uppercase tracking-wider text-amber-300">
+                  Senior Leader · Founder
+                </div>
+                <div className="text-sm font-bold text-white sm:text-base">
+                  Prophet Herbert Mulondo
+                </div>
+              </figcaption>
+            </figure>
+
+            <figure className="relative aspect-[3/4] overflow-hidden rounded-2xl border border-white/15 bg-black shadow-xl">
+              <img
+                src="assets/aistudio/image3_1d7e9e76.jfif"
+                alt="Pastor Shelma Mulondo ministering at Revival Church International"
+                referrerPolicy="no-referrer"
+                className="h-full w-full object-cover object-[28%_top]"
+              />
+              <figcaption className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black via-black/70 to-transparent px-3 pb-3 pt-8">
+                <div className="text-[10px] font-mono font-bold uppercase tracking-wider text-blue-300">
+                  Senior Leader · Co-Founder
+                </div>
+                <div className="text-sm font-bold text-white sm:text-base">
+                  Pastor Shelma Mulondo
+                </div>
+              </figcaption>
+            </figure>
+          </div>
+        </div>
+      </section>
+
+      {/* 4. Asymmetric Editorial Bento Showcase: Worship, Word & Covenant Family (4 Remaining HD Images) */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-4">
           <div className="max-w-2xl">
