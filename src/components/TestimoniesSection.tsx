@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Quote, Sparkles, Check, Send } from 'lucide-react';
+import { Quote, Sparkles, Check, Send, Play } from 'lucide-react';
 import { useContent } from '../context/ContentContext';
 import { api, errorMessage } from '../lib/api';
 import { useToast } from './Toast';
@@ -71,6 +71,47 @@ export const TestimoniesSection: React.FC = () => {
             <span>Share What God Has Done</span>
           </button>
         </div>
+
+        {content.videoTestimonies.length > 0 && (
+          <div className="mb-10">
+            <div className="mb-4 flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-blue-400">
+              <Play className="h-4 w-4" />
+              Video Testimonies
+            </div>
+            <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+              {content.videoTestimonies.map((video) => (
+                <div
+                  key={video.id}
+                  className="overflow-hidden rounded-2xl border border-slate-800 bg-slate-900/60 shadow-md"
+                >
+                  <div className="aspect-video">
+                    <iframe
+                      className="h-full w-full"
+                      src={`https://www.youtube-nocookie.com/embed/${video.youtubeId}`}
+                      title={video.title}
+                      loading="lazy"
+                      referrerPolicy="strict-origin-when-cross-origin"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                      allowFullScreen
+                    />
+                  </div>
+                  <div className="flex flex-wrap items-center justify-between gap-3 px-4 py-3">
+                    <div className="text-sm font-bold text-white">{video.title}</div>
+                    <a
+                      href={`https://youtu.be/${video.youtubeId}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1.5 text-xs font-bold text-blue-300 hover:text-blue-200"
+                    >
+                      <Play className="h-3.5 w-3.5" />
+                      Watch on YouTube
+                    </a>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
 
         {/* Testimonies Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">

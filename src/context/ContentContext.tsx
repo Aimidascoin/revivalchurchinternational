@@ -20,7 +20,7 @@ export const ContentProvider: React.FC<{ children: React.ReactNode }> = ({ child
     api.site()
       .then((response) => {
         if (active && response.data) {
-          setContent(response.data);
+          setContent({ ...localSiteContent, ...response.data });
           setSource('api');
         }
       })

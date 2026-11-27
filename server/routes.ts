@@ -9,6 +9,7 @@ import {
   STATEMENT_OF_FAITH,
   TESTIMONIES,
   UPCOMING_EVENTS,
+  VIDEO_TESTIMONIES,
 } from '../src/data/churchData';
 import { rateLimit } from './rateLimit';
 import { count, create, list } from './store';
@@ -33,6 +34,7 @@ const siteContent = {
   sermons: SERMONS,
   events: UPCOMING_EVENTS,
   testimonies: TESTIMONIES,
+  videoTestimonies: VIDEO_TESTIMONIES,
   statementOfFaith: STATEMENT_OF_FAITH,
   bankingDetails: BANKING_DETAILS,
 };
@@ -44,6 +46,7 @@ const contentByKey: Record<string, unknown> = {
   sermons: SERMONS,
   events: UPCOMING_EVENTS,
   testimonies: TESTIMONIES,
+  'video-testimonies': VIDEO_TESTIMONIES,
   'statement-of-faith': STATEMENT_OF_FAITH,
   'banking-details': BANKING_DETAILS,
 };

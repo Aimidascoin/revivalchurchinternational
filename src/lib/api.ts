@@ -7,6 +7,7 @@ import {
   STATEMENT_OF_FAITH,
   TESTIMONIES,
   UPCOMING_EVENTS,
+  VIDEO_TESTIMONIES,
   type Campus,
   type Ministry,
   type Sermon,
@@ -19,6 +20,7 @@ export interface SiteContent {
   pathway: typeof PATHWAY_STEPS;
   events: typeof UPCOMING_EVENTS;
   testimonies: typeof TESTIMONIES;
+  videoTestimonies: typeof VIDEO_TESTIMONIES;
   statementOfFaith: typeof STATEMENT_OF_FAITH;
   bankingDetails: typeof BANKING_DETAILS;
 }
@@ -30,6 +32,7 @@ export const localSiteContent: SiteContent = {
   pathway: PATHWAY_STEPS,
   events: UPCOMING_EVENTS,
   testimonies: TESTIMONIES,
+  videoTestimonies: VIDEO_TESTIMONIES,
   statementOfFaith: STATEMENT_OF_FAITH,
   bankingDetails: BANKING_DETAILS,
 };

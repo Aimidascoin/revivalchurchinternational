@@ -62,6 +62,12 @@ export interface Testimony {
   category: 'Healing' | 'Breakthrough' | 'Salvation' | 'Family';
 }
 
+export interface VideoTestimony {
+  id: string;
+  title: string;
+  youtubeId: string;
+}
+
 export const CAMPUSES: Campus[] = [
   {
     id: 'sandton-hq',
@@ -411,6 +417,14 @@ export const SERMONS: Sermon[] = [
 ];
 
 export const UPCOMING_EVENTS: EventItem[] = [];
+
+export const VIDEO_TESTIMONIES: VideoTestimony[] = [
+  {
+    id: 'video-new-job-24-hours',
+    title: 'A New Job Within 24 Hours',
+    youtubeId: 'sBoMSnuaFWg',
+  },
+];
 
 export const TESTIMONIES: Testimony[] = [
   {
