@@ -312,7 +312,7 @@ export const HomePage: React.FC<HomePageProps> = ({
                 referrerPolicy="no-referrer"
                 className="w-full h-full object-cover object-center group-hover:scale-[1.03] transition-transform duration-700"
               />
-              <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-black/90 via-black/45 to-transparent pointer-events-none" />
+              <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-slate-950/90 via-slate-950/45 to-transparent pointer-events-none" />
               <figcaption className="absolute bottom-5 left-6 right-6">
                 <div className="text-xs font-medium text-blue-300">Sunday Assembly · Sanctuary</div>
                 <div className="text-xl font-bold text-white mt-0.5">Gathered in His Presence</div>
@@ -329,7 +329,7 @@ export const HomePage: React.FC<HomePageProps> = ({
                 referrerPolicy="no-referrer"
                 className="w-full h-full object-cover object-[center_20%] group-hover:scale-[1.03] transition-transform duration-700"
               />
-              <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-black/90 via-black/45 to-transparent pointer-events-none" />
+              <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-slate-950/90 via-slate-950/45 to-transparent pointer-events-none" />
               <figcaption className="absolute bottom-5 left-6 right-6">
                 <div className="text-xs font-medium text-yellow-300">Praise &amp; Fellowship</div>
                 <div className="text-xl font-bold text-white mt-0.5">Joy &amp; Celebration</div>
@@ -349,7 +349,7 @@ export const HomePage: React.FC<HomePageProps> = ({
                 referrerPolicy="no-referrer"
                 className="w-full h-full object-cover object-[center_20%] group-hover:scale-[1.03] transition-transform duration-700"
               />
-              <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-black/90 via-black/45 to-transparent pointer-events-none" />
+              <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-slate-950/90 via-slate-950/45 to-transparent pointer-events-none" />
               <figcaption className="absolute bottom-5 left-6 right-6">
                 <div className="text-xs font-medium text-blue-300">Multi-Generational Family</div>
                 <div className="text-xl font-bold text-white mt-0.5">Every Generation Together</div>
@@ -366,7 +366,7 @@ export const HomePage: React.FC<HomePageProps> = ({
                 referrerPolicy="no-referrer"
                 className="w-full h-full object-cover object-[center_20%] group-hover:scale-[1.03] transition-transform duration-700"
               />
-              <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-black/90 via-black/45 to-transparent pointer-events-none" />
+              <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-slate-950/90 via-slate-950/45 to-transparent pointer-events-none" />
               <figcaption className="absolute bottom-5 left-6 right-6">
                 <div className="text-xs font-medium text-yellow-300">Discipleship &amp; Truth</div>
                 <div className="text-xl font-bold text-white mt-0.5">Hungry for the Word</div>

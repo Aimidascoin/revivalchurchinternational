@@ -191,7 +191,7 @@ export const Footer: React.FC<FooterProps> = ({
       </div>
 
       {panel && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4 backdrop-blur-sm">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/80 p-4 backdrop-blur-sm">
           <div className="w-full max-w-lg rounded-2xl border border-slate-800 bg-slate-950 p-6 shadow-2xl sm:p-8">
             <div className="mb-4 flex items-start justify-between gap-4 border-b border-slate-800 pb-4">
               <h3 className="text-lg font-bold text-white">{panels[panel].title}</h3>

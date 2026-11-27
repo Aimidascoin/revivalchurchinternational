@@ -126,7 +126,7 @@ export const ConnectPage: React.FC<ConnectPageProps> = ({
             </p>
           </div>
 
-          <div className="rounded-3xl border border-slate-800 bg-black p-6 shadow-2xl sm:p-8">
+          <div className="rounded-3xl border border-slate-800 bg-slate-950 p-6 shadow-2xl sm:p-8">
             <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
               <div className="max-w-3xl space-y-2">
                 <span className="text-xs font-mono font-bold tracking-wider uppercase text-amber-400">

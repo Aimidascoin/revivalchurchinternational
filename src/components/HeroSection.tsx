@@ -32,14 +32,14 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
         {/* Below Headline: Balanced 2-Column Focal Image + Declaration Split */}
         <div className="mt-9 sm:mt-11 grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-stretch">
           {/* Dominant HD Hero Visual (Image 1) */}
-          <div className="lg:col-span-7 relative rounded-3xl overflow-hidden border border-white/15 bg-black shadow-2xl min-h-[280px] sm:min-h-[380px] lg:min-h-[430px] group">
+          <div className="lg:col-span-7 relative rounded-3xl overflow-hidden border border-white/15 bg-slate-950 shadow-2xl min-h-[280px] sm:min-h-[380px] lg:min-h-[430px] group">
             <img
               src="assets/aistudio/image1_e0e6cad4.jfif"
               alt="Prophet Herbert Mulondo ministering at Revival Church International"
               referrerPolicy="no-referrer"
               className="w-full h-full object-cover object-[center_18%] group-hover:scale-[1.02] transition-transform duration-700"
             />
-            <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-black/95 via-black/55 to-transparent pointer-events-none" />
+            <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-slate-950/95 via-slate-950/55 to-transparent pointer-events-none" />
             <div className="absolute bottom-5 left-6 right-6 flex flex-col sm:flex-row sm:items-end justify-between gap-2">
               <div>
                 <div className="text-xs font-medium text-yellow-300 tracking-wide">

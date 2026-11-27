@@ -60,7 +60,7 @@ export const LiveStreamModal: React.FC<LiveStreamModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/90 backdrop-blur-md animate-in fade-in duration-200">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-slate-950/90 backdrop-blur-md animate-in fade-in duration-200">
       <div className="bg-slate-950 border border-slate-800 rounded-3xl w-full max-w-6xl max-h-[96vh] flex flex-col overflow-hidden shadow-2xl relative text-slate-100">
         {/* Stream Top Bar */}
         <div className="flex items-center justify-between px-4 sm:px-6 py-3 border-b border-slate-800 bg-slate-900/60">
@@ -92,7 +92,7 @@ export const LiveStreamModal: React.FC<LiveStreamModalProps> = ({
         {/* Video Player + Interactive Sidebar Split */}
         <div className="flex-1 grid grid-cols-1 lg:grid-cols-12 overflow-hidden min-h-[480px]">
           {/* Main Video Viewport (8 Cols) */}
-          <div className="lg:col-span-8 bg-black flex flex-col justify-between relative group">
+          <div className="lg:col-span-8 bg-slate-950 flex flex-col justify-between relative group">
             {/* Simulated Live Stream Feed */}
             <div className="relative w-full h-full min-h-[300px] flex items-center justify-center overflow-hidden">
               <img
@@ -101,7 +101,7 @@ export const LiveStreamModal: React.FC<LiveStreamModalProps> = ({
                 referrerPolicy="no-referrer"
                 className="w-full h-full object-cover filter brightness-75"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/30" />
+              <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-slate-950/30" />
 
               {/* Center Watermark & Status */}
               <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none p-6 text-center">

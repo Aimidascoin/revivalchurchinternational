@@ -212,14 +212,14 @@ export const WatchPage: React.FC<WatchPageProps> = ({
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
           {/* Main Video Stream Frame */}
           <div className="lg:col-span-8 flex flex-col bg-slate-900 border border-slate-800 rounded-3xl overflow-hidden shadow-2xl">
-            <div className="relative aspect-video bg-black flex items-center justify-center overflow-hidden">
+            <div className="relative aspect-video bg-slate-950 flex items-center justify-center overflow-hidden">
               <img
                 src={heroImg}
                 alt="RCI Global Broadcast stream worship gathering"
                 referrerPolicy="no-referrer"
                 className="w-full h-full object-cover brightness-75"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/40" />
+              <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-slate-950/40" />
 
               {/* Center Play Overlay */}
               <button
@@ -231,10 +231,10 @@ export const WatchPage: React.FC<WatchPageProps> = ({
 
               {/* Top Stream Overlay */}
               <div className="absolute top-4 left-4 right-4 flex items-center justify-between text-xs text-white z-10">
-                <span className="px-2.5 py-1 rounded bg-black/60 backdrop-blur-md font-mono text-[11px] font-bold border border-white/10">
+                <span className="px-2.5 py-1 rounded bg-slate-950/60 backdrop-blur-md font-mono text-[11px] font-bold border border-white/10">
                   🔴 LIVE 2160p (4K UHD)
                 </span>
-                <span className="px-2.5 py-1 rounded bg-black/60 backdrop-blur-md font-mono text-[11px] font-bold border border-white/10 flex items-center gap-1.5">
+                <span className="px-2.5 py-1 rounded bg-slate-950/60 backdrop-blur-md font-mono text-[11px] font-bold border border-white/10 flex items-center gap-1.5">
                   <Radio className="w-3.5 h-3.5 text-red-500 animate-pulse" />
                   Satellite Altar 01
                 </span>
@@ -242,7 +242,7 @@ export const WatchPage: React.FC<WatchPageProps> = ({
 
               {/* Bottom Player Controls */}
               <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between z-10 text-xs text-white">
-                <div className="flex items-center gap-3 bg-black/60 backdrop-blur-md px-3 py-1.5 rounded-xl border border-white/10">
+                <div className="flex items-center gap-3 bg-slate-950/60 backdrop-blur-md px-3 py-1.5 rounded-xl border border-white/10">
                   <button onClick={() => setIsMuted(!isMuted)} className="hover:text-blue-400 cursor-pointer">
                     {isMuted ? <VolumeX className="w-4 h-4 text-red-400" /> : <Volume2 className="w-4 h-4" />}
                   </button>
