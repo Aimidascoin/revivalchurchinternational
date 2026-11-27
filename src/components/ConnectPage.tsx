@@ -130,7 +130,7 @@ export const ConnectPage: React.FC<ConnectPageProps> = ({
               <div className="lg:col-span-6">
                 <div className="rounded-2xl overflow-hidden border border-slate-700/80 aspect-[3/2] bg-slate-950 relative shadow-2xl">
                   <img
-                    src="/assets/aistudio/_DSC0321_104091fc.JPG"
+                    src="assets/aistudio/_DSC0321_104091fc.JPG"
                     alt="Prophet Herbert & Pastor Shelma Mulondo"
                     referrerPolicy="no-referrer"
                     className="w-full h-full object-cover object-top brightness-[1.04] contrast-[1.06] saturate-[1.05]"

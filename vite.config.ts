@@ -22,6 +22,9 @@ const jfifMimePlugin = () => ({
 });
 
 export default defineConfig(() => ({
+  // Vite injects this into built JS/CSS URLs. GitHub Pages serves the site from
+  // /revivalchurchinternational/, so the workflow sets VITE_BASE_PATH accordingly.
+  base: process.env.VITE_BASE_PATH ?? '/',
   plugins: [react(), tailwindcss(), jfifMimePlugin()],
   resolve: {
     alias: {

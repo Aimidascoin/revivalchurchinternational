@@ -17,7 +17,7 @@ import {
   Share2,
 } from 'lucide-react';
 
-const heroImg = '/images/hero_revival_worship_1790800192961.jpg';
+const heroImg = 'images/hero_revival_worship_1790800192961.jpg';
 
 interface WatchPageProps {
   onNavigateHome: () => void;

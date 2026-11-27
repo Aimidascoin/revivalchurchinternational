@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Play, Pause, Send, Users, Heart, Sparkles, Volume2, VolumeX, Radio } from 'lucide-react';
 import { useContent } from '../context/ContentContext';
-const heroImg = '/images/hero_revival_worship_1790800192961.jpg';
+const heroImg = 'images/hero_revival_worship_1790800192961.jpg';
 
 interface LiveStreamModalProps {
   isOpen: boolean;

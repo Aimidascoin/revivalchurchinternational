@@ -32,6 +32,16 @@ npm start         # Express serves dist/ and the /api routes on PORT (default 30
 
 `npm test` runs the API integration tests (Node's built-in test runner + `tsx`). `npm run lint` runs a strict TypeScript check over `src/`, `server/`, and `vite.config.ts`.
 
+## GitHub Pages
+
+`.github/workflows/deploy.yml` builds and publishes the static frontend on every push to `main`. Enable **Settings → Pages → Source: GitHub Actions** in the repository. The site will be available at:
+
+**https://cashmindx.github.io/revivalchurchinternational/**
+
+The workflow sets `VITE_BASE_PATH=/revivalchurchinternational/` so bundled asset URLs use the subpath, and public images are referenced with relative paths so they work at both `/` and the Pages subpath.
+
+GitHub Pages hosts static files only. Content pages fall back to `src/data/churchData.ts`, but forms need the Express API. Deploy `server/` to a Node host and add a repository variable named `VITE_API_URL` (for example `https://rci-api.onrender.com/api`) to make submissions work on Pages. Without it, forms show an inline error.
+
 ## Environment
 
 Copy `.env.example` to `.env` and adjust if needed:
@@ -42,6 +52,7 @@ Copy `.env.example` to `.env` and adjust if needed:
 | `NODE_ENV` | `development` | `production` enables static serving and stricter CORS |
 | `DATA_DIR` | `server/data` | Directory for form submission JSON files |
 | `VITE_API_URL` | `/api` | Frontend API base URL |
+| `VITE_BASE_PATH` | `/` | Vite base path; the Pages workflow sets `/revivalchurchinternational/` |
 | `API_PROXY_TARGET` | `http://localhost:3001` | Vite dev/preview proxy target |
 | `APP_URL` | — | Public site URL (informational) |
 | `GEMINI_API_KEY` | — | Reserved for future AI features; not required to run |

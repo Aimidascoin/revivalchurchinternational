@@ -47,7 +47,7 @@ export const HomePage: React.FC<HomePageProps> = ({
       subtitle: 'About & Groups',
       desc: 'Discover our apostolic vision, meet Senior Leaders Prophet Herbert & Pastor Shelma Mulondo, and find weekly mid-week home hubs and virtual eGroups.',
       kicker: 'About & Leaders',
-      image: '/assets/aistudio/11_b3147462.jpg',
+      image: 'assets/aistudio/11_b3147462.jpg',
       imageAlt: 'Smiling members of Revival Church International gathered in covenant fellowship',
       imagePosition: 'object-[center_20%]',
       icon: Users,
@@ -59,7 +59,7 @@ export const HomePage: React.FC<HomePageProps> = ({
       subtitle: 'Next Steps & V-Team',
       desc: 'Our structured 6-step journey from first-time guest to empowered kingdom leader, including Foundations 101 and covenant induction.',
       kicker: '6-Week Roadmap',
-      image: '/assets/aistudio/6_b0df8f03.jpg',
+      image: 'assets/aistudio/6_b0df8f03.jpg',
       imageAlt: 'Believers writing sermon notes during teaching at Revival Church International',
       imagePosition: 'object-[center_25%]',
       icon: Compass,
@@ -71,7 +71,7 @@ export const HomePage: React.FC<HomePageProps> = ({
       subtitle: '4K Live Stream & Archive',
       desc: 'Join our weekly global encounter broadcasts, interact in real-time fellowship chat, and explore hundreds of anointed teachings.',
       kicker: 'Live & On-Demand',
-      image: '/assets/aistudio/502585865_1308573501273922_829689343425601845_n_514c130e.jpg',
+      image: 'assets/aistudio/502585865_1308573501273922_829689343425601845_n_514c130e.jpg',
       imageAlt: 'Prophet Herbert Mulondo ministering in the midst of the congregation',
       imagePosition: 'object-[center_20%]',
       icon: Radio,
@@ -83,7 +83,7 @@ export const HomePage: React.FC<HomePageProps> = ({
       subtitle: '24/7 Prayer Altar',
       desc: 'Submit your urgent prayer petitions before our intercessory altar, request pastoral visitation, and support Revival Hope relief.',
       kicker: 'Always Here for You',
-      image: '/assets/aistudio/14_e00e6246.jpg',
+      image: 'assets/aistudio/14_e00e6246.jpg',
       imageAlt: 'Congregation lifting hands in worship and earnest prayer',
       imagePosition: 'object-[center_25%]',
       icon: Sparkles,
@@ -95,7 +95,7 @@ export const HomePage: React.FC<HomePageProps> = ({
       subtitle: 'Men, Women, Youth & Kidz',
       desc: 'Dedicated spiritual homes tailored for Knight Men, Queen Reigning Women, Unstoppablegenr, Children Church, and Revival Worship.',
       kicker: 'All Generations',
-      image: '/assets/aistudio/10_a37bb766.jpg',
+      image: 'assets/aistudio/10_a37bb766.jpg',
       imageAlt: 'Women and young adults praising God with joyful raised hands',
       imagePosition: 'object-[center_20%]',
       icon: Flame,
@@ -107,7 +107,7 @@ export const HomePage: React.FC<HomePageProps> = ({
       subtitle: 'Physical & Digital Assemblies',
       desc: 'Locate assembly times and directions for Sandton (Johannesburg HQ), Cape Town, Ballito, London UK, and Atlanta USA, or worship online.',
       kicker: 'Global Footprint',
-      image: '/assets/aistudio/18_88f34ce9.jpg',
+      image: 'assets/aistudio/18_88f34ce9.jpg',
       imageAlt: 'Filled Revival Church International sanctuary auditorium during Sunday service',
       imagePosition: 'object-center',
       icon: MapPin,
@@ -240,7 +240,7 @@ export const HomePage: React.FC<HomePageProps> = ({
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
             <div className="relative aspect-[3/4] rounded-2xl overflow-hidden border border-white/15 shadow-2xl bg-black group">
               <img
-                src="/assets/aistudio/image_2_6cfe55f4.jfif"
+                src="assets/aistudio/image_2_6cfe55f4.jfif"
                 alt="Prophet Herbert Mulondo preaching at Revival Church International"
                 referrerPolicy="no-referrer"
                 className="w-full h-full object-cover object-[46%_top] group-hover:scale-[1.03] transition-transform duration-700"
@@ -258,7 +258,7 @@ export const HomePage: React.FC<HomePageProps> = ({
 
             <div className="relative aspect-[3/4] rounded-2xl overflow-hidden border border-white/15 shadow-2xl bg-black group">
               <img
-                src="/assets/aistudio/image3_1d7e9e76.jfif"
+                src="assets/aistudio/image3_1d7e9e76.jfif"
                 alt="Pastor Shelma Mulondo ministering at Revival Church International"
                 referrerPolicy="no-referrer"
                 className="w-full h-full object-cover object-[28%_top] group-hover:scale-[1.03] transition-transform duration-700"
@@ -315,7 +315,7 @@ export const HomePage: React.FC<HomePageProps> = ({
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
             <figure className="lg:col-span-7 relative aspect-[16/9] lg:aspect-auto lg:h-[400px] rounded-3xl overflow-hidden border border-white/10 bg-slate-950 shadow-2xl group">
               <img
-                src="/assets/aistudio/17jpg_cf5cc1f1.jpg"
+                src="assets/aistudio/17jpg_cf5cc1f1.jpg"
                 alt="Congregation gathered inside the main sanctuary facing the altar"
                 referrerPolicy="no-referrer"
                 className="w-full h-full object-cover object-center group-hover:scale-[1.03] transition-transform duration-700"
@@ -332,7 +332,7 @@ export const HomePage: React.FC<HomePageProps> = ({
 
             <figure className="lg:col-span-5 relative aspect-[3/2] lg:aspect-auto lg:h-[400px] rounded-3xl overflow-hidden border border-white/10 bg-slate-950 shadow-2xl group">
               <img
-                src="/assets/aistudio/21_eb16dab7.jpg"
+                src="assets/aistudio/21_eb16dab7.jpg"
                 alt="Joyful church members applauding and celebrating during worship"
                 referrerPolicy="no-referrer"
                 className="w-full h-full object-cover object-[center_20%] group-hover:scale-[1.03] transition-transform duration-700"
@@ -352,7 +352,7 @@ export const HomePage: React.FC<HomePageProps> = ({
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <figure className="relative aspect-[16/10] rounded-3xl overflow-hidden border border-white/10 bg-slate-950 shadow-2xl group">
               <img
-                src="/assets/aistudio/13_658df435.jpg"
+                src="assets/aistudio/13_658df435.jpg"
                 alt="Elders and youth seated side by side listening attentively to the Word"
                 referrerPolicy="no-referrer"
                 className="w-full h-full object-cover object-[center_20%] group-hover:scale-[1.03] transition-transform duration-700"
@@ -369,7 +369,7 @@ export const HomePage: React.FC<HomePageProps> = ({
 
             <figure className="relative aspect-[16/10] rounded-3xl overflow-hidden border border-white/10 bg-slate-950 shadow-2xl group">
               <img
-                src="/assets/aistudio/15_5dd492fb.jpg"
+                src="assets/aistudio/15_5dd492fb.jpg"
                 alt="Church family attentively taking notes during a prophetic teaching"
                 referrerPolicy="no-referrer"
                 className="w-full h-full object-cover object-[center_20%] group-hover:scale-[1.03] transition-transform duration-700"

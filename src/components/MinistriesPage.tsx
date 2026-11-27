@@ -13,7 +13,7 @@ import {
   Play,
 } from 'lucide-react';
 
-const youthImg = '/images/rci_youth_revival_1790800226600.jpg';
+const youthImg = 'images/rci_youth_revival_1790800226600.jpg';
 
 interface MinistriesPageProps {
   onNavigateHome: () => void;

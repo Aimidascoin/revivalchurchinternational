@@ -34,7 +34,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
           {/* Dominant HD Hero Visual (Image 1) */}
           <div className="lg:col-span-7 relative rounded-3xl overflow-hidden border border-white/15 bg-black shadow-2xl min-h-[280px] sm:min-h-[380px] lg:min-h-[430px] group">
             <img
-              src="/assets/aistudio/image1_e0e6cad4.jfif"
+              src="assets/aistudio/image1_e0e6cad4.jfif"
               alt="Prophet Herbert Mulondo ministering at Revival Church International"
               referrerPolicy="no-referrer"
               className="w-full h-full object-cover object-[center_18%] group-hover:scale-[1.02] transition-transform duration-700"
