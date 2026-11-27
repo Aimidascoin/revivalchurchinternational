@@ -38,6 +38,10 @@ jobs:
           # Set a repository variable VITE_API_URL to your deployed Express API
           # URL (for example https://rci-api.onrender.com/api) to enable forms.
           VITE_API_URL: ${{ vars.VITE_API_URL || '/api' }}
+          # YouTube broadcast id for the RCI live player (never shown as a link).
+          VITE_YOUTUBE_LIVE_ID: ${{ vars.VITE_YOUTUBE_LIVE_ID }}
+          # Optional: enables reliable live-status + viewer-count detection.
+          VITE_YOUTUBE_API_KEY: ${{ vars.VITE_YOUTUBE_API_KEY }}
         run: npm run build
 
       - name: Configure GitHub Pages
