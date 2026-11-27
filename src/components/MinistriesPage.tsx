@@ -31,7 +31,7 @@ export const MinistriesPage: React.FC<MinistriesPageProps> = ({
   const [volunteerEmail, setVolunteerEmail] = useState('');
   const [volunteerPhone, setVolunteerPhone] = useState('');
   const [volunteerMinistry, setVolunteerMinistry] = useState('Unstoppablegenr (Youth & Young adults)');
-  const [volunteerCampus, setVolunteerCampus] = useState('Johannesburg (HQ)');
+  const [volunteerCampus, setVolunteerCampus] = useState('Paarl');
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState('');
@@ -358,7 +358,7 @@ export const MinistriesPage: React.FC<MinistriesPageProps> = ({
                       onChange={(e) => setVolunteerCampus(e.target.value)}
                       className="w-full bg-slate-900 border border-slate-700/80 rounded-xl p-3 text-white focus:outline-none focus:border-blue-500"
                     >
-                      <option value="Johannesburg (HQ)">Johannesburg (Sandton HQ)</option>
+                      <option value="Paarl">Paarl (Western Cape)</option>
                       <option value="Cape Town Campus">Cape Town Campus</option>
                       <option value="Dolphin Coast (Ballito)">Dolphin Coast (Ballito)</option>
                       <option value="London UK Campus">London UK Campus</option>

@@ -30,7 +30,7 @@ export const MembershipPage: React.FC<MembershipPageProps> = ({
   const [enrollName, setEnrollName] = useState('');
   const [enrollEmail, setEnrollEmail] = useState('');
   const [enrollPhone, setEnrollPhone] = useState('');
-  const [enrollCampus, setEnrollCampus] = useState('Johannesburg (HQ)');
+  const [enrollCampus, setEnrollCampus] = useState('Paarl');
   const [enrollTrack, setEnrollTrack] = useState('Full 6-Week Discipleship Pathway');
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
@@ -313,7 +313,7 @@ export const MembershipPage: React.FC<MembershipPageProps> = ({
                       onChange={(e) => setEnrollCampus(e.target.value)}
                       className="w-full bg-slate-900 border border-slate-700/80 rounded-xl p-3 text-xs sm:text-sm text-white focus:outline-none focus:border-blue-500"
                     >
-                      <option value="Johannesburg (HQ)">Johannesburg (Sandton HQ)</option>
+                      <option value="Paarl">Paarl (Western Cape)</option>
                       <option value="Cape Town Campus">Cape Town Campus (Century City)</option>
                       <option value="Dolphin Coast (Ballito)">Dolphin Coast (Ballito)</option>
                       <option value="London UK Campus">London UK Campus (Westminster)</option>

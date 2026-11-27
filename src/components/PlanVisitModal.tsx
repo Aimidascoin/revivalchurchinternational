@@ -15,7 +15,7 @@ export const PlanVisitModal: React.FC<PlanVisitModalProps> = ({
   onClose,
   defaultCampus,
 }) => {
-  const [selectedCampus, setSelectedCampus] = useState(defaultCampus || 'Johannesburg (HQ Campus)');
+  const [selectedCampus, setSelectedCampus] = useState(defaultCampus || 'Paarl Campus');
   const [serviceDate, setServiceDate] = useState('This Sunday');
   const [serviceTime, setServiceTime] = useState('09:00 AM (Morning Encounter)');
   const [guestName, setGuestName] = useState('');

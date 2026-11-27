@@ -34,7 +34,7 @@ export const ConnectPage: React.FC<ConnectPageProps> = ({
   const [visitorName, setVisitorName] = useState('');
   const [visitorEmail, setVisitorEmail] = useState('');
   const [visitorPhone, setVisitorPhone] = useState('');
-  const [visitorCampus, setVisitorCampus] = useState('Johannesburg (HQ)');
+  const [visitorCampus, setVisitorCampus] = useState('Paarl');
   const [visitorInterest, setVisitorInterest] = useState('Joining a Revival Group');
   const [connectSuccess, setConnectSuccess] = useState(false);
   const [submitting, setSubmitting] = useState(false);
@@ -152,41 +152,24 @@ export const ConnectPage: React.FC<ConnectPageProps> = ({
               </button>
             </div>
 
-            <div className="mt-6 grid max-w-md grid-cols-2 gap-4 sm:gap-5">
-              <figure className="relative aspect-[3/4] overflow-hidden rounded-2xl border border-white/15 bg-black shadow-xl">
+            <figure className="mt-6 overflow-hidden rounded-2xl border border-white/15 bg-black shadow-xl">
+              <div className="relative aspect-[3/2] w-full">
                 <img
-                  src="assets/aistudio/image_2_6cfe55f4.jfif"
-                  alt="Prophet Herbert Mulondo preaching at Revival Church International"
+                  src="assets/aistudio/leaders_HD.jpg"
+                  alt="Prophet Herbert & Pastor Shelma Mulondo"
                   referrerPolicy="no-referrer"
-                  className="h-full w-full object-cover object-[46%_top]"
+                  className="h-full w-full object-cover object-center"
                 />
-                <figcaption className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black via-black/70 to-transparent px-3 pb-3 pt-8">
+                <figcaption className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black via-black/70 to-transparent px-4 pb-4 pt-12">
                   <div className="text-[10px] font-mono font-bold uppercase tracking-wider text-amber-300">
-                    Senior Leader · Founder
+                    Senior Leaders · Founder &amp; Co-Founder
                   </div>
-                  <div className="text-sm font-bold text-white sm:text-base">
-                    Prophet Herbert Mulondo
-                  </div>
-                </figcaption>
-              </figure>
-
-              <figure className="relative aspect-[3/4] overflow-hidden rounded-2xl border border-white/15 bg-black shadow-xl">
-                <img
-                  src="assets/aistudio/image3_1d7e9e76.jfif"
-                  alt="Pastor Shelma Mulondo ministering at Revival Church International"
-                  referrerPolicy="no-referrer"
-                  className="h-full w-full object-cover object-[28%_top]"
-                />
-                <figcaption className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black via-black/70 to-transparent px-3 pb-3 pt-8">
-                  <div className="text-[10px] font-mono font-bold uppercase tracking-wider text-blue-300">
-                    Senior Leader · Co-Founder
-                  </div>
-                  <div className="text-sm font-bold text-white sm:text-base">
-                    Pastor Shelma Mulondo
+                  <div className="text-base font-bold text-white sm:text-lg">
+                    Prophet Herbert &amp; Pastor Shelma Mulondo
                   </div>
                 </figcaption>
-              </figure>
-            </div>
+              </div>
+            </figure>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -422,7 +405,7 @@ export const ConnectPage: React.FC<ConnectPageProps> = ({
                       onChange={(e) => setVisitorCampus(e.target.value)}
                       className="w-full bg-slate-900 border border-slate-700/80 rounded-xl p-3 text-white focus:outline-none focus:border-blue-500"
                     >
-                      <option value="Johannesburg (HQ)">Johannesburg (Sandton HQ)</option>
+                      <option value="Paarl">Paarl (Western Cape)</option>
                       <option value="Cape Town Campus">Cape Town Campus</option>
                       <option value="Dolphin Coast (Ballito)">Dolphin Coast (Ballito)</option>
                       <option value="London UK Campus">London UK Campus</option>

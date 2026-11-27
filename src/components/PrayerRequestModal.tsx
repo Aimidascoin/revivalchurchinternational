@@ -12,7 +12,7 @@ export const PrayerRequestModal: React.FC<PrayerRequestModalProps> = ({ isOpen, 
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
-  const [campus, setCampus] = useState('Johannesburg (HQ)');
+  const [campus, setCampus] = useState('Paarl');
   const [category, setCategory] = useState('Healing & Health');
   const [requestText, setRequestText] = useState('');
   const [isConfidential, setIsConfidential] = useState(true);
@@ -146,7 +146,7 @@ export const PrayerRequestModal: React.FC<PrayerRequestModalProps> = ({ isOpen, 
                   onChange={(e) => setCampus(e.target.value)}
                   className="w-full bg-slate-900 border border-slate-800 rounded-xl px-3 py-2 text-xs sm:text-sm text-white focus:outline-none focus:ring-1 focus:ring-blue-500"
                 >
-                  <option value="Johannesburg (HQ)">Johannesburg (HQ)</option>
+                  <option value="Paarl">Paarl</option>
                   <option value="Cape Town">Cape Town</option>
                   <option value="Dolphin Coast (Ballito)">Dolphin Coast (Ballito)</option>
                   <option value="London UK">London UK</option>

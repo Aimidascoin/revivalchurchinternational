@@ -896,11 +896,7 @@
         <div>
           <label class="block font-semibold text-slate-300 mb-1">Campus</label>
           <select id="visitCampusSelect" class="w-full bg-slate-900 border border-slate-800 rounded-xl p-2 text-white">
-            <option>Johannesburg (HQ Campus)</option>
-            <option>Cape Town Campus</option>
-            <option>Dolphin Coast (Ballito)</option>
-            <option>London UK Campus</option>
-            <option>Atlanta USA Campus</option>
+            <option>Paarl (Western Cape)</option>
           </select>
         </div>
         <div>
@@ -978,7 +974,7 @@
         modal.classList.remove('hidden');
         if (id === 'visitModal' && param) {
           const select = document.getElementById('visitCampusSelect');
-          if (select) select.value = param;
+          if (select) select.value = 'Paarl (Western Cape)';
         }
       }
     }

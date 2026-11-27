@@ -36,7 +36,7 @@ export default function App() {
   const [isVisitOpen, setIsVisitOpen] = useState(false);
   const [isPrayerOpen, setIsPrayerOpen] = useState(false);
   const [isDownloadOpen, setIsDownloadOpen] = useState(false);
-  const selectedVisitCampus = 'Johannesburg (HQ Campus)';
+  const selectedVisitCampus = 'Paarl Campus';
 
   // Sync hash changes (e.g. browser back/forward)
   useEffect(() => {
