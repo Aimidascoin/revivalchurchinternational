@@ -61,29 +61,6 @@ export const CarePage: React.FC<CarePageProps> = ({
     }
   };
 
-  const careServices = [
-    {
-      title: 'Hospital & Home Visitation',
-      description: 'Our pastoral team and ordained elders visit sick family members in hospitals or homes to lay hands and pray the prayer of faith.',
-      availability: '24/7 On-Call Support',
-    },
-    {
-      title: 'Biblical Pastoral Counseling',
-      description: 'Confidential, scripture-rooted counseling for marriage enrichment, grief, crisis resolution, and spiritual direction.',
-      availability: 'Tuesdays to Fridays by Appointment',
-    },
-    {
-      title: 'Baby Dedications & Water Baptism',
-      description: 'Committing newborn infants to the Lord and public declarations of faith through believer’s water baptism by full immersion.',
-      availability: 'Monthly Ceremonies at All Campuses',
-    },
-    {
-      title: 'Bereavement & Funeral Ministry',
-      description: 'Walking beside families through the valley of sorrow with loving pastoral presence, funeral service officiating, and aftercare.',
-      availability: 'Immediate Pastoral Dispatch',
-    },
-  ];
-
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100 py-10 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto space-y-14">
@@ -181,7 +158,7 @@ export const CarePage: React.FC<CarePageProps> = ({
                         required
                         value={petitionerName}
                         onChange={(e) => setPetitionerName(e.target.value)}
-                        placeholder="e.g. Nomsa Dlamini"
+                        placeholder="e.g. John Smith"
                         className="w-full bg-slate-950 border border-slate-700/80 rounded-xl p-3 text-white focus:outline-none focus:border-blue-500"
                       />
                     </div>
@@ -191,7 +168,7 @@ export const CarePage: React.FC<CarePageProps> = ({
                         type="email"
                         value={petitionerEmail}
                         onChange={(e) => setPetitionerEmail(e.target.value)}
-                        placeholder="nomsa@domain.com"
+                        placeholder="john@domain.com"
                         className="w-full bg-slate-950 border border-slate-700/80 rounded-xl p-3 text-white focus:outline-none focus:border-blue-500"
                       />
                     </div>
@@ -282,31 +259,13 @@ export const CarePage: React.FC<CarePageProps> = ({
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {careServices.map((service, idx) => (
-              <div
-                key={idx}
-                className="bg-slate-900 border border-slate-800 rounded-2xl p-6 space-y-3 flex flex-col justify-between"
-              >
-                <div className="space-y-2">
-                  <div className="flex items-center justify-between">
-                    <h3 className="text-lg font-bold text-white">{service.title}</h3>
-                    <span className="px-2.5 py-0.5 rounded bg-blue-600/10 text-blue-400 font-mono text-[11px] font-bold">
-                      {service.availability}
-                    </span>
-                  </div>
-                  <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
-                    {service.description}
-                  </p>
-                </div>
-                <div className="pt-3 border-t border-slate-800 flex items-center justify-between text-xs">
-                  <span className="text-slate-400">Call Pastoral Desk:</span>
-                  <a href="tel:+27117849000" className="font-bold text-blue-400 hover:text-blue-300">
-                    +27 (0) 11 784 9000
-                  </a>
-                </div>
-              </div>
-            ))}
+          <div className="text-center">
+            <a
+              href="#prayer-altar"
+              className="inline-flex items-center gap-2 rounded-xl bg-blue-600 px-6 py-3 text-xs font-bold text-white transition-colors hover:bg-blue-500"
+            >
+              Contact Us
+            </a>
           </div>
         </section>
 
@@ -315,13 +274,13 @@ export const CarePage: React.FC<CarePageProps> = ({
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
             <div className="lg:col-span-8 space-y-4">
               <span className="px-3 py-1 bg-amber-500/10 border border-amber-500/30 text-amber-300 text-xs font-bold rounded-full">
-                Revival Hope Compassion Initiative
+                Herbert Mulondo Compassion Foundation
               </span>
               <h2 className="text-2xl sm:text-4xl font-extrabold text-white">
                 Extending Christ’s Hands to the Needy &amp; Vulnerable
               </h2>
               <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
-                Revival Hope operates community food pantries, emergency clothing drives, and school supply distribution across Gauteng, Western Cape, and KwaZulu-Natal. Every month, over 1,500 families receive nutritious food parcels.
+                Herbert Mulondo Compassion Foundation operates community food pantries, emergency clothing drives, and school supply distribution across Gauteng, Western Cape, and KwaZulu-Natal. Every month, over 1,500 families receive nutritious food parcels.
               </p>
               <div className="flex flex-wrap items-center gap-3 pt-2">
                 <button

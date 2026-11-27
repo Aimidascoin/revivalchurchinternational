@@ -23,22 +23,26 @@ export interface LiveStatus {
 
 const envId = (import.meta.env.VITE_YOUTUBE_LIVE_ID as string | undefined)?.trim();
 const envKey = (import.meta.env.VITE_YOUTUBE_API_KEY as string | undefined)?.trim();
+const apiUrl = (import.meta.env.VITE_API_URL as string | undefined)?.trim()?.replace(/\/$/, '');
+
+/** Resolved at runtime: env var, then backend discovery, then committed default. */
+let resolvedVideoId = envId && envId.length > 0 ? envId : LIVE_STREAM.youtubeId;
 
 /** Runtime stream config: repo variables win over the committed defaults. */
 export const liveStream: LiveStreamConfig = {
   ...LIVE_STREAM,
-  youtubeId: envId && envId.length > 0 ? envId : LIVE_STREAM.youtubeId,
+  youtubeId: resolvedVideoId,
 };
 
-export const hasLiveVideo = liveStream.youtubeId.length > 0;
+export const hasLiveVideo = resolvedVideoId.length > 0;
 
 /** Canonical watch URL for the configured broadcast (or the channel when unset). */
-export const watchUrl = hasLiveVideo
-  ? `https://www.youtube.com/watch?v=${liveStream.youtubeId}`
-  : liveStream.channelUrl;
+export const watchUrl = resolvedVideoId
+  ? `https://www.youtube.com/watch?v=${resolvedVideoId}`
+  : LIVE_STREAM.channelUrl;
 
 export const embedUrl = (options: { autoplay?: boolean; muted?: boolean } = {}) => {
-  if (!hasLiveVideo) return null;
+  if (!resolvedVideoId) return null;
   const params = new URLSearchParams({
     rel: '0',
     modestbranding: '1',
@@ -46,7 +50,7 @@ export const embedUrl = (options: { autoplay?: boolean; muted?: boolean } = {}) 
   });
   if (options.autoplay) params.set('autoplay', '1');
   if (options.muted) params.set('mute', '1');
-  return `https://www.youtube-nocookie.com/embed/${liveStream.youtubeId}?${params.toString()}`;
+  return `https://www.youtube-nocookie.com/embed/${resolvedVideoId}?${params.toString()}`;
 };
 
 /**
@@ -55,23 +59,58 @@ export const embedUrl = (options: { autoplay?: boolean; muted?: boolean } = {}) 
  * Returns a degraded result instead of throwing so the page always renders.
  */
 export const fetchLiveStatus = async (): Promise<LiveStatus> => {
+  // Prefer backend discovery so a newly started broadcast is picked up without
+  // having to redeploy a new VITE_YOUTUBE_LIVE_ID.
+  if (apiUrl) {
+    try {
+      const response = await fetch(`${apiUrl}/youtube/live`, {
+        headers: { Accept: 'application/json' },
+      });
+      if (response.ok) {
+        const payload = (await response.json()) as {
+          ok?: boolean;
+          data?: {
+            videoId?: string;
+            isLive?: boolean;
+            title?: string | null;
+            viewers?: number | null;
+            degraded?: boolean;
+          };
+        };
+        const data = payload?.data;
+        if (data?.videoId) {
+          resolvedVideoId = data.videoId;
+          return {
+            isLive: data.isLive === true,
+            viewers: typeof data.viewers === 'number' ? data.viewers : null,
+            title: typeof data.title === 'string' ? data.title : null,
+            startedAt: null,
+            degraded: data.degraded === true,
+          };
+        }
+      }
+    } catch {
+      /* fall through to the legacy probe */
+    }
+  }
+
   // Degraded assumption: a configured broadcast id is treated as live so the
   // real player (which renders YouTube's own offline state) is never hidden.
   const fallback: LiveStatus = {
-    isLive: hasLiveVideo,
+    isLive: resolvedVideoId.length > 0,
     viewers: null,
     title: null,
     startedAt: null,
     degraded: true,
   };
 
-  if (!hasLiveVideo) return { ...fallback, isLive: false };
+  if (!resolvedVideoId) return { ...fallback, isLive: false };
 
   if (envKey) {
     try {
       const url = new URL('https://www.googleapis.com/youtube/v3/videos');
       url.searchParams.set('part', 'snippet,stream,liveStreamingDetails');
-      url.searchParams.set('id', liveStream.youtubeId);
+      url.searchParams.set('id', resolvedVideoId);
       url.searchParams.set('key', envKey);
 
       const response = await fetch(url.toString());
@@ -108,10 +147,10 @@ export const fetchLiveStatus = async (): Promise<LiveStatus> => {
   }
 
   // Browser-safe probe via the official IFrame API (no CORS problems).
-  const iframe = await fetchIframeStatus(liveStream.youtubeId);
+  const iframe = await fetchIframeStatus(resolvedVideoId);
   if (iframe) return iframe;
 
-  const keyless = await fetchInnerTubeStatus(liveStream.youtubeId);
+  const keyless = await fetchInnerTubeStatus(resolvedVideoId);
   return keyless ?? fallback;
 };
 

@@ -363,7 +363,7 @@ export const ConnectPage: React.FC<ConnectPageProps> = ({
                       required
                       value={visitorName}
                       onChange={(e) => setVisitorName(e.target.value)}
-                      placeholder="e.g. Sipho Moyo"
+                      placeholder="e.g. John Smith"
                       className="w-full bg-slate-900 border border-slate-700/80 rounded-xl p-3 text-white focus:outline-none focus:border-blue-500"
                     />
                   </div>
@@ -374,7 +374,7 @@ export const ConnectPage: React.FC<ConnectPageProps> = ({
                       required
                       value={visitorEmail}
                       onChange={(e) => setVisitorEmail(e.target.value)}
-                      placeholder="sipho@domain.com"
+                      placeholder="john@domain.com"
                       className="w-full bg-slate-900 border border-slate-700/80 rounded-xl p-3 text-white focus:outline-none focus:border-blue-500"
                     />
                   </div>

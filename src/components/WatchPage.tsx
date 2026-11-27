@@ -367,7 +367,7 @@ export const WatchPage: React.FC<WatchPageProps> = ({
                 type="text"
                 value={chatSender}
                 onChange={(e) => setChatSender(e.target.value)}
-                placeholder="Your Name (e.g. Nomsa from Durban)"
+                placeholder="Your Name (e.g. John from London)"
                 className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-1.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-blue-500"
               />
               <div className="flex gap-2">

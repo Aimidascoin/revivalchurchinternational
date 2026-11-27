@@ -214,7 +214,7 @@ export const GivePage: React.FC<GivePageProps> = ({ onNavigateHome }) => {
                     required
                     value={donorName}
                     onChange={(e) => setDonorName(e.target.value)}
-                    placeholder="e.g. Sipho Sithole"
+                    placeholder="e.g. John Smith"
                     className="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-white focus:outline-none focus:border-blue-500"
                   />
                 </div>
@@ -224,7 +224,7 @@ export const GivePage: React.FC<GivePageProps> = ({ onNavigateHome }) => {
                     type="email"
                     value={donorEmail}
                     onChange={(e) => setDonorEmail(e.target.value)}
-                    placeholder="sipho@domain.com (optional)"
+                    placeholder="john@domain.com (optional)"
                     className="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-white focus:outline-none focus:border-blue-500"
                   />
                 </div>

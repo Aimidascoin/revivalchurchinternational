@@ -206,6 +206,82 @@ app.post(
   }),
 );
 
+/** Resolve the current (or most recent) YouTube broadcast for the RCI channel. */
+app.get(
+  '/api/youtube/live',
+  asyncRoute(async (_req, res) => {
+    const channelId = 'UCbGifC5lu_2eGkA1SUfryUQ';
+    let ids: string[] = [];
+    try {
+      const rss = await fetch(`https://www.youtube.com/feeds/videos.xml?channel_id=${channelId}`, {
+        headers: { 'User-Agent': 'Mozilla/5.0' },
+      });
+      const xml = await rss.text();
+      const re = /<yt:videoId>([^<]+)<\/yt:videoId>/g;
+      const matches = xml.match(re) || [];
+      const parsed = matches.map((m) => {
+        const mm = m.match(/<yt:videoId>([^<]+)<\/yt:videoId>/);
+        return mm ? mm[1] : null;
+      });
+      const cleaned = parsed.filter((x) => Boolean(x)) as string[];
+      ids = [...new Set(cleaned)].slice(0, 6);
+    } catch {
+      /* ignore and fall back below */
+    }
+
+    const envId = (process.env.VITE_YOUTUBE_LIVE_ID || '').trim();
+    if (ids.length === 0 && envId) ids = [envId];
+
+    let videoId = ids[0] || envId || '';
+    let isLive = false;
+    let title: string | null = null;
+    let viewers: number | null = null;
+
+    for (const id of ids) {
+      try {
+        const response = await fetch('https://www.youtube.com/youtubei/v1/player?prettyPrint=false', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            context: { client: { clientName: 'WEB', clientVersion: '2.20250101.01.00' } },
+            videoId: id,
+          }),
+        });
+        if (!response.ok) continue;
+        const payload = (await response.json()) as {
+          videoDetails?: { title?: string; isLive?: boolean };
+          microformat?: {
+            playerMicroformatRenderer?: {
+              liveBroadcastDetails?: { isLiveNow?: boolean; concurrentViewers?: string };
+            };
+          };
+        };
+        if (!title) title = payload.videoDetails?.title ?? null;
+        const live =
+          payload.videoDetails?.isLive === true ||
+          payload.microformat?.playerMicroformatRenderer?.liveBroadcastDetails?.isLiveNow === true;
+        if (live) {
+          videoId = id;
+          isLive = true;
+          title = payload.videoDetails?.title ?? title;
+          const raw = Number(payload.microformat?.playerMicroformatRenderer?.liveBroadcastDetails?.concurrentViewers);
+          viewers = Number.isFinite(raw) ? raw : null;
+          break;
+        }
+      } catch {
+        /* try the next candidate */
+      }
+    }
+
+    if (!videoId && envId) videoId = envId;
+
+    res.json({
+      ok: true,
+      data: { videoId, isLive, title, viewers, degraded: false },
+    });
+  }),
+);
+
 app.use('/api', (_req, res) => res.status(404).json({ ok: false, error: 'API endpoint not found' }));
 app.use((error: Error & { status?: number }, _req: Request, res: Response, _next: NextFunction) => {
   const status = error.status ?? (error instanceof SyntaxError ? 400 : 500);

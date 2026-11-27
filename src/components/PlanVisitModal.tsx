@@ -188,7 +188,7 @@ export const PlanVisitModal: React.FC<PlanVisitModalProps> = ({
                 required
                 value={guestName}
                 onChange={(e) => setGuestName(e.target.value)}
-                placeholder="e.g. Samuel & Nomsa Khumalo"
+                placeholder="e.g. John & Sarah Smith"
                 className="w-full bg-slate-900 border border-slate-800 rounded-xl px-3 py-2 text-xs sm:text-sm text-white focus:outline-none focus:ring-1 focus:ring-blue-500"
               />
             </div>

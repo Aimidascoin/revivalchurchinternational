@@ -220,7 +220,7 @@ export const CampusesPage: React.FC<CampusesPageProps> = ({
                       required
                       value={visitName}
                       onChange={(e) => setVisitName(e.target.value)}
-                      placeholder="e.g. John &amp; Sarah Khumalo"
+                      placeholder="e.g. John &amp; Sarah Smith"
                       className="w-full bg-slate-900 border border-slate-700/80 rounded-xl p-3 text-white focus:outline-none focus:border-blue-500"
                     />
                   </div>

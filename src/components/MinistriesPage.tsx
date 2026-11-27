@@ -334,7 +334,7 @@ export const MinistriesPage: React.FC<MinistriesPageProps> = ({
                       required
                       value={volunteerEmail}
                       onChange={(e) => setVolunteerEmail(e.target.value)}
-                      placeholder="tendai@domain.com"
+                      placeholder="john@domain.com"
                       className="w-full bg-slate-900 border border-slate-700/80 rounded-xl p-3 text-white focus:outline-none focus:border-blue-500"
                     />
                   </div>

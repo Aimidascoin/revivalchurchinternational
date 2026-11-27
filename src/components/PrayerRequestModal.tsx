@@ -103,7 +103,7 @@ export const PrayerRequestModal: React.FC<PrayerRequestModalProps> = ({ isOpen, 
                   required
                   value={name}
                   onChange={(e) => setName(e.target.value)}
-                  placeholder="e.g. Grace Dlamini"
+                  placeholder="e.g. John Smith"
                   className="w-full bg-slate-900 border border-slate-800 rounded-xl px-3 py-2 text-xs sm:text-sm text-white focus:outline-none focus:ring-1 focus:ring-blue-500"
                 />
               </div>
