@@ -59,7 +59,7 @@ app.post(
 
     if (
       typeof name !== 'string' || name.trim().length < 2 ||
-      typeof email !== 'string' || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) ||
+      typeof email !== 'string' || email.trim().length > 160 ||
       typeof fund !== 'string' || fund.trim().length < 2 ||
       !Number.isFinite(value) || value <= 0 || value > 1_000_000
     ) {

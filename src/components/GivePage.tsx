@@ -54,12 +54,6 @@ export const GivePage: React.FC<GivePageProps> = ({ onNavigateHome }) => {
       toast(message, 'error');
       return;
     }
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(donorEmail.trim())) {
-      const message = 'Please enter a valid email for your receipt.';
-      setError(message);
-      toast(message, 'error');
-      return;
-    }
 
     setGiveType(fund);
     setSubmitting(true);
@@ -130,33 +124,6 @@ export const GivePage: React.FC<GivePageProps> = ({ onNavigateHome }) => {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           {/* Left Column: The Legacy Vision Fund 2026 */}
           <div className="lg:col-span-6 bg-slate-900 border border-slate-800 rounded-3xl p-6 sm:p-8 space-y-6 shadow-2xl">
-            <div className="space-y-2">
-              <span className="text-xs font-mono font-bold text-amber-400 uppercase tracking-wider">
-                Capital Campaign 2026
-              </span>
-              <h2 className="text-2xl font-extrabold text-white">
-                The Legacy Vision Fund
-              </h2>
-              <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
-                Building permanent regional revival sanctuaries, state-of-the-art 4K broadcast facilities, and expanding our daily community feeding havens.
-              </p>
-            </div>
-
-            {/* Progress Bar */}
-            <div className="bg-slate-950 border border-slate-800 rounded-2xl p-5 space-y-3">
-              <div className="flex justify-between items-center text-xs font-bold">
-                <span className="text-slate-300">Phase 1 Sanctuary Expansion</span>
-                <span className="text-amber-400 font-mono">75% Funded</span>
-              </div>
-              <div className="w-full bg-slate-900 h-3 rounded-full overflow-hidden border border-slate-800">
-                <div className="bg-gradient-to-r from-amber-500 to-amber-300 h-full w-[75%] rounded-full" />
-              </div>
-              <div className="flex justify-between text-[11px] text-slate-400 font-mono">
-                <span>Raised: R 33,750,000</span>
-                <span>Goal: R 45,000,000 ($2.5M)</span>
-              </div>
-            </div>
-
             {/* Bank EFT Accounts */}
             <div className="space-y-3">
               <h3 className="text-sm font-bold text-white flex items-center gap-1.5">
@@ -272,10 +239,9 @@ export const GivePage: React.FC<GivePageProps> = ({ onNavigateHome }) => {
                   <label className="block font-semibold text-slate-300 mb-1">Email for Receipt</label>
                   <input
                     type="email"
-                    required
                     value={donorEmail}
                     onChange={(e) => setDonorEmail(e.target.value)}
-                    placeholder="sipho@domain.com"
+                    placeholder="sipho@domain.com (optional)"
                     className="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-white focus:outline-none focus:border-blue-500"
                   />
                 </div>

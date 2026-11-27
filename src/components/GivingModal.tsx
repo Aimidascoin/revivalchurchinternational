@@ -120,10 +120,6 @@ export const GivingModal: React.FC<GivingModalProps> = ({ isOpen, onClose }) => 
       setError('Please enter your full name.');
       return;
     }
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())) {
-      setError('Please enter a valid email for your receipt.');
-      return;
-    }
     setFund(selectedFund);
     setSubmitting(true);
     try {
@@ -281,7 +277,7 @@ export const GivingModal: React.FC<GivingModalProps> = ({ isOpen, onClose }) => 
 
             <div className="grid gap-3 sm:grid-cols-2">
               <input required value={name} onChange={(e) => setName(e.target.value)} placeholder="Your full name" aria-label="Full name" className="w-full rounded-xl border border-slate-800 bg-slate-900 px-4 py-2 text-xs text-white" />
-              <input required type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email for your receipt" aria-label="Email" className="w-full rounded-xl border border-slate-800 bg-slate-900 px-4 py-2 text-xs text-white" />
+              <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email for your receipt (optional)" aria-label="Email" className="w-full rounded-xl border border-slate-800 bg-slate-900 px-4 py-2 text-xs text-white" />
             </div>
 
             <div>
