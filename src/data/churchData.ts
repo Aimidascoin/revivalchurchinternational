@@ -429,6 +429,16 @@ export const VIDEO_TESTIMONIES: VideoTestimony[] = [
     title: 'Stage 2 Cancer Healing',
     youtubeId: 'wIa5cHq6FAY',
   },
+  {
+    id: 'video-herbert-mulondo-ministration',
+    title: 'Herbert Mulondo Ministration',
+    youtubeId: 'EiZhcj83n0w',
+  },
+  {
+    id: 'video-instant-miracle-no-crutches',
+    title: 'Instant Miracle: No More Crutches',
+    youtubeId: '6fJo_OXZazg',
+  },
 ];
 
 export const TESTIMONIES: Testimony[] = [
