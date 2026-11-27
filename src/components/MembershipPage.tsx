@@ -129,6 +129,22 @@ export const MembershipPage: React.FC<MembershipPageProps> = ({
           </div>
         </div>
 
+        {/* Online Membership Application */}
+        <section id="membership-application" className="bg-gradient-to-br from-slate-900 to-slate-950 border border-slate-800 rounded-3xl p-6 sm:p-12 shadow-2xl">
+          <div className="max-w-3xl mx-auto space-y-6">
+            <div className="text-center space-y-2">
+              <span className="text-xs uppercase font-mono font-bold text-amber-400">Apply Online</span>
+              <h2 className="text-2xl sm:text-3xl font-extrabold text-white mt-1">
+                Church Membership Application
+              </h2>
+              <p className="text-slate-400 text-xs sm:text-sm">
+                Complete the form below to apply for membership at Revival Church International.
+              </p>
+            </div>
+            <MembershipApplicationForm />
+          </div>
+        </section>
+
         {/* ----------------- The Moved Section: Encounter · Equip · Conquer ----------------- */}
         <section id="pathway" className="py-8 relative">
           {/* Section Header */}
@@ -356,22 +372,6 @@ export const MembershipPage: React.FC<MembershipPageProps> = ({
                 </div>
               </form>
             )}
-          </div>
-        </section>
-
-        {/* Online Membership Application */}
-        <section id="membership-application" className="bg-gradient-to-br from-slate-900 to-slate-950 border border-slate-800 rounded-3xl p-6 sm:p-12 shadow-2xl">
-          <div className="max-w-3xl mx-auto space-y-6">
-            <div className="text-center space-y-2">
-              <span className="text-xs uppercase font-mono font-bold text-amber-400">Apply Online</span>
-              <h2 className="text-2xl sm:text-3xl font-extrabold text-white mt-1">
-                Church Membership Application
-              </h2>
-              <p className="text-slate-400 text-xs sm:text-sm">
-                Complete the form below to apply for membership at Revival Church International.
-              </p>
-            </div>
-            <MembershipApplicationForm />
           </div>
         </section>
 
