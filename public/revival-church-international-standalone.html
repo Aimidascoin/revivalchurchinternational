@@ -1,0 +1,1020 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Revival Church International (RCI) | Grace · Power · Transformation</title>
+  <meta name="description" content="Official website for Revival Church International (RCI). A prophetic movement built on grace, power, and family." />
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#eff6ff',
+              500: '#3b82f6',
+              600: '#2563eb',
+              700: '#1d4ed8',
+              900: '#1e3a8a',
+              950: '#030712',
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+    html, body {
+      overflow-x: hidden;
+      max-width: 100vw;
+      width: 100%;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      font-family: 'Outfit', sans-serif;
+      letter-spacing: -0.025em;
+    }
+    /* Custom scrollbar */
+    ::-webkit-scrollbar { width: 8px; height: 8px; }
+    ::-webkit-scrollbar-track { background: #030712; }
+    ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: #334155; }
+  </style>
+</head>
+<body class="bg-slate-950 text-slate-100 font-sans antialiased selection:bg-blue-600 selection:text-white min-h-screen flex flex-col w-full max-w-full overflow-x-hidden">
+
+  <!-- Micro Announcement Bar -->
+  <div class="bg-gradient-to-r from-blue-900 via-indigo-900 to-slate-950 text-xs py-2 px-4 border-b border-white/10">
+    <div class="max-w-7xl mx-auto flex items-center justify-between">
+      <div class="flex items-center gap-2">
+        <span class="inline-block w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+        <span class="text-slate-200 font-medium">Live Broadcast: Sunday 10:00 AM &amp; 17:00 PM CAT · Watch Live</span>
+        <span class="hidden md:inline text-slate-400">· Available Across All Digital Channels</span>
+      </div>
+      <div class="flex items-center gap-4 text-slate-300">
+        <button onclick="openModal('prayerModal')" class="hover:text-blue-300 transition-colors flex items-center gap-1 cursor-pointer">
+          <span>✨ Need Prayer?</span>
+        </button>
+        <span class="text-slate-600 hidden sm:inline">|</span>
+        <a href="#campuses" class="hover:text-blue-300 transition-colors hidden sm:flex items-center gap-1">
+          <span>📍 6 Global Campuses</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Header / Navigation -->
+  <header class="sticky top-0 z-40 bg-slate-950/95 backdrop-blur-md border-b border-slate-800 shadow-xl">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-18 flex items-center justify-between">
+      <!-- Zone 1: Single text element wordmark -->
+      <a href="#" class="flex items-center gap-2.5 text-slate-100">
+        <div class="w-9 h-9 rounded-lg bg-blue-600 flex items-center justify-center font-bold text-white shadow-md shadow-blue-500/20">
+          <span class="text-lg tracking-tighter">RCI</span>
+        </div>
+        <div class="flex flex-col">
+          <span class="text-base sm:text-lg font-bold tracking-tight text-white leading-none">
+            Revival Church International
+          </span>
+          <span class="text-[11px] text-blue-400 font-medium tracking-wide">
+            Grace · Power · Family
+          </span>
+        </div>
+      </a>
+
+      <!-- Zone 2: Navigation Buttons with Subheadings inside -->
+      <nav class="hidden lg:flex items-center gap-1.5 xl:gap-2">
+        <a href="#" class="px-2 py-1.5 rounded-xl hover:bg-slate-900 border border-transparent hover:border-slate-800 transition-all flex flex-col leading-none text-left">
+          <span class="text-xs xl:text-sm font-bold text-slate-100 hover:text-white">Home</span>
+          <span class="text-[10px] text-slate-400 font-normal mt-0.5">Welcome</span>
+        </a>
+        <!-- Connect Dropdown -->
+        <div class="relative group">
+          <button type="button" onclick="toggleDropdown('connectDropdown')" class="px-2.5 py-1.5 rounded-xl hover:bg-slate-900 border border-transparent hover:border-slate-800 transition-all flex flex-col leading-none text-left cursor-pointer">
+            <span class="text-xs xl:text-sm font-bold text-slate-100 hover:text-white flex items-center gap-1">
+              Connect
+              <span class="text-[10px] text-slate-400">▾</span>
+            </span>
+            <span class="text-[10px] text-slate-400 font-normal mt-0.5">About &amp; Groups</span>
+          </button>
+          <div id="connectDropdown" class="absolute top-full left-0 w-64 pt-2 hidden group-hover:block z-50">
+            <div class="bg-slate-900 border border-slate-800 rounded-xl p-2 shadow-2xl space-y-1 text-xs">
+              <a href="#about" onclick="toggleDropdown('connectDropdown')" class="block px-3 py-2 rounded-lg hover:bg-slate-800 text-slate-200 hover:text-white">
+                <div class="font-bold text-white">About</div>
+                <div class="text-[11px] text-slate-400">Vision, history &amp; apostolic heart</div>
+              </a>
+              <a href="#leadership" onclick="toggleDropdown('connectDropdown')" class="block px-3 py-2 rounded-lg hover:bg-slate-800 text-slate-200 hover:text-white">
+                <div class="font-bold text-white">Meet the team</div>
+                <div class="text-[11px] text-slate-400">Prophet Herbert &amp; Pastor Shelma Mulondo</div>
+              </a>
+              <a href="#faith" onclick="toggleDropdown('connectDropdown')" class="block px-3 py-2 rounded-lg hover:bg-slate-800 text-slate-200 hover:text-white">
+                <div class="font-bold text-white">Statement of faith</div>
+                <div class="text-[11px] text-slate-400">Core doctrinal pillars &amp; truths</div>
+              </a>
+              <a href="#revival-groups" onclick="toggleDropdown('connectDropdown')" class="block px-3 py-2 rounded-lg hover:bg-slate-800 text-slate-200 hover:text-white">
+                <div class="font-bold text-amber-300">Revival groups</div>
+                <div class="text-[11px] text-slate-400">Mid-week home hubs &amp; virtual eGroups</div>
+              </a>
+              <a href="#ministries" onclick="toggleDropdown('connectDropdown')" class="block px-3 py-2 rounded-lg hover:bg-slate-800 text-slate-200 hover:text-white">
+                <div class="font-bold text-blue-300">Ministries</div>
+                <div class="text-[11px] text-slate-400">Men, Women, Unstoppablegenr &amp; Kids</div>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <a href="#membership" class="px-2.5 py-1.5 rounded-xl hover:bg-slate-900 border border-transparent hover:border-slate-800 transition-all flex flex-col leading-none text-left">
+          <span class="text-xs xl:text-sm font-bold text-slate-100 hover:text-white">Membership</span>
+          <span class="text-[10px] text-slate-400 font-normal mt-0.5">Next Steps</span>
+        </a>
+        <button onclick="openModal('liveModal')" class="px-2.5 py-1.5 rounded-xl hover:bg-slate-900 border border-transparent hover:border-slate-800 transition-all flex flex-col leading-none text-left cursor-pointer">
+          <span class="text-xs xl:text-sm font-bold text-slate-100 hover:text-white flex items-center gap-1">
+            Watch
+            <span class="w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse"></span>
+          </span>
+          <span class="text-[10px] text-slate-400 font-normal mt-0.5">Live Stream</span>
+        </button>
+        <a href="#sermons" class="px-2.5 py-1.5 rounded-xl bg-blue-950/40 hover:bg-blue-900/50 border border-blue-500/40 transition-all flex items-center gap-1.5 leading-none text-left">
+          <span class="text-blue-400 text-xs">▶</span>
+          <div class="flex flex-col leading-none">
+            <span class="text-xs xl:text-sm font-bold text-white">Video Sermons</span>
+            <span class="text-[10px] text-blue-300 font-normal mt-0.5">On-Demand</span>
+          </div>
+        </a>
+        <button onclick="openModal('prayerModal')" class="px-2.5 py-1.5 rounded-xl hover:bg-slate-900 border border-transparent hover:border-slate-800 transition-all flex flex-col leading-none text-left cursor-pointer">
+          <span class="text-xs xl:text-sm font-bold text-slate-100 hover:text-white">Care</span>
+          <span class="text-[10px] text-slate-400 font-normal mt-0.5">Prayer &amp; Help</span>
+        </button>
+        <a href="#ministries" class="px-2.5 py-1.5 rounded-xl hover:bg-slate-900 border border-transparent hover:border-slate-800 transition-all flex flex-col leading-none text-left">
+          <span class="text-xs xl:text-sm font-bold text-slate-100 hover:text-white">Ministries</span>
+          <span class="text-[10px] text-slate-400 font-normal mt-0.5">All Ages</span>
+        </a>
+        <button onclick="openModal('givingModal')" class="px-3 py-1.5 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-bold shadow-md shadow-amber-400/20 transition-all cursor-pointer flex items-center gap-1.5 text-left">
+          <span class="text-xs">❤️</span>
+          <div class="flex flex-col leading-none">
+            <span class="text-xs xl:text-sm font-black text-slate-950">Give</span>
+            <span class="text-[9px] font-bold text-amber-950/80 mt-0.5">Tithe &amp; Partner</span>
+          </div>
+        </button>
+        <a href="#campuses" class="px-2.5 py-1.5 rounded-xl hover:bg-slate-900 border border-transparent hover:border-slate-800 transition-all flex items-center gap-1 leading-none text-left">
+          <span class="text-blue-400 text-xs">📍</span>
+          <div class="flex flex-col leading-none">
+            <span class="text-xs xl:text-sm font-bold text-slate-100 hover:text-white">Locations</span>
+            <span class="text-[10px] text-slate-400 font-normal mt-0.5">Campuses &amp; Times</span>
+          </div>
+        </a>
+      </nav>
+
+      <!-- Zone 3: Primary Actions -->
+      <div class="flex items-center gap-3">
+        <button onclick="openModal('liveModal')" class="px-3.5 py-2 text-xs font-semibold text-slate-200 bg-slate-800/80 hover:bg-slate-700/80 border border-slate-700/70 rounded-lg transition-all flex items-center gap-2 cursor-pointer shadow-sm">
+          <span class="w-2 h-2 rounded-full bg-red-500 animate-ping"></span>
+          <span>▶ Watch Live</span>
+        </button>
+        <button onclick="openModal('visitModal')" class="px-4 py-2 text-xs font-bold text-white bg-blue-600 hover:bg-blue-500 rounded-lg transition-all shadow-md shadow-blue-600/30 cursor-pointer">
+          Plan Your Visit
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="relative overflow-hidden bg-slate-950 pt-10 sm:pt-14 pb-16">
+    <div class="absolute inset-0 z-0 bg-[radial-gradient(ellipse_at_top,rgba(30,58,138,0.28),transparent_65%),radial-gradient(circle_at_bottom_right,rgba(234,179,8,0.08),transparent_55%)] pointer-events-none"></div>
+
+    <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-6xl mx-auto">
+        <h1 class="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-[1.12]">
+          <span class="text-blue-400">Supernatural Church</span><span class="text-slate-500 mx-1 sm:mx-2">-</span><span class="text-yellow-300">Changing Lives</span><span class="text-slate-500 mx-1 sm:mx-2">-</span><span class="text-white">Disciple the Nations</span>
+        </h1>
+      </div>
+
+      <!-- Below Headline: 2-Column HD Visual + Declaration Split -->
+      <div class="mt-9 sm:mt-11 grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-stretch">
+        <div class="lg:col-span-7 relative rounded-3xl overflow-hidden border border-white/15 bg-black shadow-2xl min-h-[280px] sm:min-h-[380px] lg:min-h-[430px] group">
+          <img src="/assets/aistudio/image1_e0e6cad4.jfif" alt="Prophet Herbert Mulondo ministering at Revival Church International" class="w-full h-full object-cover object-[center_18%] group-hover:scale-[1.02] transition-transform duration-700" />
+          <div class="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-black/95 via-black/55 to-transparent pointer-events-none"></div>
+          <div class="absolute bottom-5 left-6 right-6">
+            <div class="text-xs font-medium text-yellow-300 tracking-wide">Revival Altar · Paarl &amp; Global Campuses</div>
+            <div class="text-lg sm:text-2xl font-bold text-white mt-0.5 leading-snug">Where the Word Works &amp; Lives Are Transformed</div>
+          </div>
+        </div>
+
+        <div class="lg:col-span-5 rounded-3xl bg-slate-900/80 border border-white/10 p-6 sm:p-8 shadow-2xl flex flex-col justify-between text-left backdrop-blur-sm">
+          <div class="space-y-4">
+            <div class="text-xs font-semibold tracking-wide text-blue-400">Revival Church International</div>
+            <h2 class="text-2xl sm:text-3xl font-extrabold tracking-tight text-yellow-300">The Soil of Solutions.</h2>
+            <p class="text-sm sm:text-base text-slate-200 leading-relaxed">
+              The place where your story changes, where the Word works and where you <strong class="text-white">ALWAYS</strong> come back with a testimony. This is not just a church but truly a family that loves and cares for each other. We serve God’s people with excellence and compassion.
+            </p>
+          </div>
+
+          <div class="mt-8 pt-6 border-t border-white/10 space-y-3">
+            <button onclick="openModal('visitModal')" class="w-full px-6 py-3.5 text-sm sm:text-base font-bold text-white bg-blue-600 hover:bg-blue-500 rounded-xl transition-all shadow-lg shadow-blue-600/25 flex items-center justify-center gap-2 cursor-pointer whitespace-nowrap">
+              <span>📅 Plan Your Visit This Sunday</span>
+            </button>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <button onclick="openModal('liveModal')" class="px-4 py-3 text-xs sm:text-sm font-semibold text-slate-100 bg-slate-950/90 hover:bg-slate-800 border border-slate-700/80 rounded-xl transition-all flex items-center justify-center gap-2 cursor-pointer whitespace-nowrap">
+                <span>▶ Watch Live Online</span>
+              </button>
+              <button onclick="openModal('prayerModal')" class="px-4 py-3 text-xs sm:text-sm font-medium text-slate-200 hover:text-white border border-white/15 rounded-xl transition-colors cursor-pointer whitespace-nowrap">
+                <span>✨ Prayer Request</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sunday Service Time Line -->
+      <div class="mt-8 pt-6 border-t border-white/10 flex flex-wrap items-center justify-center gap-x-2.5 gap-y-1 text-xs sm:text-sm text-slate-300 font-medium">
+        <span class="font-bold text-white">10:00 &amp; 17:00</span>
+        <span aria-hidden="true" class="text-slate-600">·</span>
+        <span>Sunday Services (CAT)</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Explore the Heart of Our Church (6 Unique HD Images) -->
+  <section class="py-16 bg-slate-950 border-t border-slate-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-3xl mx-auto mb-12">
+        <span class="text-xs font-semibold tracking-wide text-blue-400">Welcome to Revival Church</span>
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-white mt-1.5 tracking-tight">Explore the Heart of Our Church</h2>
+        <p class="text-slate-300 text-sm sm:text-base mt-2.5 leading-relaxed">
+          Every section of our church family has its own dedicated portal. Choose a pathway below to get connected.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <article class="overflow-hidden bg-slate-900 border border-slate-800 rounded-3xl flex flex-col justify-between shadow-xl group">
+          <div>
+            <div class="aspect-[16/9] w-full overflow-hidden bg-slate-950 border-b border-slate-800/80">
+              <img src="/assets/aistudio/11_b3147462.jpg" alt="Smiling members of Revival Church International gathered in covenant fellowship" class="w-full h-full object-cover object-[center_20%] group-hover:scale-[1.04] transition-transform duration-500" />
+            </div>
+            <div class="p-6 space-y-2.5">
+              <div class="text-xs text-slate-400 font-medium"><span class="font-mono text-blue-400 font-semibold">01</span> · About &amp; Leaders</div>
+              <h3 class="text-xl font-bold text-white">Connect &amp; Community</h3>
+              <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">Discover our apostolic vision, meet Senior Leaders Prophet Herbert &amp; Pastor Shelma Mulondo, and find mid-week hubs.</p>
+            </div>
+          </div>
+          <div class="px-6 pb-6 pt-3 border-t border-slate-800/80">
+            <a href="#leadership" class="w-full py-2.5 px-4 rounded-xl bg-slate-950/90 hover:bg-blue-600 text-slate-200 hover:text-white font-bold text-xs flex items-center justify-between transition-colors">
+              <span>Open Connect &amp; Community</span><span>→</span>
+            </a>
+          </div>
+        </article>
+
+        <article class="overflow-hidden bg-slate-900 border border-slate-800 rounded-3xl flex flex-col justify-between shadow-xl group">
+          <div>
+            <div class="aspect-[16/9] w-full overflow-hidden bg-slate-950 border-b border-slate-800/80">
+              <img src="/assets/aistudio/6_b0df8f03.jpg" alt="Believers writing sermon notes during teaching at Revival Church International" class="w-full h-full object-cover object-[center_25%] group-hover:scale-[1.04] transition-transform duration-500" />
+            </div>
+            <div class="p-6 space-y-2.5">
+              <div class="text-xs text-slate-400 font-medium"><span class="font-mono text-blue-400 font-semibold">02</span> · 6-Week Roadmap</div>
+              <h3 class="text-xl font-bold text-white">Discipleship Pathway</h3>
+              <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">Our structured 6-step journey from first-time guest to empowered kingdom leader, including Foundations 101.</p>
+            </div>
+          </div>
+          <div class="px-6 pb-6 pt-3 border-t border-slate-800/80">
+            <a href="#membership" class="w-full py-2.5 px-4 rounded-xl bg-slate-950/90 hover:bg-blue-600 text-slate-200 hover:text-white font-bold text-xs flex items-center justify-between transition-colors">
+              <span>Open Discipleship Pathway</span><span>→</span>
+            </a>
+          </div>
+        </article>
+
+        <article class="overflow-hidden bg-slate-900 border border-slate-800 rounded-3xl flex flex-col justify-between shadow-xl group">
+          <div>
+            <div class="aspect-[16/9] w-full overflow-hidden bg-slate-950 border-b border-slate-800/80">
+              <img src="/assets/aistudio/502585865_1308573501273922_829689343425601845_n_514c130e.jpg" alt="Prophet Herbert Mulondo ministering in the midst of the congregation" class="w-full h-full object-cover object-[center_20%] group-hover:scale-[1.04] transition-transform duration-500" />
+            </div>
+            <div class="p-6 space-y-2.5">
+              <div class="text-xs text-slate-400 font-medium"><span class="font-mono text-blue-400 font-semibold">03</span> · Live &amp; On-Demand</div>
+              <h3 class="text-xl font-bold text-white">Watch &amp; Sermons</h3>
+              <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">Join our weekly global encounter broadcasts, interact in fellowship, and explore anointed teachings.</p>
+            </div>
+          </div>
+          <div class="px-6 pb-6 pt-3 border-t border-slate-800/80">
+            <a href="#sermons" class="w-full py-2.5 px-4 rounded-xl bg-slate-950/90 hover:bg-blue-600 text-slate-200 hover:text-white font-bold text-xs flex items-center justify-between transition-colors">
+              <span>Open Watch &amp; Sermons</span><span>→</span>
+            </a>
+          </div>
+        </article>
+
+        <article class="overflow-hidden bg-slate-900 border border-slate-800 rounded-3xl flex flex-col justify-between shadow-xl group">
+          <div>
+            <div class="aspect-[16/9] w-full overflow-hidden bg-slate-950 border-b border-slate-800/80">
+              <img src="/assets/aistudio/14_e00e6246.jpg" alt="Congregation lifting hands in worship and earnest prayer" class="w-full h-full object-cover object-[center_25%] group-hover:scale-[1.04] transition-transform duration-500" />
+            </div>
+            <div class="p-6 space-y-2.5">
+              <div class="text-xs text-slate-400 font-medium"><span class="font-mono text-blue-400 font-semibold">04</span> · Always Here for You</div>
+              <h3 class="text-xl font-bold text-white">Pastoral Care &amp; Prayer</h3>
+              <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">Submit your urgent prayer petitions before our intercessory altar and request pastoral care.</p>
+            </div>
+          </div>
+          <div class="px-6 pb-6 pt-3 border-t border-slate-800/80">
+            <button onclick="openModal('prayerModal')" class="w-full py-2.5 px-4 rounded-xl bg-slate-950/90 hover:bg-blue-600 text-slate-200 hover:text-white font-bold text-xs flex items-center justify-between transition-colors cursor-pointer">
+              <span>Open Pastoral Care &amp; Prayer</span><span>→</span>
+            </button>
+          </div>
+        </article>
+
+        <article class="overflow-hidden bg-slate-900 border border-slate-800 rounded-3xl flex flex-col justify-between shadow-xl group">
+          <div>
+            <div class="aspect-[16/9] w-full overflow-hidden bg-slate-950 border-b border-slate-800/80">
+              <img src="/assets/aistudio/10_a37bb766.jpg" alt="Women and young adults praising God with joyful raised hands" class="w-full h-full object-cover object-[center_20%] group-hover:scale-[1.04] transition-transform duration-500" />
+            </div>
+            <div class="p-6 space-y-2.5">
+              <div class="text-xs text-slate-400 font-medium"><span class="font-mono text-blue-400 font-semibold">05</span> · All Generations</div>
+              <h3 class="text-xl font-bold text-white">Specialized Ministries</h3>
+              <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">Dedicated spiritual homes for Knight Men, Queen Reigning Women, Unstoppablegenr, Children Church, and Worship.</p>
+            </div>
+          </div>
+          <div class="px-6 pb-6 pt-3 border-t border-slate-800/80">
+            <a href="#ministries" class="w-full py-2.5 px-4 rounded-xl bg-slate-950/90 hover:bg-blue-600 text-slate-200 hover:text-white font-bold text-xs flex items-center justify-between transition-colors">
+              <span>Open Specialized Ministries</span><span>→</span>
+            </a>
+          </div>
+        </article>
+
+        <article class="overflow-hidden bg-slate-900 border border-slate-800 rounded-3xl flex flex-col justify-between shadow-xl group">
+          <div>
+            <div class="aspect-[16/9] w-full overflow-hidden bg-slate-950 border-b border-slate-800/80">
+              <img src="/assets/aistudio/18_88f34ce9.jpg" alt="Filled Revival Church International sanctuary auditorium during Sunday service" class="w-full h-full object-cover object-center group-hover:scale-[1.04] transition-transform duration-500" />
+            </div>
+            <div class="p-6 space-y-2.5">
+              <div class="text-xs text-slate-400 font-medium"><span class="font-mono text-blue-400 font-semibold">06</span> · Global Footprint</div>
+              <h3 class="text-xl font-bold text-white">Campuses &amp; Times</h3>
+              <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">Locate assembly times for Paarl HQ, Johannesburg, Cape Town, Ballito, London UK, and Atlanta USA.</p>
+            </div>
+          </div>
+          <div class="px-6 pb-6 pt-3 border-t border-slate-800/80">
+            <a href="#campuses" class="w-full py-2.5 px-4 rounded-xl bg-slate-950/90 hover:bg-blue-600 text-slate-200 hover:text-white font-bold text-xs flex items-center justify-between transition-colors">
+              <span>Open Campuses &amp; Times</span><span>→</span>
+            </a>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Senior Leaders Showcase -->
+  <section id="leadership" class="py-16 bg-slate-950 border-t border-slate-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="bg-black border border-slate-800 rounded-3xl p-6 sm:p-10 shadow-2xl space-y-8">
+        <div class="max-w-3xl space-y-3">
+          <span class="text-xs uppercase font-mono font-bold tracking-wider text-amber-400">SENIOR LEADERS</span>
+          <h2 class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">Meet our Senior Leaders</h2>
+          <p class="text-blue-300 font-semibold text-sm sm:text-base">Led by Prophet Herbert &amp; Pastor Shelma Mulondo</p>
+          <p class="text-slate-300 text-sm sm:text-base leading-relaxed">
+            Together, Prophet Herbert &amp; Pastor Shelma Mulondo carry a prophetic mandate of healing, sound Word, and unconditional family love — raising believers who walk in supernatural testimony across South Africa and the nations.
+          </p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
+          <div class="relative aspect-[3/4] rounded-2xl overflow-hidden border border-white/15 shadow-2xl bg-black group">
+            <img src="/assets/aistudio/image_2_6cfe55f4.jfif" alt="Prophet Herbert Mulondo preaching at Revival Church International" class="w-full h-full object-cover object-[46%_top] group-hover:scale-[1.03] transition-transform duration-700" />
+            <div class="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-black/95 via-black/55 to-transparent pointer-events-none"></div>
+            <div class="absolute bottom-5 left-5 right-5">
+              <div class="text-xs font-mono uppercase tracking-wider text-amber-300 font-bold">Senior Leader · Founder</div>
+              <div class="text-xl sm:text-2xl font-bold text-white mt-1">Prophet Herbert Mulondo</div>
+            </div>
+          </div>
+          <div class="relative aspect-[3/4] rounded-2xl overflow-hidden border border-white/15 shadow-2xl bg-black group">
+            <img src="/assets/aistudio/image3_1d7e9e76.jfif" alt="Pastor Shelma Mulondo ministering at Revival Church International" class="w-full h-full object-cover object-[28%_top] group-hover:scale-[1.03] transition-transform duration-700" />
+            <div class="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-black/95 via-black/55 to-transparent pointer-events-none"></div>
+            <div class="absolute bottom-5 left-5 right-5">
+              <div class="text-xs font-mono uppercase tracking-wider text-blue-300 font-bold">Senior Leader · Co-Founder</div>
+              <div class="text-xl sm:text-2xl font-bold text-white mt-1">Pastor Shelma Mulondo</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Asymmetric Bento Gallery: Worship, Word & Covenant Family (4 Remaining HD Images) -->
+  <section class="py-16 bg-slate-950 border-t border-slate-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
+      <div class="flex flex-col md:flex-row md:items-end justify-between mb-6 gap-4">
+        <div class="max-w-2xl">
+          <div class="text-xs font-semibold tracking-wide text-yellow-300 mb-1.5">Life Inside the House</div>
+          <h2 class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">Worship, Word &amp; Covenant Family</h2>
+          <p class="mt-2 text-slate-300 text-sm sm:text-base leading-relaxed">
+            Every Sunday and midweek gathering is marked by expectant praise, grounded biblical teaching, and genuine family warmth.
+          </p>
+        </div>
+        <button onclick="openModal('visitModal')" class="self-start md:self-auto px-5 py-2.5 text-xs sm:text-sm font-bold text-slate-950 bg-yellow-300 hover:bg-yellow-200 rounded-xl transition-colors cursor-pointer whitespace-nowrap">
+          Join Us This Sunday →
+        </button>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
+        <figure class="lg:col-span-7 relative aspect-[16/9] lg:aspect-auto lg:h-[400px] rounded-3xl overflow-hidden border border-white/10 bg-slate-950 shadow-2xl group">
+          <img src="/assets/aistudio/17jpg_cf5cc1f1.jpg" alt="Congregation gathered inside the main sanctuary facing the altar" class="w-full h-full object-cover object-center group-hover:scale-[1.03] transition-transform duration-700" />
+          <div class="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-black/90 via-black/45 to-transparent pointer-events-none"></div>
+          <figcaption class="absolute bottom-5 left-6 right-6">
+            <div class="text-xs font-medium text-blue-300">Sunday Assembly · Sanctuary</div>
+            <div class="text-xl font-bold text-white mt-0.5">Gathered in His Presence</div>
+            <p class="text-xs sm:text-sm text-slate-200 mt-1">Hearts united in faith and expectation across every row of the auditorium.</p>
+          </figcaption>
+        </figure>
+
+        <figure class="lg:col-span-5 relative aspect-[3/2] lg:aspect-auto lg:h-[400px] rounded-3xl overflow-hidden border border-white/10 bg-slate-950 shadow-2xl group">
+          <img src="/assets/aistudio/21_eb16dab7.jpg" alt="Joyful church members applauding and celebrating during worship" class="w-full h-full object-cover object-[center_20%] group-hover:scale-[1.03] transition-transform duration-700" />
+          <div class="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-black/90 via-black/45 to-transparent pointer-events-none"></div>
+          <figcaption class="absolute bottom-5 left-6 right-6">
+            <div class="text-xs font-medium text-yellow-300">Praise &amp; Fellowship</div>
+            <div class="text-xl font-bold text-white mt-0.5">Joy &amp; Celebration</div>
+            <p class="text-xs sm:text-sm text-slate-200 mt-1">A joyful family rejoicing together in grace and living testimonies.</p>
+          </figcaption>
+        </figure>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <figure class="relative aspect-[16/10] rounded-3xl overflow-hidden border border-white/10 bg-slate-950 shadow-2xl group">
+          <img src="/assets/aistudio/13_658df435.jpg" alt="Elders and youth seated side by side listening attentively to the Word" class="w-full h-full object-cover object-[center_20%] group-hover:scale-[1.03] transition-transform duration-700" />
+          <div class="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-black/90 via-black/45 to-transparent pointer-events-none"></div>
+          <figcaption class="absolute bottom-5 left-6 right-6">
+            <div class="text-xs font-medium text-blue-300">Multi-Generational Family</div>
+            <div class="text-xl font-bold text-white mt-0.5">Every Generation Together</div>
+            <p class="text-xs sm:text-sm text-slate-200 mt-1">Fathers, mothers, and young adults growing side by side in covenant love.</p>
+          </figcaption>
+        </figure>
+
+        <figure class="relative aspect-[16/10] rounded-3xl overflow-hidden border border-white/10 bg-slate-950 shadow-2xl group">
+          <img src="/assets/aistudio/15_5dd492fb.jpg" alt="Church family attentively taking notes during a prophetic teaching" class="w-full h-full object-cover object-[center_20%] group-hover:scale-[1.03] transition-transform duration-700" />
+          <div class="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-black/90 via-black/45 to-transparent pointer-events-none"></div>
+          <figcaption class="absolute bottom-5 left-6 right-6">
+            <div class="text-xs font-medium text-yellow-300">Discipleship &amp; Truth</div>
+            <div class="text-xl font-bold text-white mt-0.5">Hungry for the Word</div>
+            <p class="text-xs sm:text-sm text-slate-200 mt-1">Equipping believers through sound Scripture that builds unshakeable faith.</p>
+          </figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- Conferences & Upcoming Events -->
+  <section id="events" class="py-16 bg-slate-900 border-t border-slate-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="rounded-3xl bg-slate-950/80 border border-slate-800 p-8 sm:p-12 flex flex-col md:flex-row md:items-center justify-between gap-6 shadow-2xl">
+        <div class="max-w-2xl">
+          <div class="text-xs font-semibold tracking-wider uppercase text-blue-400 mb-2">Gatherings &amp; Encounters</div>
+          <h2 class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">Conferences &amp; Upcoming Events</h2>
+          <p class="mt-3 text-slate-300 text-sm sm:text-base leading-relaxed">
+            Mark your calendar for life-defining gatherings, prophetic summits, and nights of divine encounter.
+          </p>
+        </div>
+        <div class="shrink-0 flex items-center gap-3 px-6 py-4 rounded-2xl bg-slate-900 border border-yellow-300/30">
+          <span class="text-xl sm:text-2xl font-extrabold tracking-widest uppercase text-yellow-300 whitespace-nowrap">COMING SOON</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Campuses Section -->
+  <section id="campuses" class="py-20 bg-slate-900 border-t border-b border-slate-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-3xl mx-auto mb-12">
+        <div class="text-xs font-semibold tracking-wider uppercase text-blue-400 mb-2">
+          One Church · Multiple Physical &amp; Digital Hubs
+        </div>
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-white">
+          Our Campuses &amp; Service Times
+        </h2>
+        <p class="mt-2 text-slate-300 text-sm sm:text-base">
+          Join us in-person across South Africa, the United Kingdom, the United States, or globally online.
+        </p>
+      </div>
+
+      <!-- Campus Cards Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Sandton HQ -->
+        <div class="bg-slate-950 border border-slate-800 rounded-2xl p-6 space-y-4 hover:border-blue-500/50 transition-all">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-mono font-bold text-blue-400">Johannesburg (HQ)</span>
+            <span class="text-xs text-slate-400">South Africa</span>
+          </div>
+          <h3 class="text-xl font-bold text-white">Sandton Apostolic Hub</h3>
+          <p class="text-xs text-slate-400">104 Rivonia Road, Sandhurst, Sandton, 2196</p>
+          <div class="p-3 bg-slate-900 rounded-xl space-y-1 text-xs">
+            <div class="text-amber-400 font-bold">Sundays: 09:00 AM &amp; 17:00 PM CAT</div>
+            <div class="text-slate-300">Wednesdays: 19:00 PM Midweek Miracles</div>
+          </div>
+          <div class="pt-2 flex items-center justify-between">
+            <button onclick="openModal('visitModal', 'Johannesburg (HQ)')" class="px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-lg text-xs font-bold cursor-pointer">
+              Plan My Visit
+            </button>
+            <span class="text-xs text-slate-400">Prophet Herbert &amp; Pastor Shelma</span>
+          </div>
+        </div>
+
+        <!-- Cape Town -->
+        <div class="bg-slate-950 border border-slate-800 rounded-2xl p-6 space-y-4 hover:border-blue-500/50 transition-all">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-mono font-bold text-blue-400">Cape Town</span>
+            <span class="text-xs text-slate-400">South Africa</span>
+          </div>
+          <h3 class="text-xl font-bold text-white">Century City / Tygervalley</h3>
+          <p class="text-xs text-slate-400">Victorian Towers, 1st Floor, Cnr Palm &amp; Durban Rd</p>
+          <div class="p-3 bg-slate-900 rounded-xl space-y-1 text-xs">
+            <div class="text-amber-400 font-bold">Sundays: 09:30 AM &amp; 17:30 PM CAT</div>
+            <div class="text-slate-300">Wednesdays: 18:30 PM School of the Spirit</div>
+          </div>
+          <div class="pt-2 flex items-center justify-between">
+            <button onclick="openModal('visitModal', 'Cape Town Campus')" class="px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-lg text-xs font-bold cursor-pointer">
+              Plan My Visit
+            </button>
+            <span class="text-xs text-slate-400">Pastors Emmanuel &amp; Grace</span>
+          </div>
+        </div>
+
+        <!-- Ballito -->
+        <div class="bg-slate-950 border border-slate-800 rounded-2xl p-6 space-y-4 hover:border-blue-500/50 transition-all">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-mono font-bold text-blue-400">Dolphin Coast</span>
+            <span class="text-xs text-slate-400">Ballito, KZN</span>
+          </div>
+          <h3 class="text-xl font-bold text-white">Ballito Revival Hub</h3>
+          <p class="text-xs text-slate-400">15 Moffat Drive, Ballito Business Park</p>
+          <div class="p-3 bg-slate-900 rounded-xl space-y-1 text-xs">
+            <div class="text-amber-400 font-bold">Sundays: 09:00 AM &amp; 17:00 PM CAT</div>
+            <div class="text-slate-300">Monthly Regional Fire Nights</div>
+          </div>
+          <div class="pt-2 flex items-center justify-between">
+            <button onclick="openModal('visitModal', 'Dolphin Coast (Ballito)')" class="px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-lg text-xs font-bold cursor-pointer">
+              Plan My Visit
+            </button>
+            <span class="text-xs text-slate-400">Pastors Michael &amp; Deborah</span>
+          </div>
+        </div>
+
+        <!-- London UK -->
+        <div class="bg-slate-950 border border-slate-800 rounded-2xl p-6 space-y-4 hover:border-blue-500/50 transition-all">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-mono font-bold text-blue-400">London Campus</span>
+            <span class="text-xs text-slate-400">United Kingdom</span>
+          </div>
+          <h3 class="text-xl font-bold text-white">Westminster Assembly</h3>
+          <p class="text-xs text-slate-400">Storey’s Gate, Westminster, London SW1P 9NH</p>
+          <div class="p-3 bg-slate-900 rounded-xl space-y-1 text-xs">
+            <div class="text-amber-400 font-bold">Sundays: 10:30 AM &amp; 16:00 PM GMT</div>
+            <div class="text-slate-300">Thursdays: 19:30 PM UK Revival Groups</div>
+          </div>
+          <div class="pt-2 flex items-center justify-between">
+            <button onclick="openModal('visitModal', 'London UK Campus')" class="px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-lg text-xs font-bold cursor-pointer">
+              Plan My Visit
+            </button>
+            <span class="text-xs text-slate-400">Pastors Andrew &amp; Olivia</span>
+          </div>
+        </div>
+
+        <!-- Atlanta USA -->
+        <div class="bg-slate-950 border border-slate-800 rounded-2xl p-6 space-y-4 hover:border-blue-500/50 transition-all">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-mono font-bold text-blue-400">Atlanta Campus</span>
+            <span class="text-xs text-slate-400">United States</span>
+          </div>
+          <h3 class="text-xl font-bold text-white">Buckhead Revival Center</h3>
+          <p class="text-xs text-slate-400">3344 Peachtree Rd NE, Suite 800, Atlanta, GA</p>
+          <div class="p-3 bg-slate-900 rounded-xl space-y-1 text-xs">
+            <div class="text-amber-400 font-bold">Sundays: 10:00 AM EST</div>
+            <div class="text-slate-300">Wednesdays: 19:00 PM EST Empowerment</div>
+          </div>
+          <div class="pt-2 flex items-center justify-between">
+            <button onclick="openModal('visitModal', 'Atlanta USA Campus')" class="px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-lg text-xs font-bold cursor-pointer">
+              Plan My Visit
+            </button>
+            <span class="text-xs text-slate-400">Pastors Marcus &amp; Chloe</span>
+          </div>
+        </div>
+
+        <!-- Global Online -->
+        <div class="bg-slate-950 border border-slate-800 rounded-2xl p-6 space-y-4 hover:border-red-500/50 transition-all">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-mono font-bold text-red-400">Global Online</span>
+            <span class="text-xs text-slate-400">Worldwide 24/7</span>
+          </div>
+          <h3 class="text-xl font-bold text-white">Digital Broadcast Altar</h3>
+          <p class="text-xs text-slate-400">Streaming across RCI Player, YouTube &amp; Mobile App</p>
+          <div class="p-3 bg-slate-900 rounded-xl space-y-1 text-xs">
+            <div class="text-amber-400 font-bold">Sundays: 09:00 AM &amp; 17:00 PM CAT</div>
+            <div class="text-slate-300">Daily: 06:00 AM Morning Fire Prayer</div>
+          </div>
+          <div class="pt-2 flex items-center justify-between">
+            <button onclick="openModal('liveModal')" class="px-4 py-2 bg-red-600 hover:bg-red-500 text-white rounded-lg text-xs font-bold cursor-pointer">
+              Join Stream
+            </button>
+            <span class="text-xs text-slate-400">Over 120 eGroups</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Membership & Discipleship Pathway -->
+  <section id="membership" class="py-20 bg-slate-950 border-t border-slate-800 scroll-mt-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+      <div class="text-center max-w-3xl mx-auto">
+        <div class="text-xs font-semibold tracking-wider uppercase text-blue-400 mb-2">
+          Encounter · Equip · Conquer
+        </div>
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-white">
+          The RCI Discipleship Pathway
+        </h2>
+        <p class="mt-2 text-slate-300 text-sm sm:text-base">
+          Sunday morning is only the beginning. The Pathway is our structured 6-step journey designed to take you from a first-time guest to an empowered, purpose-driven kingdom leader.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div class="bg-slate-900/70 border border-slate-800 rounded-2xl p-6 space-y-3">
+          <div class="flex items-center justify-between">
+            <span class="w-8 h-8 rounded-full bg-blue-600 text-white font-bold flex items-center justify-center text-sm">1</span>
+            <span class="text-xs text-slate-400 font-mono">Week 1</span>
+          </div>
+          <h3 class="text-lg font-bold text-white">Step 01: Connect &amp; Welcome</h3>
+          <p class="text-xs text-slate-300">Stop by the VIP Welcome Lounge after any Sunday service. Enjoy great coffee, meet friendly hosts, and receive your Welcome Gift Pack.</p>
+        </div>
+
+        <div class="bg-slate-900/70 border border-slate-800 rounded-2xl p-6 space-y-3">
+          <div class="flex items-center justify-between">
+            <span class="w-8 h-8 rounded-full bg-blue-600 text-white font-bold flex items-center justify-center text-sm">2</span>
+            <span class="text-xs text-slate-400 font-mono">Week 2</span>
+          </div>
+          <h3 class="text-lg font-bold text-white">Step 02: Meet RCI &amp; Senior Leaders</h3>
+          <p class="text-xs text-slate-300">An informal dessert reception with our campus pastors. Learn our history, core apostolic values, and divine mission.</p>
+        </div>
+
+        <div class="bg-slate-900/70 border border-slate-800 rounded-2xl p-6 space-y-3">
+          <div class="flex items-center justify-between">
+            <span class="w-8 h-8 rounded-full bg-blue-600 text-white font-bold flex items-center justify-center text-sm">3</span>
+            <span class="text-xs text-slate-400 font-mono">Week 3</span>
+          </div>
+          <h3 class="text-lg font-bold text-white">Step 03: Foundations 101</h3>
+          <p class="text-xs text-slate-300">A 2-session module uncovering new-creation realities, righteousness by faith, water baptism, and authority in Christ.</p>
+        </div>
+
+        <div class="bg-slate-900/70 border border-slate-800 rounded-2xl p-6 space-y-3">
+          <div class="flex items-center justify-between">
+            <span class="w-8 h-8 rounded-full bg-blue-600 text-white font-bold flex items-center justify-center text-sm">4</span>
+            <span class="text-xs text-slate-400 font-mono">Week 4</span>
+          </div>
+          <h3 class="text-lg font-bold text-white">Step 04: Join the V-Team (Serving)</h3>
+          <p class="text-xs text-slate-300">Discover your spiritual gifts and passions. Shadow active serving teams across worship, media, kids, and hospitality.</p>
+        </div>
+
+        <div class="bg-slate-900/70 border border-slate-800 rounded-2xl p-6 space-y-3">
+          <div class="flex items-center justify-between">
+            <span class="w-8 h-8 rounded-full bg-blue-600 text-white font-bold flex items-center justify-center text-sm">5</span>
+            <span class="text-xs text-slate-400 font-mono">Week 5</span>
+          </div>
+          <h3 class="text-lg font-bold text-white">Step 05: Empowerment 201</h3>
+          <p class="text-xs text-slate-300">Deep activation into hearing God's voice, praying in the Spirit, and practical demonstrations of divine love and power.</p>
+        </div>
+
+        <div class="bg-slate-900/70 border border-slate-800 rounded-2xl p-6 space-y-3">
+          <div class="flex items-center justify-between">
+            <span class="w-8 h-8 rounded-full bg-emerald-600 text-white font-bold flex items-center justify-center text-sm">6</span>
+            <span class="text-xs text-slate-400 font-mono">Week 6</span>
+          </div>
+          <h3 class="text-lg font-bold text-white">Step 06: Full Commissioning</h3>
+          <p class="text-xs text-slate-300">Celebration of completion! Formally received into covenant church membership, ready to lead an eGroup or marketplace altar.</p>
+        </div>
+      </div>
+
+      <!-- Key Milestones & Outcomes Callout Box -->
+      <div class="bg-slate-900 border border-slate-800 rounded-3xl p-8 sm:p-10 shadow-2xl">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+          <div class="lg:col-span-6 space-y-3">
+            <span class="text-xs uppercase font-mono font-bold text-blue-400">Week 1 Roadmap</span>
+            <h3 class="text-2xl font-bold text-white">Your First Step into Family</h3>
+            <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
+              Stop by the VIP Welcome Lounge after any Sunday service. Enjoy great coffee, meet friendly hosts, and receive your Welcome Gift Pack.
+            </p>
+            <div class="pt-2 flex items-center gap-3">
+              <button onclick="openModal('visitModal')" class="px-5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-xl text-xs cursor-pointer">
+                Plan a Sunday Visit
+              </button>
+              <span class="text-xs text-slate-400">✓ Runs termly at all campuses &amp; online</span>
+            </div>
+          </div>
+          <div class="lg:col-span-6 bg-slate-950 p-6 rounded-2xl border border-slate-800 space-y-3">
+            <div class="text-xs font-bold uppercase tracking-wider text-slate-400">✨ Key Milestones &amp; Outcomes</div>
+            <ul class="space-y-2 text-xs text-slate-300">
+              <li class="flex items-start gap-2"><span>🛡️</span><span>Complete clarity on RCI apostolic DNA and prophetic theology</span></li>
+              <li class="flex items-start gap-2"><span>🤝</span><span>Personal connection with campus pastors and cell leaders</span></li>
+              <li class="flex items-start gap-2"><span>👤</span><span>Placement in a ministry team aligned with your spiritual gifts</span></li>
+              <li class="flex items-start gap-2"><span>📜</span><span>Certificate of Completion &amp; official covenant membership</span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sermons Console -->
+  <section id="sermons" class="py-20 bg-slate-900 border-t border-slate-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-3xl mx-auto mb-12">
+        <div class="text-xs font-semibold tracking-wider uppercase text-blue-400 mb-2">
+          Word &amp; Revelation Altar
+        </div>
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-white">
+          Sermons &amp; Prophetic Teachings
+        </h2>
+        <p class="mt-2 text-slate-300 text-sm sm:text-base">
+          Stream anointed messages grounded in grace, supernatural power, and kingdom authority.
+        </p>
+      </div>
+
+      <div class="bg-slate-950 border border-slate-800 rounded-3xl p-6 sm:p-10 shadow-2xl mb-8">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+          <div class="lg:col-span-7 bg-slate-900 rounded-2xl p-6 aspect-video flex flex-col justify-between border border-slate-800 relative">
+            <div class="flex items-center justify-between text-xs text-slate-400">
+              <span class="font-bold text-blue-400 uppercase">Current Prophetic Series</span>
+              <span class="font-mono">52 mins</span>
+            </div>
+            <div class="text-center my-auto">
+              <button onclick="toggleAudio()" id="playBtn" class="w-16 h-16 rounded-full bg-blue-600 hover:bg-blue-500 text-white flex items-center justify-center mx-auto shadow-xl shadow-blue-600/40 text-xl font-bold cursor-pointer">
+                ▶
+              </button>
+              <div id="playStatus" class="text-xs text-slate-400 mt-3 font-medium">Click to stream message</div>
+            </div>
+            <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden">
+              <div id="progressBar" class="bg-blue-500 h-full w-[22%]"></div>
+            </div>
+          </div>
+
+          <div class="lg:col-span-5 space-y-4">
+            <div class="text-xs text-blue-400 font-bold uppercase tracking-wider">Kingdom Dominion 2026</div>
+            <h3 class="text-2xl font-bold text-white">Unstoppable Glory: Walking in Kingdom Dominion</h3>
+            <p class="text-xs text-slate-400">Ministered by <strong>Prophet Herbert Mulondo</strong> · Romans 8:31-39</p>
+            <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
+              A prophetic declaration on understanding the resurrection power at work within believers. You are not fighting for victory; you are enforcing victory from the heavenly places.
+            </p>
+            <div class="pt-2 flex items-center gap-3">
+              <button onclick="openModal('liveModal')" class="px-4 py-2 bg-red-600 hover:bg-red-500 text-white font-bold rounded-xl text-xs flex items-center gap-2 cursor-pointer">
+                <span>▶ Watch Live Stream</span>
+              </button>
+              <button onclick="alert('Downloading study guide outline...')" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold rounded-xl text-xs cursor-pointer">
+                <span>📄 Study Notes</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Vision Fund & Giving -->
+  <section class="py-20 bg-slate-950 border-t border-slate-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="bg-gradient-to-br from-slate-900 via-slate-950 to-blue-950 border border-slate-800 rounded-3xl p-8 sm:p-12 shadow-2xl">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+          <div class="lg:col-span-8 space-y-5">
+            <span class="px-3 py-1 bg-amber-500/10 border border-amber-500/30 text-amber-300 text-xs font-bold rounded-full">
+              The Legacy Vision Fund 2026
+            </span>
+            <h2 class="text-3xl sm:text-4xl font-extrabold text-white">
+              Building Altars for the Nations — Brick by Brick, Life by Life.
+            </h2>
+            <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
+              The Vision Fund fuels an apostolic movement, expanding seated auditorium capacity, launching 4K global broadcast studios, and providing emergency community relief across Southern Africa and beyond.
+            </p>
+            <div class="bg-slate-950/80 border border-slate-800 rounded-2xl p-4 space-y-2">
+              <div class="flex justify-between text-xs font-semibold">
+                <span class="text-slate-300">Phase 1 Milestone Progress</span>
+                <span class="text-amber-400 font-bold">75% Funded ($1.875M / $2.5M Target)</span>
+              </div>
+              <div class="w-full bg-slate-800 h-3 rounded-full overflow-hidden">
+                <div class="bg-gradient-to-r from-amber-500 to-amber-300 h-full w-[75%]"></div>
+              </div>
+            </div>
+            <button onclick="openModal('givingModal')" class="px-6 py-3 bg-amber-400 hover:bg-amber-300 text-slate-950 font-bold rounded-xl text-xs sm:text-sm shadow-lg shadow-amber-400/20 cursor-pointer">
+              Partner with the Vision Fund
+            </button>
+          </div>
+          <div class="lg:col-span-4 space-y-3">
+            <div class="p-4 bg-slate-900/80 border border-slate-800 rounded-xl">
+              <h4 class="text-sm font-bold text-white">🏛️ Sanctuary Expansions</h4>
+              <p class="text-xs text-slate-400 mt-1">Expanding capacity at Sandton HQ and securing permanent facilities for Cape Town &amp; Ballito.</p>
+            </div>
+            <div class="p-4 bg-slate-900/80 border border-slate-800 rounded-xl">
+              <h4 class="text-sm font-bold text-white">📡 4K Global Media Center</h4>
+              <p class="text-xs text-slate-400 mt-1">State-of-the-art satellite studios with multi-language interpretation for global broadcasts.</p>
+            </div>
+            <div class="p-4 bg-slate-900/80 border border-slate-800 rounded-xl">
+              <h4 class="text-sm font-bold text-white">🤝 Revival Hope Havens</h4>
+              <p class="text-xs text-slate-400 mt-1">Daily community feeding programs, emergency shelters, and youth vocational skills labs.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-slate-950 border-t border-slate-800 py-12 text-slate-400 text-xs sm:text-sm mt-auto">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+      <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div class="flex items-center gap-2">
+          <div class="w-8 h-8 rounded-lg bg-blue-600 flex items-center justify-center font-bold text-white text-sm">RCI</div>
+          <span class="text-base font-bold text-white">Revival Church International</span>
+        </div>
+        <div class="flex flex-wrap items-center gap-4 text-xs">
+          <a href="#about" class="hover:text-white">About</a>
+          <a href="#campuses" class="hover:text-white">Campuses</a>
+          <a href="#sermons" class="hover:text-white">Sermons</a>
+          <a href="#pathway" class="hover:text-white">Pathway</a>
+          <button onclick="openModal('givingModal')" class="text-amber-400 hover:text-amber-300">Give</button>
+          <button onclick="openModal('prayerModal')" class="text-blue-400 hover:text-blue-300">Prayer</button>
+        </div>
+      </div>
+      <div class="border-t border-slate-900 pt-6 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 gap-2">
+        <div>© 2026 Revival Church International (RCI). All Rights Reserved.</div>
+        <div>Johannesburg · Cape Town · London · Atlanta · Global Online</div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- MODALS -->
+
+  <!-- Giving Modal -->
+  <div id="givingModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md">
+    <div class="bg-slate-950 border border-slate-800 rounded-3xl w-full max-w-lg p-6 sm:p-8 relative">
+      <div class="flex items-center justify-between border-b border-slate-800 pb-3 mb-4">
+        <h3 class="text-lg font-bold text-white">Partner with RCI</h3>
+        <button onclick="closeModal('givingModal')" class="text-slate-400 hover:text-white p-1">✕</button>
+      </div>
+      <div class="space-y-4 text-xs">
+        <div>
+          <label class="block font-semibold text-slate-300 mb-1">Select Designation</label>
+          <select class="w-full bg-slate-900 border border-slate-800 rounded-xl p-2.5 text-white">
+            <option>Tithes &amp; Regular Offerings</option>
+            <option>The Legacy Vision Fund (Building Project)</option>
+            <option>Revival Hope Community Haven</option>
+            <option>Global Missions &amp; Media</option>
+          </select>
+        </div>
+        <div class="bg-slate-900 p-4 rounded-xl space-y-2 border border-slate-800">
+          <div class="font-bold text-white">Direct Bank EFT (FNB South Africa)</div>
+          <div>Account: <strong class="text-blue-400">62849921043</strong> (Cheque)</div>
+          <div>Branch: <strong class="text-white">250655 (Sandton City)</strong></div>
+          <div>SWIFT: <strong class="text-white">FIRNZAJJXXX</strong></div>
+          <div>Ref: <span class="text-amber-400">Initials + Surname + Designation</span></div>
+        </div>
+        <button onclick="alert('Thank you! Redirecting to secure instant card payment...'); closeModal('givingModal');" class="w-full py-3 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-xl">
+          Give via Card / SnapScan
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Plan Visit Modal -->
+  <div id="visitModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md">
+    <div class="bg-slate-950 border border-slate-800 rounded-3xl w-full max-w-md p-6 sm:p-8 relative">
+      <div class="flex items-center justify-between border-b border-slate-800 pb-3 mb-4">
+        <h3 class="text-lg font-bold text-white">Plan Your VIP Sunday Visit</h3>
+        <button onclick="closeModal('visitModal')" class="text-slate-400 hover:text-white p-1">✕</button>
+      </div>
+      <form onsubmit="event.preventDefault(); alert('VIP Visit Confirmed! Code: RCI-VIP-' + Math.floor(100000+Math.random()*900000) + '\nWe have reserved priority seats and a welcome gift bag for you.'); closeModal('visitModal');" class="space-y-3 text-xs">
+        <div>
+          <label class="block font-semibold text-slate-300 mb-1">Campus</label>
+          <select id="visitCampusSelect" class="w-full bg-slate-900 border border-slate-800 rounded-xl p-2 text-white">
+            <option>Johannesburg (HQ Campus)</option>
+            <option>Cape Town Campus</option>
+            <option>Dolphin Coast (Ballito)</option>
+            <option>London UK Campus</option>
+            <option>Atlanta USA Campus</option>
+          </select>
+        </div>
+        <div>
+          <label class="block font-semibold text-slate-300 mb-1">Full Name</label>
+          <input type="text" required placeholder="e.g. Tendai Moyo" class="w-full bg-slate-900 border border-slate-800 rounded-xl p-2 text-white" />
+        </div>
+        <div>
+          <label class="block font-semibold text-slate-300 mb-1">Email</label>
+          <input type="email" required placeholder="tendai@example.com" class="w-full bg-slate-900 border border-slate-800 rounded-xl p-2 text-white" />
+        </div>
+        <button type="submit" class="w-full py-2.5 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-xl mt-2">
+          Confirm VIP Visit
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Prayer Request Modal -->
+  <div id="prayerModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md">
+    <div class="bg-slate-950 border border-slate-800 rounded-3xl w-full max-w-md p-6 sm:p-8 relative">
+      <div class="flex items-center justify-between border-b border-slate-800 pb-3 mb-4">
+        <h3 class="text-lg font-bold text-white">✨ Request Prayer</h3>
+        <button onclick="closeModal('prayerModal')" class="text-slate-400 hover:text-white p-1">✕</button>
+      </div>
+      <form onsubmit="event.preventDefault(); alert('Prayer petition received. Our pastoral prayer altar has lifted your request before the Lord.'); closeModal('prayerModal');" class="space-y-3 text-xs">
+        <div>
+          <label class="block font-semibold text-slate-300 mb-1">Full Name</label>
+          <input type="text" required placeholder="e.g. Nomsa Dlamini" class="w-full bg-slate-900 border border-slate-800 rounded-xl p-2 text-white" />
+        </div>
+        <div>
+          <label class="block font-semibold text-slate-300 mb-1">Petition Category</label>
+          <select class="w-full bg-slate-900 border border-slate-800 rounded-xl p-2 text-white">
+            <option>Supernatural Healing &amp; Health</option>
+            <option>Financial &amp; Career Breakthrough</option>
+            <option>Marriage &amp; Family Restoration</option>
+            <option>Salvation of Loved Ones</option>
+          </select>
+        </div>
+        <div>
+          <label class="block font-semibold text-slate-300 mb-1">Prayer Request Details</label>
+          <textarea rows="3" required placeholder="Share your petition openly..." class="w-full bg-slate-900 border border-slate-800 rounded-xl p-2 text-white"></textarea>
+        </div>
+        <button type="submit" class="w-full py-2.5 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-xl mt-2">
+          Submit to Prayer Altar
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Live Stream Modal -->
+  <div id="liveModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/90 backdrop-blur-md">
+    <div class="bg-slate-950 border border-slate-800 rounded-3xl w-full max-w-4xl p-6 sm:p-8 relative">
+      <div class="flex items-center justify-between border-b border-slate-800 pb-3 mb-4">
+        <div class="flex items-center gap-2">
+          <span class="w-2.5 h-2.5 rounded-full bg-red-500 animate-ping"></span>
+          <h3 class="text-lg font-bold text-white">RCI Global Broadcast Stream (Live)</h3>
+        </div>
+        <button onclick="closeModal('liveModal')" class="text-slate-400 hover:text-white p-1">✕</button>
+      </div>
+      <div class="aspect-video bg-black rounded-2xl flex flex-col items-center justify-center text-center p-6 border border-slate-800">
+        <div class="w-14 h-14 rounded-full bg-red-600 flex items-center justify-center text-white text-xl font-bold mb-3 animate-pulse">
+          ▶
+        </div>
+        <div class="text-lg font-bold text-white">Sunday Global Encounter Service</div>
+        <div class="text-xs text-slate-400 mt-1">Prophet Herbert Mulondo ministering on Kingdom Authority</div>
+        <div class="text-[11px] text-blue-400 font-mono mt-3">4,820 Viewers Live Online</div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function openModal(id, param) {
+      const modal = document.getElementById(id);
+      if (modal) {
+        modal.classList.remove('hidden');
+        if (id === 'visitModal' && param) {
+          const select = document.getElementById('visitCampusSelect');
+          if (select) select.value = param;
+        }
+      }
+    }
+    function closeModal(id) {
+      const modal = document.getElementById(id);
+      if (modal) modal.classList.add('hidden');
+    }
+
+    function toggleDropdown(id) {
+      const el = document.getElementById(id);
+      if (el) {
+        el.classList.toggle('hidden');
+      }
+    }
+
+    let isAudioPlaying = false;
+    function toggleAudio() {
+      isAudioPlaying = !isAudioPlaying;
+      const btn = document.getElementById('playBtn');
+      const status = document.getElementById('playStatus');
+      if (btn) btn.innerText = isAudioPlaying ? '❚❚' : '▶';
+      if (status) status.innerText = isAudioPlaying ? 'Streaming audio...' : 'Click to stream message';
+    }
+
+    (function () {
+      const slides = document.querySelectorAll('.hero-fade-slide');
+      if (!slides.length) return;
+      let current = 0;
+      setInterval(() => {
+        slides[current].classList.remove('opacity-100');
+        slides[current].classList.add('opacity-0');
+        current = (current + 1) % slides.length;
+        slides[current].classList.remove('opacity-0');
+        slides[current].classList.add('opacity-100');
+      }, 5000);
+    })();
+  </script>
+</body>
+</html>

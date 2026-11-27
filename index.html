@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Revival Church International (RCI) | Grace · Power · Transformation</title>
+    <meta name="description" content="Revival Church International (RCI) is a global apostolic and prophetic movement bringing supernatural encounters through God's Word, Spirit, and power. Join us in-person across our campuses or online." />
+    
+    <!-- OpenGraph / Social Cards -->
+    <meta property="og:title" content="Revival Church International (RCI)" />
+    <meta property="og:description" content="A prophetic movement built on grace, power, and family — reaching communities and nations with the Gospel." />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="en_US" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Revival Church International (RCI)" />
+    <meta name="twitter:description" content="Grace · Power · Transformation. Join us this Sunday across our campuses and global broadcast." />
+    <meta name="theme-color" content="#0F172A" />
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+
+    <!-- Favicon link (SVG Church cross & flame motif) -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%232563EB'><path d='M12 2L15 8H9L12 2Z'/><path d='M11 8H13V22H11V8Z'/><path d='M6 12H18V14H6V12Z'/></svg>" />
+
+    <!-- Third-party browser extension error suppressor (e.g. MetaMask, Phantom) -->
+    <script>
+      (function() {
+        window.addEventListener('unhandledrejection', function(e) {
+          var r = e.reason;
+          var msg = typeof r === 'string' ? r : (r && r.message ? r.message : '');
+          if (/metamask|ethereum|web3|wallet|chrome-extension/i.test(msg)) {
+            e.preventDefault();
+            e.stopImmediatePropagation();
+          }
+        }, true);
+
+        window.addEventListener('error', function(e) {
+          var msg = e.message || '';
+          var fn = e.filename || '';
+          if (/metamask|ethereum|web3|wallet/i.test(msg) || /chrome-extension|moz-extension|safari-extension/i.test(fn)) {
+            e.preventDefault();
+            e.stopImmediatePropagation();
+            return true;
+          }
+        }, true);
+      })();
+    </script>
+  </head>
+  <body class="bg-slate-950 text-slate-100 font-sans antialiased selection:bg-blue-600 selection:text-white" style="background-color:#030712;color:#f1f5f9;">
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
+

@@ -1,0 +1,6 @@
+{
+  "name": "Revival Church International (RCI)",
+  "description": "Official portal for Revival Church International (RCI) - A global prophetic movement built on grace, power, and family. Campuses, live sermons, ministries, discipleship pathway, and giving.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
