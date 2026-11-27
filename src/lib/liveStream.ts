@@ -107,6 +107,10 @@ export const fetchLiveStatus = async (): Promise<LiveStatus> => {
     }
   }
 
+  // Browser-safe probe via the official IFrame API (no CORS problems).
+  const iframe = await fetchIframeStatus(liveStream.youtubeId);
+  if (iframe) return iframe;
+
   const keyless = await fetchInnerTubeStatus(liveStream.youtubeId);
   return keyless ?? fallback;
 };
@@ -165,6 +169,115 @@ const fetchInnerTubeStatus = async (videoId: string): Promise<LiveStatus | null>
   }
 };
 
+/**
+ * Browser-safe live detection. YouTube's youtubei/v1/player endpoint has no
+ * CORS headers, so a direct fetch always fails in the browser. The official
+ * IFrame API talks to the player over postMessage and exposes the same
+ * `isLive` flag via getVideoData(), so we probe with a tiny hidden player.
+ */
+type YTPlayerLike = {
+  getVideoData?: () => Record<string, unknown>;
+  destroy?: () => void;
+};
+type YTNamespace = {
+  Player: new (target: HTMLElement, options: Record<string, unknown>) => YTPlayerLike;
+};
+type WindowWithYT = Window & {
+  YT?: YTNamespace;
+  onYouTubeIframeAPIReady?: () => void;
+};
+
+let ytApiPromise: Promise<YTNamespace> | null = null;
+
+const loadYouTubeIframeApi = (): Promise<YTNamespace> => {
+  const w = window as WindowWithYT;
+  if (w.YT?.Player) return Promise.resolve(w.YT);
+  if (!ytApiPromise) {
+    ytApiPromise = new Promise<YTNamespace>((resolve, reject) => {
+      const previous = w.onYouTubeIframeAPIReady;
+      w.onYouTubeIframeAPIReady = () => {
+        previous?.();
+        if (w.YT?.Player) resolve(w.YT);
+        else reject(new Error('YouTube IFrame API unavailable'));
+      };
+      const script = document.createElement('script');
+      script.src = 'https://www.youtube.com/iframe_api';
+      script.async = true;
+      script.onerror = () => reject(new Error('YouTube IFrame API blocked'));
+      document.head.appendChild(script);
+      window.setTimeout(() => reject(new Error('YouTube IFrame API timeout')), 12_000);
+    }).catch((error: unknown) => {
+      ytApiPromise = null;
+      throw error;
+    });
+  }
+  return ytApiPromise;
+};
+
+const fetchIframeStatus = async (videoId: string): Promise<LiveStatus | null> => {
+  if (typeof window === 'undefined') return null;
+  try {
+    const YT = await loadYouTubeIframeApi();
+    return await new Promise<LiveStatus | null>((resolve) => {
+      let settled = false;
+      let player: YTPlayerLike | null = null;
+      let host: HTMLDivElement | null = null;
+      let timer: number | null = null;
+
+      const finish = (value: LiveStatus | null) => {
+        if (settled) return;
+        settled = true;
+        if (timer !== null) window.clearTimeout(timer);
+        try {
+          player?.destroy?.();
+        } catch {
+          /* ignore a half-initialised player */
+        }
+        host?.remove();
+        resolve(value);
+      };
+
+      const read = (target: YTPlayerLike) => {
+        const data = target.getVideoData?.() ?? {};
+        const viewersRaw = data.viewerCount;
+        finish({
+          isLive: data.isLive === true && data.errorCode == null,
+          viewers: typeof viewersRaw === 'number' ? viewersRaw : null,
+          title: typeof data.title === 'string' ? data.title : null,
+          startedAt: null,
+          degraded: false,
+        });
+      };
+
+      host = document.createElement('div');
+      host.setAttribute('aria-hidden', 'true');
+      host.style.cssText =
+        'position:absolute;left:-10000px;top:-10000px;width:1px;height:1px;opacity:0;pointer-events:none;';
+      document.body.appendChild(host);
+
+      player = new YT.Player(host, {
+        videoId,
+        playerVars: {
+          autoplay: 0,
+          mute: 1,
+          controls: 0,
+          playsinline: 1,
+          origin: window.location.origin,
+        },
+        events: {
+          onReady: (event: { target: YTPlayerLike }) => read(event.target),
+          onError: () =>
+            finish({ isLive: false, viewers: null, title: null, startedAt: null, degraded: false }),
+        },
+      });
+
+      timer = window.setTimeout(() => finish(null), 10_000);
+    });
+  } catch {
+    return null;
+  }
+};
+
 /** Local-time helper used for the "service starts in" countdown. */
 export const formatCountdown = (target: Date, now: Date = new Date()): string => {
   const delta = Math.max(0, target.getTime() - now.getTime());
@@ -207,7 +320,9 @@ export interface LiveSnapshot extends LiveStatus {
 // Shared store: every indicator subscribes to one polling loop instead of
 // firing its own YouTube request.
 let snapshot: LiveSnapshot = {
-  isLive: hasLiveVideo,
+  // Start offline, then let the first probe decide. Prevents a false green
+  // LIVE flash while the broadcast is still scheduled.
+  isLive: false,
   viewers: null,
   title: null,
   startedAt: null,
