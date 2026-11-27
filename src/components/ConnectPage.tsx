@@ -152,7 +152,7 @@ export const ConnectPage: React.FC<ConnectPageProps> = ({
               </button>
             </div>
 
-            <figure className="mt-6 overflow-hidden rounded-2xl border border-white/15 bg-black shadow-xl">
+            <figure className="mx-auto mt-6 w-full max-w-xl overflow-hidden rounded-2xl border border-white/15 bg-slate-950 shadow-xl">
               <div className="relative aspect-[3/2] w-full">
                 <img
                   src="assets/aistudio/leaders_HD.jpg"
@@ -160,11 +160,11 @@ export const ConnectPage: React.FC<ConnectPageProps> = ({
                   referrerPolicy="no-referrer"
                   className="h-full w-full object-cover object-center"
                 />
-                <figcaption className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black via-black/70 to-transparent px-4 pb-4 pt-12">
+                <figcaption className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-slate-950 via-slate-950/70 to-transparent px-3 pb-3 pt-10">
                   <div className="text-[10px] font-mono font-bold uppercase tracking-wider text-amber-300">
                     Senior Leaders · Founder &amp; Co-Founder
                   </div>
-                  <div className="text-base font-bold text-white sm:text-lg">
+                  <div className="text-sm font-bold text-white sm:text-base">
                     Prophet Herbert &amp; Pastor Shelma Mulondo
                   </div>
                 </figcaption>
