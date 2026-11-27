@@ -410,52 +410,7 @@ export const SERMONS: Sermon[] = [
   },
 ];
 
-export const UPCOMING_EVENTS: EventItem[] = [
-  {
-    id: 'event-grc2027',
-    title: 'Global Revival Conference (GRC 2027)',
-    date: 'March 17 - 20, 2027',
-    time: '18:30 PM Daily & 09:00 AM Masterclasses',
-    location: 'Sandton Convention Centre & RCI HQ, Johannesburg',
-    category: 'Conference',
-    description: 'Four life-defining days of high-voltage worship, apostolic impartation, healing, and prophetic ministry with international keynote speakers.',
-    featured: true,
-    registrationOpen: true,
-  },
-  {
-    id: 'event-night-miracles',
-    title: 'Night of Miracles & Prophetic Encounter',
-    date: 'January 15, 2027',
-    time: '19:00 PM - 23:00 PM',
-    location: 'All Campuses (Simulcast Broadcast)',
-    category: 'Miracle Service',
-    description: 'An extended evening devoted to mass deliverance, physical healing, and accurate prophetic ministry for families and careers.',
-    featured: true,
-    registrationOpen: true,
-  },
-  {
-    id: 'event-unstoppablegenr-fire',
-    title: 'Unstoppablegenr Youth Fire Summit',
-    date: 'February 06, 2027',
-    time: '14:00 PM - 21:00 PM',
-    location: 'Cape Town & Sandton Campuses',
-    category: 'Youth',
-    description: 'A catalytic one-day gathering for teenagers and university students featuring urban worship, breakout labs, and baptism rally.',
-    featured: false,
-    registrationOpen: true,
-  },
-  {
-    id: 'event-vanguard-summit',
-    title: 'Vanguard Men’s Leadership Breakfast',
-    date: 'January 30, 2027',
-    time: '08:00 AM - 11:30 AM',
-    location: 'Dolphin Coast / Ballito Hub',
-    category: 'Men',
-    description: 'Keynote conversations on kingdom wealth creation, integrity in marriage, and raising godly sons in a broken world.',
-    featured: false,
-    registrationOpen: true,
-  },
-];
+export const UPCOMING_EVENTS: EventItem[] = [];
 
 export const TESTIMONIES: Testimony[] = [
   {

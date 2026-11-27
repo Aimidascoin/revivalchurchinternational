@@ -11,6 +11,8 @@ export const EventsSection: React.FC = () => {
   const [registered, setRegistered] = useState<string[]>([]);
   const [error, setError] = useState('');
 
+  if (content.events.length === 0) return null;
+
   const register = async (title: string) => {
     if (busy) return;
     setError('');
