@@ -47,12 +47,7 @@ export const GivePage: React.FC<GivePageProps> = ({ onNavigateHome }) => {
       toast(message, 'error');
       return;
     }
-    if (donorName.trim().length < 2) {
-      const message = 'Please enter your full name.';
-      setError(message);
-      toast(message, 'error');
-      return;
-    }
+
 
     setGiveType(fund);
     setSubmitting(true);
@@ -214,7 +209,7 @@ export const GivePage: React.FC<GivePageProps> = ({ onNavigateHome }) => {
                     required
                     value={donorName}
                     onChange={(e) => setDonorName(e.target.value)}
-                    placeholder="e.g. John Smith"
+                    placeholder="Full name (optional)"
                     className="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-white focus:outline-none focus:border-blue-500"
                   />
                 </div>
@@ -224,7 +219,7 @@ export const GivePage: React.FC<GivePageProps> = ({ onNavigateHome }) => {
                     type="email"
                     value={donorEmail}
                     onChange={(e) => setDonorEmail(e.target.value)}
-                    placeholder="john@domain.com (optional)"
+                    placeholder="Email (optional)"
                     className="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-white focus:outline-none focus:border-blue-500"
                   />
                 </div>

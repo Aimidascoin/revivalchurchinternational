@@ -155,6 +155,8 @@ apiRouter.post('/yoco/checkout', formLimit, asyncRoute(async (req, res) => {
   }
 
   const { name, email, fund } = parsed.data;
+  const donorName = (name ?? '').trim();
+  const donorEmail = (email ?? '').trim();
   const amountInCents = Math.round(parsed.data.amount * 100);
   const reference = `RCI-${Date.now().toString(36).toUpperCase()}-${randomUUID().slice(0, 6).toUpperCase()}`;
   // Yoco redirects inside the checkout iframe. This RCI-owned page breaks
@@ -179,8 +181,8 @@ apiRouter.post('/yoco/checkout', formLimit, asyncRoute(async (req, res) => {
         metadata: {
           reference,
           fund,
-          donorName: name,
-          donorEmail: email,
+          donorName,
+          donorEmail,
           source: 'rci_website',
         },
         lineItems: [

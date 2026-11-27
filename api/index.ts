@@ -58,8 +58,8 @@ app.post(
     const value = Number(amount);
 
     if (
-      typeof name !== 'string' || name.trim().length < 2 ||
-      typeof email !== 'string' || email.trim().length > 160 ||
+      (name !== undefined && (typeof name !== 'string' || name.trim().length > 120)) ||
+      (email !== undefined && (typeof email !== 'string' || email.trim().length > 160)) ||
       typeof fund !== 'string' || fund.trim().length < 2 ||
       !Number.isFinite(value) || value <= 0 || value > 1_000_000
     ) {
@@ -95,8 +95,8 @@ app.post(
           metadata: {
             reference,
             fund: fund.trim(),
-            donorName: name.trim(),
-            donorEmail: email.trim(),
+            donorName: (name ?? '').trim(),
+            donorEmail: (email ?? '').trim(),
             source: 'rci_website',
           },
           lineItems: [
@@ -135,8 +135,8 @@ app.post(
           amount: value,
           currency: 'ZAR',
           fund: fund.trim(),
-          name: name.trim(),
-          email: email.trim(),
+          name: (name ?? '').trim(),
+          email: (email ?? '').trim(),
         },
         message: 'Continue on the secure RCI checkout page to complete your gift.',
       });
