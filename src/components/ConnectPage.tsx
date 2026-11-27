@@ -12,6 +12,7 @@ import {
   Send,
   Globe,
   ArrowLeft,
+  ArrowRight,
 } from 'lucide-react';
 
 interface ConnectPageProps {
@@ -111,76 +112,7 @@ export const ConnectPage: React.FC<ConnectPageProps> = ({
           </button>
         </div>
 
-        {/* 1. Meet the Team / Senior Leaders */}
-        <section id="leadership" className="space-y-8 scroll-mt-24">
-          <div className="text-center max-w-3xl mx-auto">
-            <div className="text-xs font-semibold tracking-wider uppercase text-blue-400 mb-2">
-              SENIOR LEADERS
-            </div>
-            <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
-              Meet the Leadership Team
-            </h2>
-            <p className="mt-3 text-slate-300 text-sm sm:text-base leading-relaxed">
-              Led by Prophet Herbert &amp; Pastor Shelma Mulondo
-            </p>
-          </div>
-
-          <div className="bg-slate-900 border border-slate-800 rounded-3xl p-6 sm:p-10 shadow-2xl">
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-              <div className="lg:col-span-6">
-                <div className="rounded-2xl overflow-hidden border border-slate-700/80 aspect-[3/2] bg-slate-950 relative shadow-2xl">
-                  <img
-                    src="assets/aistudio/_DSC0321_104091fc.JPG"
-                    alt="Prophet Herbert & Pastor Shelma Mulondo"
-                    referrerPolicy="no-referrer"
-                    className="w-full h-full object-cover object-top brightness-[1.04] contrast-[1.06] saturate-[1.05]"
-                  />
-                  <div className="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-slate-950/90 via-slate-950/40 to-transparent" />
-                  <div className="absolute bottom-4 left-4 right-4">
-                    <span className="text-xs font-mono font-bold text-amber-400 uppercase tracking-wider">
-                      Senior Leaders &amp; Founders
-                    </span>
-                    <h3 className="text-xl sm:text-2xl font-bold text-white drop-shadow">
-                      Prophet Herbert &amp; Pastor Shelma Mulondo
-                    </h3>
-                  </div>
-                </div>
-              </div>
-
-              <div className="lg:col-span-6 space-y-4">
-                <span className="px-3 py-1 rounded-full bg-blue-600/10 border border-blue-500/30 text-blue-400 text-xs font-bold font-mono">
-                  Senior Leaders &amp; Visionaries
-                </span>
-                <h3 className="text-2xl font-extrabold text-white">
-                  Carrying an Uncompromising Message of Grace &amp; Revival Fire
-                </h3>
-                <p className="text-slate-300 text-xs sm:text-sm leading-relaxed">
-                  For over two decades, Prophet Herbert Mulondo has preached the uncompromised gospel of Jesus Christ accompanied by notable miracles, healing, and prophetic breakthroughs across the nations.
-                </p>
-                <p className="text-slate-300 text-xs sm:text-sm leading-relaxed">
-                  Pastor Shelma Mulondo ministers alongside him, nurturing covenant families, Queen Reigning Women’s fellowship, and compassionate care initiatives that serve God’s people with excellence and love.
-                </p>
-
-                <div className="pt-2 grid grid-cols-2 sm:grid-cols-3 gap-3 text-xs text-slate-300">
-                  <div className="p-3 bg-slate-950 rounded-xl border border-slate-800">
-                    <div className="font-bold text-white">Apostolic Council</div>
-                    <div className="text-[11px] text-slate-400">12 Ordained Elders</div>
-                  </div>
-                  <div className="p-3 bg-slate-950 rounded-xl border border-slate-800">
-                    <div className="font-bold text-white">Campus Pastors</div>
-                    <div className="text-[11px] text-slate-400">5 Regional Assemblies</div>
-                  </div>
-                  <div className="p-3 bg-slate-950 rounded-xl border border-slate-800">
-                    <div className="font-bold text-white">eGroup Shepherds</div>
-                    <div className="text-[11px] text-slate-400">120+ Cell Leaders</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* 2. About RCI: Supernatural Church · Changing Lives · Disciple the Nations */}
+        {/* 1. About RCI: Supernatural Church · Changing Lives · Disciple the Nations */}
         <section id="about" className="space-y-8 scroll-mt-24">
           <div className="text-center max-w-3xl mx-auto">
             <div className="text-xs font-semibold tracking-wider uppercase text-blue-400 mb-2">
@@ -192,6 +124,69 @@ export const ConnectPage: React.FC<ConnectPageProps> = ({
             <p className="mt-3 text-slate-300 text-sm sm:text-base leading-relaxed">
               We are a supernatural church committed to seeing lives transformed by the living Word and discipling the nations through the love and power of Jesus Christ.
             </p>
+          </div>
+
+          <div className="rounded-3xl border border-slate-800 bg-black p-6 shadow-2xl sm:p-8">
+            <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+              <div className="max-w-3xl space-y-2">
+                <span className="text-xs font-mono font-bold tracking-wider uppercase text-amber-400">
+                  SENIOR LEADERS
+                </span>
+                <h3 className="text-2xl font-black tracking-tight text-white sm:text-3xl">
+                  Meet our Senior Leaders
+                </h3>
+                <p className="text-sm font-semibold text-blue-300">
+                  Led by Prophet Herbert &amp; Pastor Shelma Mulondo
+                </p>
+                <p className="text-sm leading-relaxed text-slate-300">
+                  Together, Prophet Herbert &amp; Pastor Shelma Mulondo carry a prophetic mandate of healing, sound Word, and unconditional family love — raising believers who walk in supernatural testimony across South Africa and the nations.
+                </p>
+              </div>
+              <button
+                type="button"
+                onClick={onOpenVisit}
+                className="inline-flex shrink-0 items-center gap-2 rounded-xl bg-blue-600 px-5 py-2.5 text-xs font-bold text-white transition-colors hover:bg-blue-500"
+              >
+                Connect With Our Leaders
+                <ArrowRight className="h-4 w-4" />
+              </button>
+            </div>
+
+            <div className="mt-6 grid max-w-md grid-cols-2 gap-4 sm:gap-5">
+              <figure className="relative aspect-[3/4] overflow-hidden rounded-2xl border border-white/15 bg-black shadow-xl">
+                <img
+                  src="assets/aistudio/image_2_6cfe55f4.jfif"
+                  alt="Prophet Herbert Mulondo preaching at Revival Church International"
+                  referrerPolicy="no-referrer"
+                  className="h-full w-full object-cover object-[46%_top]"
+                />
+                <figcaption className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black via-black/70 to-transparent px-3 pb-3 pt-8">
+                  <div className="text-[10px] font-mono font-bold uppercase tracking-wider text-amber-300">
+                    Senior Leader · Founder
+                  </div>
+                  <div className="text-sm font-bold text-white sm:text-base">
+                    Prophet Herbert Mulondo
+                  </div>
+                </figcaption>
+              </figure>
+
+              <figure className="relative aspect-[3/4] overflow-hidden rounded-2xl border border-white/15 bg-black shadow-xl">
+                <img
+                  src="assets/aistudio/image3_1d7e9e76.jfif"
+                  alt="Pastor Shelma Mulondo ministering at Revival Church International"
+                  referrerPolicy="no-referrer"
+                  className="h-full w-full object-cover object-[28%_top]"
+                />
+                <figcaption className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black via-black/70 to-transparent px-3 pb-3 pt-8">
+                  <div className="text-[10px] font-mono font-bold uppercase tracking-wider text-blue-300">
+                    Senior Leader · Co-Founder
+                  </div>
+                  <div className="text-sm font-bold text-white sm:text-base">
+                    Pastor Shelma Mulondo
+                  </div>
+                </figcaption>
+              </figure>
+            </div>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">

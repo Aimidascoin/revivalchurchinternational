@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import { Mail, Phone, MapPin, Heart, Smartphone, Sparkles, Check } from 'lucide-react';
+import { Mail, Phone, Heart, Smartphone, Sparkles, Check } from 'lucide-react';
 import type { AppPage } from './Navbar';
-import { useContent } from '../context/ContentContext';
 import { api, errorMessage } from '../lib/api';
 import { useToast } from './Toast';
 
@@ -54,7 +53,6 @@ export const Footer: React.FC<FooterProps> = ({
   onOpenVisit,
   onOpenDownload,
 }) => {
-  const { content } = useContent();
   const toast = useToast();
   const [emailSub, setEmailSub] = useState('');
   const [subDone, setSubDone] = useState(false);
@@ -159,20 +157,6 @@ export const Footer: React.FC<FooterProps> = ({
                   📥 Free Downloads &amp; Guides
                 </button>
               </li>
-            </ul>
-          </div>
-
-          <div className="space-y-3">
-            <h4 className="text-xs font-bold uppercase tracking-wider text-slate-200">Campuses &amp; Gatherings</h4>
-            <ul className="space-y-2 text-xs">
-              {content.campuses.map((campus) => (
-                <li key={campus.id}>
-                  <button onClick={() => onNavigate('campuses')} className="flex items-center gap-1.5 hover:text-white">
-                    <MapPin className="h-3 w-3 shrink-0 text-blue-400" />
-                    {campus.name.split(' (')[0]}
-                  </button>
-                </li>
-              ))}
             </ul>
           </div>
 
