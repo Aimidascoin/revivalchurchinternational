@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Mail, Phone, Heart, Smartphone, Sparkles, Check } from 'lucide-react';
+import { Heart, Smartphone, Sparkles, Check } from 'lucide-react';
 import type { AppPage } from './Navbar';
 import { api, errorMessage } from '../lib/api';
 import { useToast } from './Toast';
@@ -126,13 +126,6 @@ export const Footer: React.FC<FooterProps> = ({
               <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-blue-600 text-sm font-bold">RCI</div>
               <span className="text-lg font-bold tracking-tight">Revival Church International</span>
             </button>
-            <p className="max-w-sm text-xs leading-relaxed text-slate-400">
-              An apostolic house built upon grace, supernatural power, and family. Reaching the nations with the gospel of Jesus Christ through thriving regional campuses and global broadcasts.
-            </p>
-            <div className="space-y-1.5 pt-2 text-xs">
-              <div className="flex items-center gap-2 text-slate-300"><Phone className="h-3.5 w-3.5 text-blue-400" /><span>Global Pastoral Desk: +27 (0) 11 884 9200</span></div>
-              <div className="flex items-center gap-2 text-slate-300"><Mail className="h-3.5 w-3.5 text-blue-400" /><span>info@revivalchurchintl.org</span></div>
-            </div>
             <div className="flex items-center gap-2 pt-2">
               <button onClick={onOpenGive} className="flex items-center gap-1.5 rounded-lg border border-amber-500/30 bg-amber-500/10 px-3 py-1.5 text-xs font-semibold text-amber-400 hover:bg-amber-500/20">
                 <Heart className="h-3 w-3" /> Give / Tithe

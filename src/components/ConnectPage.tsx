@@ -42,14 +42,7 @@ export const ConnectPage: React.FC<ConnectPageProps> = ({
   const { content } = useContent();
   const toast = useToast();
 
-  const revivalGroupsList = [
-    { name: 'Sandton & Bryanston Executive Hub', day: 'Wednesdays', time: '19:00 PM CAT', type: 'In-Person', leader: 'Deacon Mark & Sis Linda', suburb: 'Sandton, JHB' },
-    { name: 'Fourways & Midrand Family Fellowship', day: 'Thursdays', time: '19:30 PM CAT', type: 'In-Person', leader: 'Bro Thabo & Sis Zanele', suburb: 'Fourways, JHB' },
-    { name: 'Century City Young Professionals', day: 'Tuesdays', time: '19:00 PM CAT', type: 'In-Person', leader: 'Elder Kevin & Sarah', suburb: 'Cape Town' },
-    { name: 'Ballito Coastal Prayer Altar', day: 'Thursdays', time: '18:30 PM CAT', type: 'In-Person', leader: 'Pastors Michael & Deborah', suburb: 'Ballito, KZN' },
-    { name: 'UK & Europe Virtual Zoom eGroup', day: 'Thursdays', time: '19:30 PM GMT', type: 'Online Zoom', leader: 'Pastor Emmanuel', suburb: 'London & Global' },
-    { name: 'North America East Coast eGroup', day: 'Wednesdays', time: '20:00 PM EST', type: 'Online Zoom', leader: 'Pastor Marcus', suburb: 'Atlanta & USA' },
-  ];
+  const revivalGroupsList: Array<{ name: string; day: string; time: string; type: string; leader: string; suburb: string }> = [];
 
   const filteredGroups = revivalGroupsList.filter((g) => {
     const matchesSearch = g.name.toLowerCase().includes(groupSearch.toLowerCase()) || g.suburb.toLowerCase().includes(groupSearch.toLowerCase());
@@ -343,7 +336,7 @@ export const ConnectPage: React.FC<ConnectPageProps> = ({
             <div className="text-center space-y-2">
               <span className="text-xs font-mono font-bold uppercase text-blue-400">First-Time Guest or Interested in a Group?</span>
               <h3 className="text-2xl sm:text-3xl font-extrabold text-white">
-                Submit Your Digital Connect Card
+                Submit Your Digital Connect Card to join a group in your area
               </h3>
               <p className="text-xs sm:text-sm text-slate-400">
                 Let us know how we can serve you. Our pastoral hosts will reach out with a personal welcome and group placement details.
