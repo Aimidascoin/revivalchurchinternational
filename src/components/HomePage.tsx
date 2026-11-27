@@ -231,8 +231,8 @@ export const HomePage: React.FC<HomePageProps> = ({
             </button>
           </div>
 
-          <div className="mt-6 grid max-w-md grid-cols-2 gap-4 sm:gap-5">
-            <figure className="relative aspect-[3/4] overflow-hidden rounded-2xl border border-white/15 bg-slate-950 shadow-xl">
+          <div className="mt-6 grid max-w-3xl grid-cols-2 gap-4 sm:gap-5">
+            <figure className="relative aspect-[4/5] overflow-hidden rounded-2xl border border-white/15 bg-slate-950 shadow-xl">
               <img
                 src="assets/aistudio/image_2_6cfe55f4.jfif"
                 alt="Prophet Herbert Mulondo preaching at Revival Church International"
@@ -249,7 +249,7 @@ export const HomePage: React.FC<HomePageProps> = ({
               </figcaption>
             </figure>
 
-            <figure className="relative aspect-[3/4] overflow-hidden rounded-2xl border border-white/15 bg-slate-950 shadow-xl">
+            <figure className="relative aspect-[4/5] overflow-hidden rounded-2xl border border-white/15 bg-slate-950 shadow-xl">
               <img
                 src="assets/aistudio/image3_1d7e9e76.jfif"
                 alt="Pastor Shelma Mulondo ministering at Revival Church International"

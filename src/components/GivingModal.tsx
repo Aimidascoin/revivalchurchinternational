@@ -232,28 +232,10 @@ export const GivingModal: React.FC<GivingModalProps> = ({ isOpen, onClose }) => 
                   : 'Tap a giving type, then record your bank EFT pledge.'}
               </p>
             </div>
-            <div className="grid gap-3 sm:grid-cols-2">
-              <div>
-                <label className="mb-1 block text-xs font-semibold text-slate-300">Currency</label>
-                <div className="grid grid-cols-3 gap-1 rounded-xl border border-slate-800 bg-slate-900 p-1 text-center text-xs font-bold">
-                  {(['ZAR', 'USD', 'GBP'] as const).map((curr) => (
-                    <button
-                      key={curr}
-                      type="button"
-                      onClick={() => { setCurrency(curr); setAmount(amounts[curr][2]); }}
-                      className={`rounded-lg py-1.5 ${currency === curr ? 'bg-blue-600 text-white' : 'text-slate-400 hover:text-white'}`}
-                    >
-                      {curr}
-                    </button>
-                  ))}
-                </div>
-              </div>
-            </div>
-
             <div>
-              <label className="mb-2 block text-xs font-semibold text-slate-300">Seed Amount ({currency})</label>
+              <label className="mb-2 block text-xs font-semibold text-slate-300">Amount (ZAR)</label>
               <div className="mb-3 grid grid-cols-3 gap-2 sm:grid-cols-6">
-                {amounts[currency].map((preset) => (
+                {amounts.ZAR.map((preset) => (
                   <button
                     key={preset}
                     type="button"

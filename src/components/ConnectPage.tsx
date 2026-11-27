@@ -120,7 +120,7 @@ export const ConnectPage: React.FC<ConnectPageProps> = ({
           </div>
 
           <div className="rounded-3xl border border-slate-800 bg-slate-950 p-6 shadow-2xl sm:p-8">
-            <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:gap-8">
+            <div className="flex flex-col gap-6 lg:flex-row-reverse lg:items-center lg:gap-8">
               <div className="flex-1 space-y-3">
                 <span className="text-xs font-mono font-bold tracking-wider uppercase text-amber-400">
                   SENIOR LEADERS
@@ -144,8 +144,8 @@ export const ConnectPage: React.FC<ConnectPageProps> = ({
                 </button>
               </div>
 
-              <figure className="w-full shrink-0 overflow-hidden rounded-2xl border border-white/15 bg-slate-950 shadow-xl lg:w-[45%]">
-              <div className="relative aspect-[3/2] w-full">
+              <figure className="w-full shrink-0 overflow-hidden rounded-2xl border border-white/15 bg-slate-950 shadow-xl lg:w-[60%]">
+              <div className="relative aspect-[4/3] w-full">
                 <img
                   src="assets/aistudio/leaders_HD.jpg"
                   alt="Prophet Herbert & Pastor Shelma Mulondo"

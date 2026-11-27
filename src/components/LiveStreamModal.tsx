@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Send, Users, Heart, Sparkles } from 'lucide-react';
-import { useContent } from '../context/ContentContext';
+
 import { api, errorMessage, type LiveChatMessage } from '../lib/api';
 import { LiveStreamPlayer } from './LiveStreamPlayer';
 import { useLiveStatus } from '../lib/liveStream';
@@ -19,14 +19,14 @@ export const LiveStreamModal: React.FC<LiveStreamModalProps> = ({
   onOpenPrayer,
 }) => {
   const liveStatus = useLiveStatus();
-  const [activeTab, setActiveTab] = useState<'chat' | 'scripture' | 'notes'>('chat');
+  const activeTab = 'chat' as const;
   const [chatInput, setChatInput] = useState('');
   const [chatError, setChatError] = useState('');
   const [chatOnline, setChatOnline] = useState<boolean | null>(null);
   const [amens, setAmens] = useState(0);
   const [messages, setMessages] = useState<LiveChatMessage[]>([]);
 
-  const { content } = useContent();
+
   const chatBottomRef = useRef<HTMLDivElement>(null);
   const lastChatIdRef = useRef<string | undefined>(undefined);
   const knownChatIdsRef = useRef<Set<string>>(new Set());
@@ -219,36 +219,10 @@ export const LiveStreamModal: React.FC<LiveStreamModalProps> = ({
           <div className="lg:col-span-4 bg-slate-900 flex flex-col border-t lg:border-t-0 lg:border-l border-slate-800 h-full">
             {/* Sidebar Tabs */}
             <div className="flex items-center border-b border-slate-800 text-xs font-bold bg-slate-950">
-              <button
-                onClick={() => setActiveTab('chat')}
-                className={`flex-1 py-3 text-center border-b-2 transition-colors cursor-pointer ${
-                  activeTab === 'chat'
-                    ? 'border-blue-500 text-white bg-slate-900/50'
-                    : 'border-transparent text-slate-400 hover:text-slate-200'
-                }`}
-              >
+              <div className="flex-1 py-3 text-center border-b-2 border-blue-500 text-white bg-slate-900/50 font-bold">
                 Live Fellowship Chat
-              </button>
-              <button
-                onClick={() => setActiveTab('scripture')}
-                className={`flex-1 py-3 text-center border-b-2 transition-colors cursor-pointer ${
-                  activeTab === 'scripture'
-                    ? 'border-blue-500 text-white bg-slate-900/50'
-                    : 'border-transparent text-slate-400 hover:text-slate-200'
-                }`}
-              >
-                Today’s Scripture
-              </button>
-              <button
-                onClick={() => setActiveTab('notes')}
-                className={`flex-1 py-3 text-center border-b-2 transition-colors cursor-pointer ${
-                  activeTab === 'notes'
-                    ? 'border-blue-500 text-white bg-slate-900/50'
-                    : 'border-transparent text-slate-400 hover:text-slate-200'
-                }`}
-              >
-                Sermon Notes
-              </button>
+              </div>
+
             </div>
 
             {/* Tab 1: Live Chat Feed */}
@@ -300,55 +274,7 @@ export const LiveStreamModal: React.FC<LiveStreamModalProps> = ({
               </div>
             )}
 
-            {/* Tab 2: Scripture Viewer */}
-            {activeTab === 'scripture' && (
-              <div className="flex-1 p-5 overflow-y-auto space-y-4 text-xs sm:text-sm">
-                <div className="p-4 rounded-xl bg-slate-950 border border-slate-800 space-y-2">
-                  <div className="font-bold text-amber-400 text-xs uppercase tracking-wider">
-                    Romans 8:31-32 (NKJV)
-                  </div>
-                  <p className="text-slate-200 leading-relaxed italic">
-                    "What then shall we say to these things? If God is for us, who can be against us? He who did not spare His own Son, but delivered Him up for us all, how shall He not with Him also freely give us all things?"
-                  </p>
-                </div>
 
-                <div className="p-4 rounded-xl bg-slate-950 border border-slate-800 space-y-2">
-                  <div className="font-bold text-amber-400 text-xs uppercase tracking-wider">
-                    Matthew 6:10 (NKJV)
-                  </div>
-                  <p className="text-slate-200 leading-relaxed italic">
-                    "Your kingdom come. Your will be done on earth as it is in heaven."
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-xl bg-slate-950 border border-slate-800 space-y-2">
-                  <div className="font-bold text-blue-400 text-xs uppercase tracking-wider">
-                    Ephesians 1:19-20 (NKJV)
-                  </div>
-                  <p className="text-slate-200 leading-relaxed italic">
-                    "...and what is the exceeding greatness of His power toward us who believe, according to the working of His mighty power which He worked in Christ when He raised Him from the dead and seated Him at His right hand in the heavenly places."
-                  </p>
-                </div>
-              </div>
-            )}
-
-            {activeTab === 'notes' && (
-              <div className="flex-1 space-y-3 overflow-y-auto p-5 text-xs">
-                {content.sermons[0] && (
-                  <>
-                    <p className="font-bold text-white">{content.sermons[0].title}</p>
-                    <p className="text-[11px] text-slate-400">{content.sermons[0].scripture}</p>
-                    <ul className="space-y-2">
-                      {content.sermons[0].keyPoints.map((point) => (
-                        <li key={point} className="rounded-xl border border-slate-800 bg-slate-950 p-3 leading-relaxed text-slate-200">
-                          {point}
-                        </li>
-                      ))}
-                    </ul>
-                  </>
-                )}
-              </div>
-            )}
           </div>
         </div>
       </div>
