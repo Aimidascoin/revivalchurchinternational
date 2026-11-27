@@ -439,46 +439,14 @@ export const VIDEO_TESTIMONIES: VideoTestimony[] = [
     title: 'Instant Miracle: No More Crutches',
     youtubeId: '6fJo_OXZazg',
   },
+  {
+    id: 'video-instant-healing-25-years-crutch',
+    title: 'Instant Healing After 25 Years with a Crutch',
+    youtubeId: 'hUUjYDpRBGc',
+  },
 ];
 
-export const TESTIMONIES: Testimony[] = [
-  {
-    id: 'test-1',
-    name: 'Sipho & Lindiwe M.',
-    city: 'Johannesburg, South Africa',
-    title: 'Stage 4 Cancer Vanished After Prophetic Prayer',
-    story: 'During the July Miracle Encounter, Prophet Herbert spoke a specific word of knowledge regarding a lung affliction. When we returned for scans the following Tuesday, the medical specialist confirmed zero traces of malignancy. Jesus healed what doctors said was impossible!',
-    date: 'August 2026',
-    category: 'Healing',
-  },
-  {
-    id: 'test-2',
-    name: 'Tariro N.',
-    city: 'London, United Kingdom',
-    title: 'From Near-Bankruptcy to Multi-National Contract',
-    story: 'Our logistics enterprise was facing liquidation. We sowed our last corporate seed into the RCI Vision Fund and committed to weekly Virtual eGroups. Within 45 days, God opened doors for an international supply contract exceeding £1.8M. Glory to God!',
-    date: 'September 2026',
-    category: 'Breakthrough',
-  },
-  {
-    id: 'test-3',
-    name: 'Kobus & Anri P.',
-    city: 'Cape Town, South Africa',
-    title: 'Broken Marriage Restored in Foundations 101',
-    story: 'We were living in separate homes and had signed divorce papers. A colleague invited us to RCI Cape Town. The teaching on pure grace broke the bitter walls between us. Today we serve happily together on the V-Team, and our home is full of joy.',
-    date: 'September 2026',
-    category: 'Family',
-  },
-  {
-    id: 'test-4',
-    name: 'Romeo',
-    city: 'Stellenbosch, South Africa',
-    title: 'Breast Cancer Vanished After Prophetic Prayer',
-    story: 'During the July Miracle Encounter, Prophet Herbert spoke a specific word of knowledge: "No more breast cancer, in Jesus name!"',
-    date: 'August 2026',
-    category: 'Healing',
-  },
-];
+export const TESTIMONIES: Testimony[] = [];
 
 export const STATEMENT_OF_FAITH = [
   {
