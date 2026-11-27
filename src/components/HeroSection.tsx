@@ -102,13 +102,6 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             </div>
           </div>
         </div>
-
-        {/* Sunday Service Time Line Below Hero Split */}
-        <div className="mt-8 pt-6 border-t border-white/10 flex flex-wrap items-center justify-center gap-x-2.5 gap-y-1 text-xs sm:text-sm text-slate-300 font-medium">
-          <span className="font-bold text-white tabular-nums">10:00 &amp; 17:00</span>
-          <span aria-hidden="true" className="text-slate-600">·</span>
-          <span>Sunday Services (CAT)</span>
-        </div>
       </div>
     </section>
   );
