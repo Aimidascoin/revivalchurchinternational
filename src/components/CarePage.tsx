@@ -222,6 +222,7 @@ export const CarePage: React.FC<CarePageProps> = ({
                         <option>Salvation of Loved Ones</option>
                         <option>Fruit of the Womb (Conception)</option>
                         <option>Career Direction &amp; Relocation</option>
+                        <option>Other</option>
                       </select>
                     </div>
                   </div>
