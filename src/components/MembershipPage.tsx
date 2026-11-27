@@ -260,7 +260,7 @@ export const MembershipPage: React.FC<MembershipPageProps> = ({
             <div className="text-center mb-8">
               <span className="text-xs uppercase font-mono font-bold text-amber-400">Step In Today</span>
               <h2 className="text-2xl sm:text-3xl font-extrabold text-white mt-1">
-                Register for the Next Membership Cohort
+                Register for the Next New Membership Classes
               </h2>
               <p className="text-slate-400 text-xs sm:text-sm mt-2">
                 Classes meet on Sunday mornings 1 hour prior to services or via live Zoom interactive workshops on Thursday evenings.
