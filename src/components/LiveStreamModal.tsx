@@ -1,7 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Play, Pause, Send, Users, Heart, Sparkles, Volume2, VolumeX, Radio } from 'lucide-react';
+import { Send, Users, Heart, Sparkles } from 'lucide-react';
 import { useContent } from '../context/ContentContext';
-const heroImg = 'images/hero_revival_worship_1790800192961.jpg';
+import { api, errorMessage, type LiveChatMessage } from '../lib/api';
+import { LiveStreamPlayer } from './LiveStreamPlayer';
+import { useLiveStatus } from '../lib/liveStream';
 
 interface LiveStreamModalProps {
   isOpen: boolean;
@@ -10,34 +12,75 @@ interface LiveStreamModalProps {
   onOpenPrayer: () => void;
 }
 
-interface ChatMessage {
-  id: string;
-  sender: string;
-  location: string;
-  text: string;
-  timestamp: string;
-}
-
 export const LiveStreamModal: React.FC<LiveStreamModalProps> = ({
   isOpen,
   onClose,
   onOpenGive,
   onOpenPrayer,
 }) => {
-  const [isPlaying, setIsPlaying] = useState(true);
-  const [isMuted, setIsMuted] = useState(false);
+  const liveStatus = useLiveStatus();
   const [activeTab, setActiveTab] = useState<'chat' | 'scripture' | 'notes'>('chat');
   const [chatInput, setChatInput] = useState('');
-  const [messages, setMessages] = useState<ChatMessage[]>([
-    { id: '1', sender: 'Sister Rachel', location: 'London, UK', text: 'Amen! Tuning in with our family in London! The presence of God is here! 🔥', timestamp: '10:02' },
-    { id: '2', sender: 'Pastor Andrew', location: 'Cape Town, SA', text: 'Fire on the altar! Welcome all watching from across the globe.', timestamp: '10:03' },
-    { id: '3', sender: 'Brother Michael', location: 'Atlanta, USA', text: 'Watching live from Georgia. Ready for the Word today!', timestamp: '10:04' },
-    { id: '4', sender: 'Thando M.', location: 'Johannesburg, SA', text: 'Hallelujah! The sound of worship is shifting atmospheres right now 🙌', timestamp: '10:05' },
-    { id: '5', sender: 'Grace K.', location: 'Nairobi, Kenya', text: 'Connecting our faith for healing and breakthrough today in Jesus name!', timestamp: '10:06' },
-  ]);
+  const [chatError, setChatError] = useState('');
+  const [chatOnline, setChatOnline] = useState<boolean | null>(null);
+  const [amens, setAmens] = useState(0);
+  const [messages, setMessages] = useState<LiveChatMessage[]>([]);
 
   const { content } = useContent();
   const chatBottomRef = useRef<HTMLDivElement>(null);
+  const lastChatIdRef = useRef<string | undefined>(undefined);
+  const knownChatIdsRef = useRef<Set<string>>(new Set());
+
+  const applyIncomingMessages = (incoming: LiveChatMessage[]) => {
+    const fresh = incoming.filter((message) => !knownChatIdsRef.current.has(message.id));
+    if (fresh.length === 0) return;
+    fresh.forEach((message) => knownChatIdsRef.current.add(message.id));
+    lastChatIdRef.current = fresh[fresh.length - 1]?.id;
+    setMessages((previous) => [...previous, ...fresh]);
+  };
+
+  // Only poll while the modal is open so we never hit the API in the background.
+  useEffect(() => {
+    if (!isOpen) return undefined;
+    let cancelled = false;
+
+    const loadStats = async () => {
+      try {
+        const result = await api.liveStats();
+        if (!cancelled) setAmens(result.data?.amens ?? 0);
+      } catch {
+        /* stats are decorative; ignore */
+      }
+    };
+
+    const loadChat = async () => {
+      const after = lastChatIdRef.current;
+      try {
+        const result = await api.liveChat(after);
+        if (cancelled) return;
+        setChatOnline(true);
+        setChatError('');
+        applyIncomingMessages(result.data ?? []);
+      } catch (cause) {
+        if (cancelled) return;
+        setChatOnline(false);
+        if (after === undefined) setChatError(errorMessage(cause));
+      }
+    };
+
+    void loadStats();
+    void loadChat();
+    const poll = window.setInterval(() => {
+      void loadChat();
+      void loadStats();
+    }, 15_000);
+
+    return () => {
+      cancelled = true;
+      window.clearInterval(poll);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isOpen]);
 
   useEffect(() => {
     chatBottomRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -45,18 +88,45 @@ export const LiveStreamModal: React.FC<LiveStreamModalProps> = ({
 
   if (!isOpen) return null;
 
-  const handleSendChat = (e: React.FormEvent) => {
+  const handleSendChat = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!chatInput.trim()) return;
-    const newMsg: ChatMessage = {
-      id: Date.now().toString(),
+    const text = chatInput.trim();
+    if (!text) return;
+
+    const optimistic: LiveChatMessage = {
+      id: `local-${Date.now()}`,
       sender: 'You',
       location: 'Online Viewer',
-      text: chatInput.trim(),
+      text,
       timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
     };
-    setMessages((prev) => [...prev, newMsg]);
+    setMessages((previous) => [...previous, optimistic]);
     setChatInput('');
+    setChatError('');
+
+    try {
+      const result = await api.postLiveChat({ sender: 'You', text, location: 'Online Viewer' });
+      if (result.data) {
+        knownChatIdsRef.current.add(result.data.id);
+        setMessages((previous) =>
+          previous.map((message) => (message.id === optimistic.id ? (result.data as LiveChatMessage) : message)),
+        );
+      }
+      setChatOnline(true);
+    } catch (cause) {
+      setChatOnline(false);
+      setChatError(errorMessage(cause));
+    }
+  };
+
+  const handleAmen = async () => {
+    setAmens((value) => value + 1);
+    try {
+      const result = await api.reactAmen();
+      if (typeof result.data?.amens === 'number') setAmens(result.data.amens);
+    } catch {
+      /* keep the optimistic count */
+    }
   };
 
   return (
@@ -65,9 +135,19 @@ export const LiveStreamModal: React.FC<LiveStreamModalProps> = ({
         {/* Stream Top Bar */}
         <div className="flex items-center justify-between px-4 sm:px-6 py-3 border-b border-slate-800 bg-slate-900/60">
           <div className="flex items-center gap-3">
-            <span className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-red-600/20 border border-red-500/40 text-red-400 text-xs font-bold uppercase tracking-wider">
-              <span className="w-2 h-2 rounded-full bg-red-500 animate-pulse" />
-              <span>LIVE BROADCAST</span>
+            <span
+              className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full border text-xs font-bold uppercase tracking-wider ${
+                liveStatus.isLive
+                  ? 'bg-red-600/20 border-red-500/40 text-red-400'
+                  : 'bg-slate-900 border-slate-700 text-slate-400'
+              }`}
+            >
+              <span
+                className={`w-2 h-2 rounded-full ${
+                  liveStatus.isLive ? 'bg-red-500 animate-pulse' : 'bg-slate-500'
+                }`}
+              />
+              <span>{liveStatus.isLive ? 'Live Broadcast' : 'Between Services'}</span>
             </span>
             <div className="hidden sm:block">
               <h3 className="text-sm font-bold text-white">Sunday Global Encounter Service</h3>
@@ -76,10 +156,12 @@ export const LiveStreamModal: React.FC<LiveStreamModalProps> = ({
           </div>
 
           <div className="flex items-center gap-3">
-            <div className="flex items-center gap-1 text-xs text-slate-400 font-mono">
-              <Users className="w-3.5 h-3.5 text-blue-400" />
-              <span>4,820 Viewers</span>
-            </div>
+            {liveStatus.isLive && liveStatus.viewers !== null && (
+              <div className="flex items-center gap-1 text-xs text-slate-400 font-mono">
+                <Users className="w-3.5 h-3.5 text-blue-400" />
+                <span>{liveStatus.viewers.toLocaleString()} Viewers</span>
+              </div>
+            )}
             <button
               onClick={onClose}
               className="text-slate-400 hover:text-white p-1 rounded-lg hover:bg-slate-850 cursor-pointer"
@@ -93,52 +175,28 @@ export const LiveStreamModal: React.FC<LiveStreamModalProps> = ({
         <div className="flex-1 grid grid-cols-1 lg:grid-cols-12 overflow-hidden min-h-[480px]">
           {/* Main Video Viewport (8 Cols) */}
           <div className="lg:col-span-8 bg-slate-950 flex flex-col justify-between relative group">
-            {/* Simulated Live Stream Feed */}
-            <div className="relative w-full h-full min-h-[300px] flex items-center justify-center overflow-hidden">
-              <img
-                src={heroImg}
-                alt="RCI Live Broadcast worship auditorium"
-                referrerPolicy="no-referrer"
-                className="w-full h-full object-cover filter brightness-75"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-slate-950/30" />
-
-              {/* Center Watermark & Status */}
-              <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none p-6 text-center">
-                <div className="w-14 h-14 rounded-full bg-red-600/90 text-white flex items-center justify-center shadow-2xl mb-3">
-                  <Radio className="w-7 h-7 animate-pulse" />
-                </div>
-                <div className="text-xl sm:text-2xl font-bold text-white drop-shadow">
-                  Revival Church International Broadcast
-                </div>
-                <div className="text-xs sm:text-sm text-slate-300 drop-shadow mt-1">
-                  Prophet Herbert Mulondo ministering on Kingdom Authority
-                </div>
-              </div>
+            {/* Real YouTube Live embed (offline state between services) */}
+            <div className="w-full h-full min-h-[300px] flex items-center justify-center overflow-hidden p-2 sm:p-3">
+              <LiveStreamPlayer className="max-h-[52vh] lg:max-h-none rounded-xl" />
             </div>
 
             {/* Bottom Stream Bar */}
-            <div className="p-3 bg-slate-950/90 border-t border-slate-800 flex items-center justify-between text-xs">
-              <div className="flex items-center gap-3">
-                <button
-                  onClick={() => setIsPlaying(!isPlaying)}
-                  className="hover:text-blue-400 cursor-pointer"
-                >
-                  {isPlaying ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4" />}
-                </button>
-                <button
-                  onClick={() => setIsMuted(!isMuted)}
-                  className="hover:text-blue-400 cursor-pointer"
-                >
-                  {isMuted ? <VolumeX className="w-4 h-4 text-red-400" /> : <Volume2 className="w-4 h-4" />}
-                </button>
-                <span className="font-mono text-red-400 font-bold flex items-center gap-1.5">
-                  <span className="w-1.5 h-1.5 rounded-full bg-red-500 animate-ping" />
-                  <span>1080p HD LIVE</span>
-                </span>
+            <div className="p-3 bg-slate-950/90 border-t border-slate-800 flex items-center justify-between gap-2 flex-wrap text-xs">
+              <div className="flex items-center gap-1.5 text-[11px] font-semibold text-emerald-400">
+                <span className="w-1.5 h-1.5 rounded-full bg-current" />
+                {chatOnline === false
+                  ? 'Offline mode — messages stay on this device'
+                  : 'Fellowship chat connected'}
               </div>
 
               <div className="flex items-center gap-2">
+                <button
+                  onClick={handleAmen}
+                  className="px-3 py-1 rounded-lg bg-red-600/80 hover:bg-red-500 text-white text-xs font-bold flex items-center gap-1 cursor-pointer transition-transform active:scale-105"
+                >
+                  <Heart className="w-3.5 h-3.5 fill-white" />
+                  <span>Amen ({amens.toLocaleString()})</span>
+                </button>
                 <button
                   onClick={onOpenGive}
                   className="px-3 py-1 rounded-lg bg-amber-500/20 text-amber-300 hover:bg-amber-500/30 border border-amber-500/40 text-xs font-bold flex items-center gap-1 cursor-pointer"
@@ -197,6 +255,13 @@ export const LiveStreamModal: React.FC<LiveStreamModalProps> = ({
             {activeTab === 'chat' && (
               <div className="flex-1 flex flex-col justify-between overflow-hidden">
                 <div className="flex-1 overflow-y-auto p-4 space-y-3 text-xs">
+                  {messages.length === 0 && (
+                    <div className="rounded-xl border border-dashed border-slate-800 bg-slate-950/50 p-4 text-center text-[11px] leading-relaxed text-slate-500">
+                      {chatOnline === false
+                        ? 'Live chat needs the RCI server. Messages you send now stay on this device.'
+                        : 'The altar is quiet. Be the first to share an Amen, a greeting or a testimony.'}
+                    </div>
+                  )}
                   {messages.map((m) => (
                     <div key={m.id} className="bg-slate-950/60 p-2.5 rounded-xl border border-slate-800/80">
                       <div className="flex items-center justify-between mb-1">
@@ -229,6 +294,9 @@ export const LiveStreamModal: React.FC<LiveStreamModalProps> = ({
                     <Send className="w-3.5 h-3.5" />
                   </button>
                 </form>
+                {chatError && (
+                  <p className="px-3 pb-2 text-[11px] text-amber-400 bg-slate-950">{chatError}</p>
+                )}
               </div>
             )}
 

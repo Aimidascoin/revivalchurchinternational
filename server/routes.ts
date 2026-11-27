@@ -12,10 +12,12 @@ import {
   VIDEO_TESTIMONIES,
 } from '../src/data/churchData';
 import { rateLimit } from './rateLimit';
-import { count, create, list } from './store';
+import { count, create, incrementCounter, list, readCounter } from './store';
 import {
   contactSchema,
   givingSchema,
+  liveChatSchema,
+  liveReactionSchema,
   newsletterSchema,
   prayerRequestSchema,
   visitSchema,
@@ -161,6 +163,48 @@ apiRouter.post('/newsletter', formLimit, asyncRoute(async (req, res) => {
   }
   await create('newsletter', { email });
   res.status(201).json({ ok: true, message: 'You have joined the RCI prayer newsletter.' });
+}));
+
+// Live service interaction: chat, viewer reactions and aggregate stats.
+const chatLimit = rateLimit(20, 60_000);
+const MAX_CHAT_HISTORY = 200;
+
+apiRouter.get('/live/chat', asyncRoute(async (req, res) => {
+  const after = typeof req.query.after === 'string' ? req.query.after : '';
+  const messages = await list('liveChat');
+  const index = after ? messages.findIndex((message) => message.id === after) : -1;
+  // Unknown cursor means the client is out of sync — resync with recent history.
+  const tail = index >= 0 ? messages.slice(index + 1) : messages.slice(-MAX_CHAT_HISTORY);
+  res.json({ ok: true, data: tail });
+}));
+
+apiRouter.post('/live/chat', chatLimit, asyncRoute(async (req, res) => {
+  const parsed = liveChatSchema.safeParse(req.body);
+  if (!parsed.success) {
+    res.status(400).json({ ok: false, error: parsed.error.issues[0]?.message ?? 'Invalid message' });
+    return;
+  }
+  const record = await create('liveChat', {
+    ...parsed.data,
+    location: parsed.data.location?.trim() || 'Online Viewer',
+    timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+  });
+  res.status(201).json({ ok: true, data: record });
+}));
+
+apiRouter.get('/live/stats', asyncRoute(async (_req, res) => {
+  const [amens, messages] = await Promise.all([readCounter('amen'), count('liveChat')]);
+  res.json({ ok: true, data: { amens, messages } });
+}));
+
+apiRouter.post('/live/react', chatLimit, asyncRoute(async (req, res) => {
+  const parsed = liveReactionSchema.safeParse(req.body);
+  if (!parsed.success) {
+    res.status(400).json({ ok: false, error: 'Unsupported reaction' });
+    return;
+  }
+  const [amens, messages] = await Promise.all([incrementCounter('amen'), count('liveChat')]);
+  res.status(201).json({ ok: true, data: { amens, messages } });
 }));
 
 apiRouter.get('/stats', asyncRoute(async (_req, res) => {

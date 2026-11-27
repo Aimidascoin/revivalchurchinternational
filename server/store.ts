@@ -8,7 +8,9 @@ export type CollectionName =
   | 'visits'
   | 'giving'
   | 'contacts'
-  | 'newsletter';
+  | 'newsletter'
+  | 'liveChat'
+  | 'counters';
 
 export interface StoredRecord {
   id: string;
@@ -70,4 +72,38 @@ export async function create<T extends Record<string, unknown>>(
 
 export async function count(collection: CollectionName): Promise<number> {
   return (await list(collection)).length;
+}
+
+interface CounterRecord extends StoredRecord {
+  key: string;
+  value: number;
+}
+
+const writeRecords = async (collection: CollectionName, records: StoredRecord[]) => {
+  const file = fileFor(collection);
+  const temporary = `${file}.${process.pid}.tmp`;
+  await fs.writeFile(temporary, JSON.stringify(records, null, 2), 'utf8');
+  await fs.rename(temporary, file);
+};
+
+/** Atomically adds `by` to a named counter, creating it on first use. */
+export async function incrementCounter(key: string, by = 1): Promise<number> {
+  return withQueue('counters', async () => {
+    const records = await list<CounterRecord>('counters');
+    const existing = records.find((record) => record.key === key);
+    const next = (existing?.value ?? 0) + by;
+    if (existing) {
+      existing.value = next;
+    } else {
+      records.push({ id: randomUUID(), createdAt: new Date().toISOString(), key, value: next });
+    }
+    await writeRecords('counters', records);
+    return next;
+  });
+}
+
+/** Reads a named counter without creating it. */
+export async function readCounter(key: string): Promise<number> {
+  const records = await list<CounterRecord>('counters');
+  return records.find((record) => record.key === key)?.value ?? 0;
 }

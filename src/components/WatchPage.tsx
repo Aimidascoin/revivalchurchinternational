@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { SERMONS, Sermon } from '../data/churchData';
+import React, { useState, useEffect, useRef } from 'react';
+import { LIVE_STREAM, SERMONS, Sermon } from '../data/churchData';
 import { useContent } from '../context/ContentContext';
 import { useToast } from './Toast';
 import {
@@ -7,17 +7,15 @@ import {
   Pause,
   Send,
   Heart,
-  Volume2,
-  VolumeX,
-  Radio,
   Search,
   ArrowLeft,
   Clock,
   Download,
   Share2,
 } from 'lucide-react';
-
-const heroImg = 'images/hero_revival_worship_1790800192961.jpg';
+import { api, errorMessage, type LiveChatMessage } from '../lib/api';
+import { LiveStreamPlayer } from './LiveStreamPlayer';
+import { useLiveStatus, watchUrl } from '../lib/liveStream';
 
 interface WatchPageProps {
   onNavigateHome: () => void;
@@ -25,31 +23,73 @@ interface WatchPageProps {
   onOpenPrayer: () => void;
 }
 
-interface ChatMessage {
-  id: string;
-  sender: string;
-  location: string;
-  text: string;
-  timestamp: string;
-}
-
 export const WatchPage: React.FC<WatchPageProps> = ({
   onNavigateHome,
   onOpenGive,
   onOpenPrayer,
 }) => {
-  // Live player state
-  const [isPlaying, setIsPlaying] = useState(true);
-  const [isMuted, setIsMuted] = useState(false);
-  const viewerCount = 4820;
-  const [reactionHearts, setReactionHearts] = useState(142);
-  const [chatMessages, setChatMessages] = useState<ChatMessage[]>([
-    { id: '1', sender: 'Sister Grace', location: 'London, UK', text: 'Receiving the Word with open hearts! Hallelujah!', timestamp: '10:04 AM' },
-    { id: '2', sender: 'Brother Thabo', location: 'Sandton, JHB', text: 'Amen! The fire of God is falling in my living room right now.', timestamp: '10:05 AM' },
-    { id: '3', sender: 'Elder Marcus', location: 'Atlanta, USA', text: 'What an apostolic teaching on Covenant Dominion!', timestamp: '10:06 AM' },
-  ]);
+  // Live service interaction state (backed by the /api/live endpoints).
+  const liveStatus = useLiveStatus();
+  const [chatMessages, setChatMessages] = useState<LiveChatMessage[]>([]);
   const [chatInput, setChatInput] = useState('');
   const [chatSender, setChatSender] = useState('');
+  const [chatError, setChatError] = useState('');
+  const [chatOnline, setChatOnline] = useState<boolean | null>(null);
+  const [amens, setAmens] = useState(0);
+
+  // Load stats + recent chat, then poll for new messages while the page is open.
+  const lastChatIdRef = useRef<string | undefined>(undefined);
+  const knownChatIdsRef = useRef<Set<string>>(new Set());
+
+  const applyIncomingMessages = (incoming: LiveChatMessage[]) => {
+    const fresh = incoming.filter((message) => !knownChatIdsRef.current.has(message.id));
+    if (fresh.length === 0) return;
+    fresh.forEach((message) => knownChatIdsRef.current.add(message.id));
+    lastChatIdRef.current = fresh[fresh.length - 1]?.id;
+    setChatMessages((previous) => [...previous, ...fresh]);
+  };
+
+  useEffect(() => {
+    let cancelled = false;
+
+    const loadStats = async () => {
+      try {
+        const result = await api.liveStats();
+        if (cancelled) return;
+        setAmens(result.data?.amens ?? 0);
+      } catch {
+        /* stats are decorative; ignore */
+      }
+    };
+
+    const loadChat = async () => {
+      const after = lastChatIdRef.current;
+      try {
+        const result = await api.liveChat(after);
+        if (cancelled) return;
+        setChatOnline(true);
+        setChatError('');
+        applyIncomingMessages(result.data ?? []);
+      } catch (cause) {
+        if (cancelled) return;
+        setChatOnline(false);
+        if (after === undefined) setChatError(errorMessage(cause));
+      }
+    };
+
+    void loadStats();
+    void loadChat();
+    const poll = window.setInterval(() => {
+      void loadChat();
+      void loadStats();
+    }, 15_000);
+
+    return () => {
+      cancelled = true;
+      window.clearInterval(poll);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const { content } = useContent();
   const toast = useToast();
@@ -88,22 +128,48 @@ export const WatchPage: React.FC<WatchPageProps> = ({
     return matchesSearch && matchesSeries;
   });
 
-  const handleSendChat = (e: React.FormEvent) => {
+  const handleSendChat = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!chatInput.trim()) return;
-    const newMsg: ChatMessage = {
-      id: Date.now().toString(),
-      sender: chatSender.trim() || 'Online Guest',
+    const text = chatInput.trim();
+    if (!text) return;
+
+    const sender = chatSender.trim() || 'Online Guest';
+    // Optimistic local echo so the altar feels instant even on a slow link.
+    const optimistic: LiveChatMessage = {
+      id: `local-${Date.now()}`,
+      sender,
       location: 'Virtual Altar',
-      text: chatInput.trim(),
+      text,
       timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
     };
-    setChatMessages((prev) => [...prev, newMsg]);
+    setChatMessages((previous) => [...previous, optimistic]);
     setChatInput('');
+    setChatError('');
+
+    try {
+      const result = await api.postLiveChat({ sender, text, location: 'Virtual Altar' });
+      if (result.data) {
+        knownChatIdsRef.current.add(result.data.id);
+        setChatMessages((previous) =>
+          previous.map((message) => (message.id === optimistic.id ? (result.data as LiveChatMessage) : message)),
+        );
+      }
+      setChatOnline(true);
+    } catch (cause) {
+      setChatOnline(false);
+      setChatError(errorMessage(cause));
+    }
   };
 
-  const handleHeartReaction = () => {
-    setReactionHearts((prev) => prev + 1);
+  const handleHeartReaction = async () => {
+    const optimistic = amens + 1;
+    setAmens(optimistic);
+    try {
+      const result = await api.reactAmen();
+      if (typeof result.data?.amens === 'number') setAmens(result.data.amens);
+    } catch {
+      /* keep the optimistic count */
+    }
   };
 
   const downloadNotes = (sermon: Sermon) => {
@@ -165,14 +231,24 @@ export const WatchPage: React.FC<WatchPageProps> = ({
         {/* Live Broadcast Header */}
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
-            <div className="flex items-center gap-2 mb-2">
-              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-red-600/20 text-red-400 border border-red-500/40 text-xs font-bold animate-pulse font-mono">
-                <span className="w-2 h-2 rounded-full bg-red-500" />
-                OFFICIAL 4K LIVE BROADCAST
+            <div className="flex flex-wrap items-center gap-2 mb-2">
+              <span
+                className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full border text-xs font-bold font-mono ${
+                  liveStatus.isLive
+                    ? 'bg-red-600/20 text-red-400 border-red-500/40 animate-pulse'
+                    : 'bg-slate-900 text-slate-400 border-slate-700'
+                }`}
+              >
+                <span
+                  className={`w-2 h-2 rounded-full ${liveStatus.isLive ? 'bg-red-500' : 'bg-slate-500'}`}
+                />
+                {liveStatus.isLive ? 'LIVE NOW' : 'OFFLINE · NEXT SERVICE SOON'}
               </span>
-              <span className="text-xs text-slate-400 font-mono">
-                {viewerCount.toLocaleString()} Worshippers Online
-              </span>
+              {liveStatus.isLive && liveStatus.viewers !== null && (
+                <span className="text-xs text-slate-400 font-mono">
+                  {liveStatus.viewers.toLocaleString()} Worshippers Online
+                </span>
+              )}
             </div>
             <h1 className="text-2xl sm:text-4xl font-black text-white">
               Global Encounter Service Altar
@@ -212,51 +288,28 @@ export const WatchPage: React.FC<WatchPageProps> = ({
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
           {/* Main Video Stream Frame */}
           <div className="lg:col-span-8 flex flex-col bg-slate-900 border border-slate-800 rounded-3xl overflow-hidden shadow-2xl">
-            <div className="relative aspect-video bg-slate-950 flex items-center justify-center overflow-hidden">
-              <img
-                src={heroImg}
-                alt="RCI Global Broadcast stream worship gathering"
-                referrerPolicy="no-referrer"
-                className="w-full h-full object-cover brightness-75"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-slate-950/40" />
+            <LiveStreamPlayer />
 
-              {/* Center Play Overlay */}
-              <button
-                onClick={() => setIsPlaying(!isPlaying)}
-                className="w-16 h-16 rounded-full bg-blue-600 hover:bg-blue-500 text-white flex items-center justify-center shadow-xl shadow-blue-600/40 transition-transform active:scale-95 cursor-pointer z-10"
+            {/* Live interaction bar: connection state + Amen reaction */}
+            <div className="flex flex-wrap items-center justify-between gap-3 border-t border-slate-800 bg-slate-900 px-4 py-3">
+              <span
+                className={`inline-flex items-center gap-1.5 text-[11px] font-semibold ${
+                  chatOnline === false ? 'text-amber-400' : 'text-emerald-400'
+                }`}
               >
-                {isPlaying ? <Pause className="w-7 h-7" /> : <Play className="w-7 h-7 ml-1" />}
+                <span className="w-1.5 h-1.5 rounded-full bg-current" />
+                {chatOnline === false
+                  ? 'Offline mode — messages stay on this device'
+                  : 'Fellowship chat connected'}
+              </span>
+
+              <button
+                onClick={handleHeartReaction}
+                className="px-4 py-2 rounded-xl bg-red-600/80 hover:bg-red-500 text-white font-bold text-xs flex items-center gap-1.5 cursor-pointer transition-transform active:scale-105"
+              >
+                <Heart className="w-3.5 h-3.5 fill-white" />
+                <span>Amen ({amens.toLocaleString()})</span>
               </button>
-
-              {/* Top Stream Overlay */}
-              <div className="absolute top-4 left-4 right-4 flex items-center justify-between text-xs text-white z-10">
-                <span className="px-2.5 py-1 rounded bg-slate-950/60 backdrop-blur-md font-mono text-[11px] font-bold border border-white/10">
-                  🔴 LIVE 2160p (4K UHD)
-                </span>
-                <span className="px-2.5 py-1 rounded bg-slate-950/60 backdrop-blur-md font-mono text-[11px] font-bold border border-white/10 flex items-center gap-1.5">
-                  <Radio className="w-3.5 h-3.5 text-red-500 animate-pulse" />
-                  Satellite Altar 01
-                </span>
-              </div>
-
-              {/* Bottom Player Controls */}
-              <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between z-10 text-xs text-white">
-                <div className="flex items-center gap-3 bg-slate-950/60 backdrop-blur-md px-3 py-1.5 rounded-xl border border-white/10">
-                  <button onClick={() => setIsMuted(!isMuted)} className="hover:text-blue-400 cursor-pointer">
-                    {isMuted ? <VolumeX className="w-4 h-4 text-red-400" /> : <Volume2 className="w-4 h-4" />}
-                  </button>
-                  <span className="text-[11px] text-slate-300">Prophet Herbert Mulondo ministering</span>
-                </div>
-
-                <button
-                  onClick={handleHeartReaction}
-                  className="px-3 py-1.5 rounded-xl bg-red-600/80 hover:bg-red-500 text-white font-bold flex items-center gap-1.5 cursor-pointer transition-transform active:scale-125"
-                >
-                  <Heart className="w-3.5 h-3.5 fill-white" />
-                  <span>Amen ({reactionHearts})</span>
-                </button>
-              </div>
             </div>
 
             {/* Current Message Details Bar */}
@@ -268,8 +321,18 @@ export const WatchPage: React.FC<WatchPageProps> = ({
               </div>
 
               <div className="text-xs text-slate-400 space-y-1 sm:text-right shrink-0">
-                <div>Broadcast Times: <strong className="text-amber-400">Sun 09:00 &amp; 17:00 CAT</strong></div>
-                <div>Daily Morning Fire: <strong className="text-slate-200">06:00 AM CAT</strong></div>
+                <div>Broadcast Times: <strong className="text-amber-400">{LIVE_STREAM.schedule}</strong></div>
+                <div>
+                  Watch archive:{' '}
+                  <a
+                    href={watchUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="text-blue-400 hover:text-blue-300 font-semibold"
+                  >
+                    RCI on YouTube
+                  </a>
+                </div>
               </div>
             </div>
           </div>
@@ -278,7 +341,11 @@ export const WatchPage: React.FC<WatchPageProps> = ({
           <div className="lg:col-span-4 bg-slate-900 border border-slate-800 rounded-3xl p-5 flex flex-col justify-between shadow-2xl h-[450px] lg:h-auto">
             <div className="border-b border-slate-800 pb-3 flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse" />
+                <span
+                  className={`w-2.5 h-2.5 rounded-full ${
+                    chatOnline === false ? 'bg-amber-400' : 'bg-emerald-400 animate-pulse'
+                  }`}
+                />
                 <h4 className="text-sm font-bold text-white">Live Fellowship Chat</h4>
               </div>
               <span className="text-[11px] text-slate-400 font-mono">Worldwide</span>
@@ -286,6 +353,13 @@ export const WatchPage: React.FC<WatchPageProps> = ({
 
             {/* Chat Messages Log */}
             <div className="flex-1 overflow-y-auto space-y-3 py-3 pr-1 text-xs no-scrollbar">
+              {chatMessages.length === 0 && (
+                <div className="rounded-xl border border-dashed border-slate-800 bg-slate-950/50 p-4 text-center text-[11px] leading-relaxed text-slate-500">
+                  {chatOnline === false
+                    ? 'Live chat needs the RCI server. Messages you send now stay on this device.'
+                    : 'The altar is quiet. Be the first to share an Amen, a greeting or a testimony.'}
+                </div>
+              )}
               {chatMessages.map((msg) => (
                 <div key={msg.id} className="p-2.5 rounded-xl bg-slate-950/70 border border-slate-800/80 space-y-1">
                   <div className="flex items-center justify-between">
@@ -323,6 +397,7 @@ export const WatchPage: React.FC<WatchPageProps> = ({
                   <Send className="w-3.5 h-3.5" />
                 </button>
               </div>
+              {chatError && <p className="text-[11px] text-amber-400">{chatError}</p>}
             </form>
           </div>
         </div>

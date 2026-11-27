@@ -83,6 +83,19 @@ export interface GivingResult {
   bankingDetails: typeof BANKING_DETAILS | null;
 }
 
+export interface LiveChatMessage {
+  id: string;
+  sender: string;
+  location: string;
+  text: string;
+  timestamp: string;
+}
+
+export interface LiveStats {
+  amens: number;
+  messages: number;
+}
+
 const baseUrl = (import.meta.env.VITE_API_URL as string | undefined)?.replace(/\/$/, '') || '/api';
 
 async function request<T>(path: string, init?: RequestInit): Promise<ApiResponse<T>> {
@@ -109,6 +122,8 @@ async function request<T>(path: string, init?: RequestInit): Promise<ApiResponse
 const post = <T>(path: string, payload: unknown) =>
   request<T>(path, { method: 'POST', body: JSON.stringify(payload) });
 
+const get = <T>(path: string) => request<T>(path, { method: 'GET' });
+
 export const api = {
   site: () => request<SiteContent>('/site'),
   prayerRequest: (payload: PrayerPayload) =>
@@ -118,6 +133,12 @@ export const api = {
   contact: (payload: { name: string; email: string; subject: string; message: string }) =>
     post<{ id: string; receivedAt: string }>('/contact', payload),
   newsletter: (email: string) => post<Record<string, never>>('/newsletter', { email }),
+  liveChat: (after?: string) =>
+    get<LiveChatMessage[]>(`/live/chat${after ? `?after=${encodeURIComponent(after)}` : ''}`),
+  postLiveChat: (payload: { sender: string; location?: string; text: string }) =>
+    post<LiveChatMessage>('/live/chat', payload),
+  liveStats: () => get<LiveStats>('/live/stats'),
+  reactAmen: () => post<LiveStats>('/live/react', { type: 'amen' }),
 };
 
 /** Maps the UI's campus label or name to the id expected by the API. */

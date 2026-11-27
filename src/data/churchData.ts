@@ -396,3 +396,24 @@ export const BANKING_DETAILS = {
   swiftCode: 'FIRNZAJJXXX',
   referenceGuide: 'Initials + Surname + Designation (e.g. "Tithe", "VisionFund", "HopeMissions")',
 };
+
+export interface LiveStreamConfig {
+  /** YouTube live video id to embed. Leave empty until a broadcast is scheduled. */
+  youtubeId: string;
+  /** RTMP ingest endpoint used by OBS / hardware encoders. */
+  rtmpIngestUrl: string;
+  /** Where the stream key lives — never committed to source. */
+  streamKeyEnv: string;
+  /** Human readable broadcast schedule shown in the offline state. */
+  schedule: string;
+  /** Channel viewers are sent to for reminders and replays. */
+  channelUrl: string;
+}
+
+export const LIVE_STREAM: LiveStreamConfig = {
+  youtubeId: '',
+  rtmpIngestUrl: 'rtmp://a.rtmp.youtube.com/live2',
+  streamKeyEnv: 'YOUTUBE_STREAM_KEY (repo secret)',
+  schedule: 'Sun 09:30 & 19:00 SAST · Midweek 19:00 SAST',
+  channelUrl: 'https://www.youtube.com/@HerbertMulondo',
+};

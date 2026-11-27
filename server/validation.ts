@@ -52,8 +52,19 @@ export const newsletterSchema = z.object({
   email,
 });
 
+export const liveChatSchema = z.object({
+  sender: z.string().trim().min(1, 'Please enter a name').max(60),
+  location: z.string().trim().max(60).optional(),
+  text: z.string().trim().min(1, 'Please enter a message').max(500),
+});
+
+export const liveReactionSchema = z.object({
+  type: z.enum(['amen']),
+});
+
 export type PrayerRequestInput = z.infer<typeof prayerRequestSchema>;
 export type VisitInput = z.infer<typeof visitSchema>;
 export type GivingInput = z.infer<typeof givingSchema>;
 export type ContactInput = z.infer<typeof contactSchema>;
 export type NewsletterInput = z.infer<typeof newsletterSchema>;
+export type LiveChatInput = z.infer<typeof liveChatSchema>;
