@@ -147,11 +147,6 @@ export const PrayerRequestModal: React.FC<PrayerRequestModalProps> = ({ isOpen, 
                   className="w-full bg-slate-900 border border-slate-800 rounded-xl px-3 py-2 text-xs sm:text-sm text-white focus:outline-none focus:ring-1 focus:ring-blue-500"
                 >
                   <option value="Paarl">Paarl</option>
-                  <option value="Cape Town">Cape Town</option>
-                  <option value="Dolphin Coast (Ballito)">Dolphin Coast (Ballito)</option>
-                  <option value="London UK">London UK</option>
-                  <option value="Atlanta USA">Atlanta USA</option>
-                  <option value="Global Online">Global Online</option>
                 </select>
               </div>
             </div>
@@ -172,6 +167,7 @@ export const PrayerRequestModal: React.FC<PrayerRequestModalProps> = ({ isOpen, 
                 <option value="Salvation of Loved Ones">Salvation of Loved Ones</option>
                 <option value="Career & Exams">Career Promotion &amp; Academic Success</option>
                 <option value="Prophetic Guidance">Prophetic Direction &amp; Peace of Mind</option>
+                <option value="Other">Other</option>
               </select>
             </div>
 

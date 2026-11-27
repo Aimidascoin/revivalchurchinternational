@@ -21,6 +21,7 @@ export const PlanVisitModal: React.FC<PlanVisitModalProps> = ({
   const [guestName, setGuestName] = useState('');
   const [guestEmail, setGuestEmail] = useState('');
   const [guestPhone, setGuestPhone] = useState('');
+  const [countryCode, setCountryCode] = useState('+27');
   const [adultCount, setAdultCount] = useState(1);
   const [kidCount, setKidCount] = useState(0);
   const [needsParking, setNeedsParking] = useState(true);
@@ -45,7 +46,7 @@ export const PlanVisitModal: React.FC<PlanVisitModalProps> = ({
       const response = await api.visit({
         name: guestName,
         email: guestEmail,
-        phone: guestPhone,
+        phone: `${countryCode}${guestPhone}`,
         campusId: campusIdFor(selectedCampus),
         serviceDate,
         serviceTime,
@@ -211,13 +212,32 @@ export const PlanVisitModal: React.FC<PlanVisitModalProps> = ({
                 <label className="block text-xs font-semibold text-slate-300 mb-1">
                   Mobile / WhatsApp
                 </label>
-                <input
-                  type="tel"
-                  value={guestPhone}
-                  onChange={(e) => setGuestPhone(e.target.value)}
-                  placeholder="+27 (0) 83 555 1234"
-                  className="w-full bg-slate-900 border border-slate-800 rounded-xl px-3 py-2 text-xs sm:text-sm text-white focus:outline-none focus:ring-1 focus:ring-blue-500"
-                />
+                <div className="flex gap-2">
+                  <select
+                    aria-label="Country code"
+                    value={countryCode}
+                    onChange={(e) => setCountryCode(e.target.value)}
+                    className="w-28 shrink-0 bg-slate-900 border border-slate-800 rounded-xl px-2 py-2 text-xs sm:text-sm text-white focus:outline-none focus:ring-1 focus:ring-blue-500"
+                  >
+                    <option value="+27">ZA +27</option>
+                    <option value="+44">UK +44</option>
+                    <option value="+1">US +1</option>
+                    <option value="+234">NG +234</option>
+                    <option value="+254">KE +254</option>
+                    <option value="+263">ZW +263</option>
+                    <option value="+258">MZ +258</option>
+                    <option value="+267">BW +267</option>
+                    <option value="+260">ZM +260</option>
+                    <option value="+49">DE +49</option>
+                  </select>
+                  <input
+                    type="tel"
+                    value={guestPhone}
+                    onChange={(e) => setGuestPhone(e.target.value)}
+                    placeholder="83 555 1234"
+                    className="min-w-0 flex-1 bg-slate-900 border border-slate-800 rounded-xl px-3 py-2 text-xs sm:text-sm text-white focus:outline-none focus:ring-1 focus:ring-blue-500"
+                  />
+                </div>
               </div>
             </div>
 
