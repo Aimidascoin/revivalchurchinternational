@@ -75,6 +75,7 @@ export const DownloadModal: React.FC<DownloadModalProps> = ({ isOpen, onClose })
         `Bank: ${content.bankingDetails.bankName}`,
         `Account number: ${content.bankingDetails.accountNumber}`,
         `Branch code: ${content.bankingDetails.branchCode}`,
+        `Physical address: ${content.bankingDetails.physicalAddress}`,
         `Account type: ${content.bankingDetails.accountType}`,
         `SWIFT/BIC: ${content.bankingDetails.swiftCode}`,
         `Reference guide: ${content.bankingDetails.referenceGuide}`,

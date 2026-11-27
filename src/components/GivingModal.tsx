@@ -157,6 +157,7 @@ export const GivingModal: React.FC<GivingModalProps> = ({ isOpen, onClose }) => 
                 <p className="flex justify-between"><span className="text-slate-400">Account</span><span>{bank.accountNumber}</span></p>
                 <p className="flex justify-between"><span className="text-slate-400">Bank</span><span>{bank.bankName}</span></p>
                 <p className="flex justify-between"><span className="text-slate-400">Branch</span><span>{bank.branchCode}</span></p>
+                <p className="flex justify-between"><span className="text-slate-400">Address</span><span className="text-right">{bank.physicalAddress}</span></p>
                 <p className="flex justify-between"><span className="text-slate-400">Reference</span><span className="text-amber-400">{result.reference}</span></p>
               </div>
             )}

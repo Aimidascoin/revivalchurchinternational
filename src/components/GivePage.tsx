@@ -202,6 +202,10 @@ export const GivePage: React.FC<GivePageProps> = ({ onNavigateHome }) => {
                   <strong className="text-white font-mono">{content.bankingDetails.branchCode}</strong>
                 </div>
                 <div className="flex justify-between items-center text-slate-300">
+                  <span>Physical Address:</span>
+                  <strong className="text-white text-right text-xs">{content.bankingDetails.physicalAddress}</strong>
+                </div>
+                <div className="flex justify-between items-center text-slate-300">
                   <span>SWIFT Code:</span>
                   <strong className="text-white font-mono">{content.bankingDetails.swiftCode}</strong>
                 </div>

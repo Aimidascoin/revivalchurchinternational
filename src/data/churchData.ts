@@ -390,8 +390,9 @@ export const STATEMENT_OF_FAITH = [
 export const BANKING_DETAILS = {
   accountName: 'Revival Church International Non-Profit',
   bankName: 'First National Bank (FNB)',
-  accountNumber: '62849921043',
-  branchCode: '250655 (Sandton City)',
+  accountNumber: '62834805098',
+  branchCode: '250655',
+  physicalAddress: '2nd Floor, 78 Market Street, Johannesburg, 2000',
   accountType: 'Cheque / Current Account',
   swiftCode: 'FIRNZAJJXXX',
   referenceGuide: 'Initials + Surname + Designation (e.g. "Tithe", "VisionFund", "HopeMissions")',
