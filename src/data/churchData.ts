@@ -424,6 +424,11 @@ export const VIDEO_TESTIMONIES: VideoTestimony[] = [
     title: 'A New Job Within 24 Hours',
     youtubeId: 'sBoMSnuaFWg',
   },
+  {
+    id: 'video-stage-2-cancer-healing',
+    title: 'Stage 2 Cancer Healing',
+    youtubeId: 'wIa5cHq6FAY',
+  },
 ];
 
 export const TESTIMONIES: Testimony[] = [
@@ -453,6 +458,15 @@ export const TESTIMONIES: Testimony[] = [
     story: 'We were living in separate homes and had signed divorce papers. A colleague invited us to RCI Cape Town. The teaching on pure grace broke the bitter walls between us. Today we serve happily together on the V-Team, and our home is full of joy.',
     date: 'September 2026',
     category: 'Family',
+  },
+  {
+    id: 'test-4',
+    name: 'Romeo',
+    city: 'Stellenbosch, South Africa',
+    title: 'Breast Cancer Vanished After Prophetic Prayer',
+    story: 'During the July Miracle Encounter, Prophet Herbert spoke a specific word of knowledge: "No more breast cancer, in Jesus name!"',
+    date: 'August 2026',
+    category: 'Healing',
   },
 ];
 
