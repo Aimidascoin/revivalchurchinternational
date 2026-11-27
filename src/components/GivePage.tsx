@@ -8,7 +8,6 @@ import {
   Building2,
   Copy,
   Check,
-  CreditCard,
   ArrowLeft,
 } from 'lucide-react';
 
@@ -17,16 +16,13 @@ interface GivePageProps {
 }
 
 export const GivePage: React.FC<GivePageProps> = ({ onNavigateHome }) => {
-  const [giveType, setGiveType] = useState('Vision Fund');
+  const [giveType, setGiveType] = useState('TITHE');
   const [giveAmount, setGiveAmount] = useState('500');
   const [giveCustomAmount, setGiveCustomAmount] = useState('');
   const [donorName, setDonorName] = useState('');
   const [donorEmail, setDonorEmail] = useState('');
-  const [paymentMethod, setPaymentMethod] = useState<'bank' | 'online'>('online');
   const [checkout, setCheckout] = useState<YocoCheckoutResult | null>(null);
   const [copiedField, setCopiedField] = useState<string | null>(null);
-  const [giveSuccess, setGiveSuccess] = useState(false);
-  const [reference, setReference] = useState('');
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState('');
   const { content } = useContent();
@@ -42,48 +38,40 @@ export const GivePage: React.FC<GivePageProps> = ({ onNavigateHome }) => {
     }
   };
 
-  const handleGiveSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const startYocoCheckout = async (fund: string) => {
     if (submitting) return;
     setError('');
     const amount = Number(currentAmount);
     if (!Number.isFinite(amount) || amount <= 0) {
-      const message = 'Please enter a valid amount.';
+      const message = 'Please enter the amount you would like to give.';
       setError(message);
       toast(message, 'error');
       return;
     }
+    if (donorName.trim().length < 2) {
+      const message = 'Please enter your full name.';
+      setError(message);
+      toast(message, 'error');
+      return;
+    }
+    if (!/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(donorEmail.trim())) {
+      const message = 'Please enter a valid email for your receipt.';
+      setError(message);
+      toast(message, 'error');
+      return;
+    }
+
+    setGiveType(fund);
     setSubmitting(true);
     try {
-      if (paymentMethod === 'online') {
-        const response = await api.createYocoCheckout({
-          name: donorName,
-          email: donorEmail,
-          amount,
-          fund: giveType,
-        });
-        if (!response.data) throw new Error('Secure checkout could not be started.');
-        setCheckout(response.data);
-        return;
-      }
-
-      const response = await api.giving({
-        name: donorName,
-        email: donorEmail,
+      const response = await api.createYocoCheckout({
+        name: donorName.trim(),
+        email: donorEmail.trim(),
         amount,
-        currency: 'ZAR',
-        fund: giveType,
-        method: 'bank',
+        fund,
       });
-      setReference(response.data?.reference ?? '');
-      setGiveSuccess(true);
-      toast('Your giving pledge has been recorded.');
-      window.setTimeout(() => {
-        setGiveSuccess(false);
-        setDonorName('');
-        setDonorEmail('');
-        setGiveCustomAmount('');
-      }, 6000);
+      if (!response.data) throw new Error('Secure checkout could not be started.');
+      setCheckout(response.data);
     } catch (cause) {
       const message = errorMessage(cause);
       setError(message);
@@ -231,151 +219,97 @@ export const GivePage: React.FC<GivePageProps> = ({ onNavigateHome }) => {
               </p>
             </div>
 
-            {giveSuccess ? (
-              <div className="p-8 rounded-2xl bg-emerald-950/40 border border-emerald-500/40 text-center space-y-3 animate-in fade-in">
-                <div className="w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center mx-auto">
-                  <Check className="w-6 h-6" />
-                </div>
-                <h3 className="text-xl font-bold text-white">Pledge Recorded!</h3>
-                <p className="text-xs sm:text-sm text-slate-300">
-                  Thank you, <strong className="text-white">{donorName || 'Partner'}</strong>. Your <strong className="text-emerald-400">R {currentAmount}</strong> pledge towards <strong className="text-white">{giveType}</strong> has been recorded. Use the reference below when you complete your payment.
-                </p>
-                {reference && (
-                  <p className="font-mono text-xs text-amber-400">Reference: {reference}</p>
-                )}
-              </div>
-            ) : (
-              <form onSubmit={handleGiveSubmit} className="space-y-4 text-xs">
-                {/* Giving Designation */}
-                <div>
-                  <label className="block font-semibold text-slate-300 mb-1">Designation</label>
-                  <div className="grid grid-cols-2 gap-2">
-                    {['Tithes & Offerings', 'Vision Fund (Building)', 'Revival Hope Relief', 'Global Media & Broadcast'].map((type) => (
-                      <button
-                        type="button"
-                        key={type}
-                        onClick={() => setGiveType(type)}
-                        className={`p-2.5 rounded-xl border text-left font-bold transition-all cursor-pointer ${
-                          giveType === type
-                            ? 'bg-blue-600/20 border-blue-500 text-white'
-                            : 'bg-slate-950 border-slate-800 text-slate-400 hover:text-white'
-                        }`}
-                      >
-                        {type}
-                      </button>
-                    ))}
-                  </div>
-                </div>
+            <div className="space-y-4 text-xs">
+              <p className="text-slate-400">
+                Choose how you would like to give. Enter your amount and details, then tap a giving button to go straight to Yoco's secure payment page.
+              </p>
 
-                {/* Amount Selection */}
+              {/* Amount Selection */}
+              <div>
+                <label className="block font-semibold text-slate-300 mb-1">Amount (ZAR)</label>
+                <div className="grid grid-cols-4 gap-2 mb-2">
+                  {['250', '500', '1000', '2500'].map((amt) => (
+                    <button
+                      type="button"
+                      key={amt}
+                      onClick={() => {
+                        setGiveAmount(amt);
+                        setGiveCustomAmount('');
+                      }}
+                      className={`py-2 rounded-xl border font-bold font-mono transition-all cursor-pointer ${
+                        giveAmount === amt && !giveCustomAmount
+                          ? 'bg-amber-400 text-slate-950 border-amber-400'
+                          : 'bg-slate-950 border-slate-800 text-slate-300 hover:text-white'
+                      }`}
+                    >
+                      R {amt}
+                    </button>
+                  ))}
+                </div>
+                <input
+                  type="number"
+                  value={giveCustomAmount}
+                  onChange={(e) => setGiveCustomAmount(e.target.value)}
+                  placeholder="Or enter your own amount in Rands..."
+                  className="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-white placeholder-slate-500 focus:outline-none focus:border-blue-500"
+                />
+              </div>
+
+              {/* Donor Details */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
-                  <label className="block font-semibold text-slate-300 mb-1">Amount (ZAR)</label>
-                  <div className="grid grid-cols-4 gap-2 mb-2">
-                    {['250', '500', '1000', '2500'].map((amt) => (
-                      <button
-                        type="button"
-                        key={amt}
-                        onClick={() => {
-                          setGiveAmount(amt);
-                          setGiveCustomAmount('');
-                        }}
-                        className={`py-2 rounded-xl border font-bold font-mono transition-all cursor-pointer ${
-                          giveAmount === amt && !giveCustomAmount
-                            ? 'bg-amber-400 text-slate-950 border-amber-400'
-                            : 'bg-slate-950 border-slate-800 text-slate-300 hover:text-white'
-                        }`}
-                      >
-                        R {amt}
-                      </button>
-                    ))}
-                  </div>
+                  <label className="block font-semibold text-slate-300 mb-1">Full Name</label>
                   <input
-                    type="number"
-                    value={giveCustomAmount}
-                    onChange={(e) => setGiveCustomAmount(e.target.value)}
-                    placeholder="Or enter custom amount in Rands..."
-                    className="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-white placeholder-slate-500 focus:outline-none focus:border-blue-500"
+                    type="text"
+                    required
+                    value={donorName}
+                    onChange={(e) => setDonorName(e.target.value)}
+                    placeholder="e.g. Sipho Sithole"
+                    className="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-white focus:outline-none focus:border-blue-500"
                   />
                 </div>
-
-                {/* Donor Details */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                  <div>
-                    <label className="block font-semibold text-slate-300 mb-1">Full Name</label>
-                    <input
-                      type="text"
-                      required
-                      value={donorName}
-                      onChange={(e) => setDonorName(e.target.value)}
-                      placeholder="e.g. Sipho Sithole"
-                      className="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-white focus:outline-none focus:border-blue-500"
-                    />
-                  </div>
-                  <div>
-                    <label className="block font-semibold text-slate-300 mb-1">Email for Receipt</label>
-                    <input
-                      type="email"
-                      required
-                      value={donorEmail}
-                      onChange={(e) => setDonorEmail(e.target.value)}
-                      placeholder="sipho@domain.com"
-                      className="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-white focus:outline-none focus:border-blue-500"
-                    />
-                  </div>
-                </div>
-
-                {/* Payment Method Switcher */}
                 <div>
-                  <label className="block font-semibold text-slate-300 mb-1">Payment Method</label>
-                  <div className="grid grid-cols-2 gap-2">
-                    <button
-                      type="button"
-                      onClick={() => setPaymentMethod('online')}
-                      className={`p-2.5 rounded-xl border flex items-center justify-center gap-2 font-bold cursor-pointer ${
-                        paymentMethod === 'online' ? 'bg-amber-400/15 border-amber-400 text-white' : 'bg-slate-950 border-slate-800 text-slate-400'
-                      }`}
-                    >
-                      <CreditCard className="w-4 h-4" />
-                      <span>Pay with Yoco</span>
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => setPaymentMethod('bank')}
-                      className={`p-2.5 rounded-xl border flex items-center justify-center gap-2 font-bold cursor-pointer ${
-                        paymentMethod === 'bank' ? 'bg-slate-800 border-blue-500 text-white' : 'bg-slate-950 border-slate-800 text-slate-400'
-                      }`}
-                    >
-                      <Building2 className="w-4 h-4" />
-                      <span>Bank EFT</span>
-                    </button>
-                  </div>
-                  <p className="mt-2 text-[11px] text-slate-500">
-                    {paymentMethod === 'online'
-                      ? 'You will review your gift on an RCI-branded checkout page, then complete payment securely on Yoco.'
-                      : 'A pledge is recorded here; transfer the amount using the bank details shown on the left.'}
-                  </p>
+                  <label className="block font-semibold text-slate-300 mb-1">Email for Receipt</label>
+                  <input
+                    type="email"
+                    required
+                    value={donorEmail}
+                    onChange={(e) => setDonorEmail(e.target.value)}
+                    placeholder="sipho@domain.com"
+                    className="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-white focus:outline-none focus:border-blue-500"
+                  />
                 </div>
+              </div>
 
-                {error && (
-                  <p role="alert" className="rounded-xl border border-red-500/40 bg-red-500/10 px-3 py-2 text-xs text-red-300">{error}</p>
-                )}
+              {/* Giving Type Buttons -> straight to Yoco */}
+              <div>
+                <label className="block font-semibold text-slate-300 mb-2">Give As</label>
+                <div className="grid grid-cols-2 gap-3">
+                  {['TITHE', 'OFFERING', 'SEED', 'PARTNER'].map((type) => (
+                    <button
+                      type="button"
+                      key={type}
+                      disabled={submitting}
+                      onClick={() => startYocoCheckout(type)}
+                      className={`py-4 rounded-2xl border font-black tracking-wide transition-all cursor-pointer disabled:opacity-60 ${
+                        giveType === type
+                          ? 'bg-amber-400 text-slate-950 border-amber-400 shadow-lg shadow-amber-400/20'
+                          : 'bg-slate-950 border-slate-800 text-slate-200 hover:border-amber-400 hover:text-amber-300'
+                      }`}
+                    >
+                      {submitting && giveType === type ? 'Preparing…' : type}
+                    </button>
+                  ))}
+                </div>
+                <p className="mt-2 text-[11px] text-slate-500">
+                  TITHE, OFFERING, SEED or PARTNER will create your secure Yoco checkout using the amount and details above.
+                </p>
+              </div>
 
-                <button
-                  type="submit"
-                  disabled={submitting}
-                  className="w-full py-3.5 bg-amber-400 hover:bg-amber-300 text-slate-950 font-black rounded-xl text-xs sm:text-sm shadow-lg shadow-amber-400/20 flex items-center justify-center gap-2 cursor-pointer transition-all disabled:opacity-60"
-                >
-                  <Heart className="w-4 h-4 fill-slate-950" />
-                  <span>
-                    {submitting
-                      ? 'Preparing secure checkout…'
-                      : paymentMethod === 'online'
-                        ? `Give R ${currentAmount} securely with Yoco`
-                        : `Record R ${currentAmount} pledge to ${giveType}`}
-                  </span>
-                </button>
-              </form>
-            )}
+              {error && (
+                <p role="alert" className="rounded-xl border border-red-500/40 bg-red-500/10 px-3 py-2 text-xs text-red-300">{error}</p>
+              )}
+            </div>
           </div>
         </div>
 
